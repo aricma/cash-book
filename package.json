@@ -1,0 +1,12 @@
+{
+  "name": "aricma",
+  "description": "the aricma mono repo for all the aricma projects",
+  "private": true,
+  "scripts": {
+    "prettify": "prettier --write .",
+    "pretty": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}

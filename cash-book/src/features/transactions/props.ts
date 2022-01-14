@@ -33,10 +33,7 @@ export interface CreateTransactionViewProps {
     close: ButtonProps;
     title: string;
     name: TextInputProps;
-    cashStation: {
-        value: string;
-        validation?: string;
-    };
+    cashStation: OptionsInputProps;
     type: ButtonProps;
     otherAccount: OptionsInputProps;
     cancel: ButtonProps;

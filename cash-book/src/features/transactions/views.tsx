@@ -79,7 +79,7 @@ export const CreateTransactionView: React.FC<CreateTransactionViewProps> = props
             </div>
             <div className="grid grid-cols-[1fr_max-content_1fr] gap-2">
                 <div className="flex items-center justify-center">
-                    <p className="button-still button-md">{props.cashStation.value}</p>
+                    <Select {...props.cashStation} />
                 </div>
                 <div className="flex items-center justify-center">
                     <button type="button" onClick={props.type.onSelect} className="button button-md p-2">

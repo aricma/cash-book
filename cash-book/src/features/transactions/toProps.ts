@@ -91,8 +91,22 @@ export const toCreateTransactionViewProps = (appState: ApplicationState, closeCr
             },
         },
         cashStation: {
-            value: accounts.find(({type}) => type === AccountType.CASH_STATION)?.name || "No cashier defined!",
+            type: 'OPTIONS_INPUT_PROPS_TYPE',
+            value: appState.accounts.accounts[appState.transactions.create.cashierAccountId || '']?.name || '',
+            placeholder: 'set cashier account',
             validation: validationMap?.cashierAccountId,
+            options: accounts.filter(({type}) => type === AccountType.CASH_STATION).map((account) => {
+                return {
+                    type: "BUTTON_PROPS_TYPE",
+                    title: account.name,
+                    onSelect: () => {
+                        dispatch({
+                            type: ApplicationActionType.TRANSACTIONS_CREATE_SET_CASHIER_ACCOUNT,
+                            value: account.id,
+                        });
+                    },
+                };
+            }),
         },
         type: {
             type: 'BUTTON_PROPS_TYPE',

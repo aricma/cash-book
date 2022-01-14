@@ -1,0 +1,99 @@
+{
+    "settings": {
+        "save": "Settings_Save_Type/AUTO"
+    },
+    "bookEntries": {
+        "create": {
+            "date": "2022-01-12T21:28:30.259Z",
+            "cash": {},
+            "transactions": {}
+        },
+        "entries": {
+        }
+    },
+    "accounts": {
+        "create": {
+            "type": "ACCOUNT_TYPE/DEFAULT"
+        },
+        "accounts": {
+            "1000": {
+                "type": "ACCOUNT_TYPE/CASH_STATION",
+                "id": "1000",
+                "name": "Kasse"
+            },
+            "1010": {
+                "type": "ACCOUNT_TYPE/DIFFERENCE",
+                "id": "1010",
+                "name": "Diff"
+            },
+            "1500": {
+                "type": "ACCOUNT_TYPE/DEFAULT",
+                "id": "1500",
+                "name": "Card"
+            },
+            "2000": {
+                "type": "ACCOUNT_TYPE/DEFAULT",
+                "id": "2000",
+                "name": "Bank"
+            },
+            "3000": {
+                "type": "ACCOUNT_TYPE/DEFAULT",
+                "id": "3000",
+                "name": "Private"
+            },
+            "9000": {
+                "type": "ACCOUNT_TYPE/DEFAULT",
+                "id": "9000",
+                "name": "Waren"
+            }
+        }
+    },
+    "transactions": {
+        "create": {
+            "type": "TRANSACTION_TYPE/OUT",
+            "otherAccountId": "1500"
+        },
+        "transactions": {
+            "42d694f774ef35791961a17652abb3bb3b3048fa": {
+                "id": "42d694f774ef35791961a17652abb3bb3b3048fa",
+                "order": 1,
+                "type": "TRANSACTION_TYPE/IN",
+                "fromAccountId": "9000",
+                "toAccountId": "1000",
+                "name": "7%"
+            },
+            "8e4d2a93d944dadf00c96cfbf978636c7e964d7b": {
+                "id": "8e4d2a93d944dadf00c96cfbf978636c7e964d7b",
+                "order": 2,
+                "type": "TRANSACTION_TYPE/IN",
+                "fromAccountId": "9000",
+                "toAccountId": "1000",
+                "name": "19%"
+            },
+            "1fecfb0e857a1d03ff36f4278f7381944267136a": {
+                "id": "1fecfb0e857a1d03ff36f4278f7381944267136a",
+                "order": 3,
+                "type": "TRANSACTION_TYPE/OUT",
+                "fromAccountId": "1000",
+                "toAccountId": "1500",
+                "name": "MasterCard"
+            },
+            "30f2ca801d54f5eeced27bb743e4158ab0fe1b49": {
+                "id": "30f2ca801d54f5eeced27bb743e4158ab0fe1b49",
+                "order": 4,
+                "type": "TRANSACTION_TYPE/OUT",
+                "fromAccountId": "1000",
+                "toAccountId": "2000",
+                "name": "Bank"
+            },
+            "306689643d101a89d6390d61ccb6470160eea713": {
+                "id": "306689643d101a89d6390d61ccb6470160eea713",
+                "order": 5,
+                "type": "TRANSACTION_TYPE/OUT",
+                "fromAccountId": "1000",
+                "toAccountId": "3000",
+                "name": "Private"
+            }
+        }
+    }
+}

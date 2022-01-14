@@ -5,6 +5,16 @@ import {Icon} from './icons';
 
 
 export const Select: React.FC<OptionsInputProps> = (props) => {
+    React.useEffect(() => {
+        if (props.options.length === 1) {
+            props.options.forEach((buttonProps) => {
+                if (buttonProps.type === 'BUTTON_PROPS_TYPE') {
+                    buttonProps.onSelect()
+                }
+            });
+        }
+        // eslint-disable-next-line
+    }, []);
     const changeHandler = (buttonPropsTitle: string) => {
         props.options.forEach((buttonProps) => {
             if (buttonProps.type === 'BUTTON_PROPS_TYPE' && buttonPropsTitle === buttonProps.title) {
@@ -16,7 +26,7 @@ export const Select: React.FC<OptionsInputProps> = (props) => {
         <Listbox as="div" value={props.value} onChange={changeHandler} className="relative">
             <Listbox.Button className="button button-md">{props.value || props.placeholder}</Listbox.Button>
             <Listbox.Options className="origin-top-right absolute z-10 right-0 mt-2 w-full shadow-lg button button-md p-0">
-                <div className="rounded-md bg-level divide-y-2 divide-gray-900">
+                <div className="rounded-md bg-level divide-y-2 divide-gray-300 dark:divide-gray-900">
                     {props.options.map((buttonProps, index) => (
                         <Listbox.Option key={index} value={buttonProps.title}>
                             {

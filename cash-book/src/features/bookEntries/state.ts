@@ -1,8 +1,8 @@
 export interface BookEntriesState {
-	create: CreateBookEntry,
+	create: CreateBookEntry;
 	entries: {
-		[date: string]: BookEntry,
-	}
+		[date: string]: BookEntry;
+	};
 }
 
 export interface CreateBookEntry {
@@ -10,18 +10,18 @@ export interface CreateBookEntry {
 	cash: {
 		start?: string;
 		end?: string;
-	},
+	};
 	transactions: {
 		[transactionId: string]: string;
 	};
 }
 
 export interface BookEntry {
-	date: string,
+	date: string;
 	cash: {
 		start: number;
 		end: number;
-	},
+	};
 	transactions: {
 		[transactionId: string]: number;
 	};
@@ -34,4 +34,3 @@ export const initialState: BookEntriesState = {
 	},
 	entries: {},
 };
-

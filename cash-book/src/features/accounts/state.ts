@@ -12,7 +12,7 @@ export interface AccountsState {
 export enum AccountType {
 	DEFAULT = 'ACCOUNT_TYPE/DEFAULT',
 	CASH_STATION = 'ACCOUNT_TYPE/CASH_STATION',
-	DIFFERENCE = 'ACCOUNT_TYPE/DIFFERENCE'
+	DIFFERENCE = 'ACCOUNT_TYPE/DIFFERENCE',
 }
 
 export interface Account {

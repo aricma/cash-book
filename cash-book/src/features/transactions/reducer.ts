@@ -1,8 +1,10 @@
 import hash from 'crypto-js/sha1';
-import {Reducer} from '../../models/reducers';
-import {TransactionsState, Transaction, TransactionType} from './state';
-import {TransactionsAction, ApplicationActionType} from '../../applicationState/actions';
-
+import { Reducer } from '../../models/reducers';
+import { TransactionsState, Transaction, TransactionType } from './state';
+import {
+	TransactionsAction,
+	ApplicationActionType,
+} from '../../applicationState/actions';
 
 export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 	state,
@@ -30,7 +32,10 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 		case ApplicationActionType.TRANSACTIONS_ORDER_DEC: {
 			const transaction = state.transactions[action.transactionId];
 			if (transaction === undefined) return state;
-			const prevTransaction = Object.values(state.transactions).find(({ order }) => order === transaction.order - 1) || undefined;
+			const prevTransaction =
+				Object.values(state.transactions).find(
+					({ order }) => order === transaction.order - 1
+				) || undefined;
 			if (prevTransaction === undefined) return state;
 			return {
 				...state,
@@ -43,14 +48,17 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 					[transaction.id]: {
 						...transaction,
 						order: transaction.order - 1,
-					}
-				}
-			}
+					},
+				},
+			};
 		}
 		case ApplicationActionType.TRANSACTIONS_ORDER_INC: {
 			const transaction = state.transactions[action.transactionId];
 			if (transaction === undefined) return state;
-			const nextTransaction = Object.values(state.transactions).find(({ order }) => order === transaction.order + 1) || undefined;
+			const nextTransaction =
+				Object.values(state.transactions).find(
+					({ order }) => order === transaction.order + 1
+				) || undefined;
 			if (nextTransaction === undefined) return state;
 			return {
 				...state,
@@ -63,9 +71,9 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 					[transaction.id]: {
 						...transaction,
 						order: transaction.order + 1,
-					}
-				}
-			}
+					},
+				},
+			};
 		}
 		case ApplicationActionType.TRANSACTIONS_CREATE_SET_CASHIER_ACCOUNT:
 			return {
@@ -96,7 +104,10 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 			if (state.create.cashierAccountId === undefined) return state;
 			if (state.create.otherAccountId === undefined) return state;
 			const allTransactions = Object.values(state.transactions);
-			const getLastOrderNumber = allTransactions.map(({ order }) => order).sort()[allTransactions.length - 1] || 0;
+			const getLastOrderNumber =
+				allTransactions.map(({ order }) => order).sort()[
+					allTransactions.length - 1
+				] || 0;
 			const fromAccountId =
 				state.create.type === TransactionType.OUT
 					? state.create.cashierAccountId
@@ -105,7 +116,9 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 				state.create.type === TransactionType.IN
 					? state.create.cashierAccountId
 					: state.create.otherAccountId;
-			const newTransactionId = hash(state.create.name + fromAccountId + toAccountId).toString();
+			const newTransactionId = hash(
+				state.create.name + fromAccountId + toAccountId
+			).toString();
 			const newTransaction: Transaction = {
 				id: newTransactionId,
 				order: getLastOrderNumber + 1,

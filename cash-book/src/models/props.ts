@@ -75,7 +75,7 @@ export interface BodyCellProps {
 }
 
 export interface DatePickerInputProps {
-	type: 'DATE_PICKER_INPUT_PROPS'
+	type: 'DATE_PICKER_INPUT_PROPS';
 	label?: string;
 	value: string;
 	onChange: (date: string) => void;

@@ -67,7 +67,7 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
 				}
 			}
 		}
-		case ApplicationActionType.TRANSACTIONS_CREATE_SET_CASH_STATION:
+		case ApplicationActionType.TRANSACTIONS_CREATE_SET_CASHIER_ACCOUNT:
 			return {
 				...state,
 				create: {

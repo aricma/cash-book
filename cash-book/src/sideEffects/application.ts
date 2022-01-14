@@ -18,7 +18,7 @@ export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, 
 
                     ApplicationActionType.TRANSACTIONS_CREATE_SET_TYPE,
                     ApplicationActionType.TRANSACTIONS_CREATE_SET_NAME,
-                    ApplicationActionType.TRANSACTIONS_CREATE_SET_CASH_STATION,
+                    ApplicationActionType.TRANSACTIONS_CREATE_SET_CASHIER_ACCOUNT,
                     ApplicationActionType.TRANSACTIONS_CREATE_SET_OTHER_ACCOUNT,
                     ApplicationActionType.TRANSACTIONS_CREATE_CANCEL,
                     ApplicationActionType.TRANSACTIONS_CREATE_SUBMIT,

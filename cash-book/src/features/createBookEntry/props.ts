@@ -3,7 +3,9 @@ import {
 	ButtonProps,
 	DisabledButtonProps,
 	DatePickerInputProps,
-	OptionsInputProps, BooleanInputProps, IconType,
+	OptionsInputProps,
+	BooleanInputProps,
+	IconType,
 } from '../../models/props';
 
 export interface CreateBookEntryViewProps {

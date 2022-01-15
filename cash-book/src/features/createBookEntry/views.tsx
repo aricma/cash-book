@@ -1,10 +1,10 @@
 import React from 'react';
-import {CreateBookEntryViewProps, CreateBookEntryTemplateConfigProps, ToggleDiffViewProps} from './props';
+import { CreateBookEntryViewProps, CreateBookEntryTemplateConfigProps, ToggleDiffViewProps } from './props';
 import { DatePickerInput } from '../../components/datePickerInput';
 import { TextInput } from '../../components/textInput';
 import { Header } from '../menu';
 import { Select } from '../../components/select';
-import {Icon} from '../../components/icons';
+import { Icon } from '../../components/icons';
 
 export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) => {
 	return (
@@ -36,7 +36,7 @@ const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props)
 				</div>
 			</React.Fragment>
 		))}
-		{props.diffTransaction && (<DifferenceAccount {...props.diffTransaction} />)}
+		{props.diffTransaction && <DifferenceAccount {...props.diffTransaction} />}
 		<div className="flex items-center justify-end space-x-2">
 			<button type="button" onClick={props.cancel.onSelect} className="button button-md">
 				{props.cancel.title}
@@ -56,11 +56,7 @@ const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props)
 
 const DifferenceAccount: React.FC<ToggleDiffViewProps> = (props) => (
 	<div className="bg-blue-100 p-4 rounded-xl flex items-center justify-between space-x-4 text-blue-600">
-		<input
-			type="checkbox"
-			checked={props.input.value}
-			onChange={props.input.onChange}
-		/>
+		<input type="checkbox" checked={props.input.value} onChange={props.input.onChange} />
 		<div className="space-y-4">
 			<p className="text-blue-900 text-lg font-medium">{props.title}</p>
 			<div className="space-y-2">

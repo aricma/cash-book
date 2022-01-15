@@ -15,7 +15,7 @@ export interface Create {
 export interface CreateBookEntry {
 	templateId: string;
 	date: string;
-	diffTransaction?: { transactionId: string, value: number };
+	diffTransaction?: { transactionId: string; value: number };
 	transactions: {
 		[transactionId: string]: string;
 	};

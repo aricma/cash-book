@@ -201,8 +201,11 @@ export type BookEntriesCreateSetTransaction = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 	{ templateId: string; transactionId: string; value: string }
 >;
-export type BookEntriesCreateSetDiffTransaction = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION, {
-	transaction?: { transactionId: string; value: number }
-}>;
+export type BookEntriesCreateSetDiffTransaction = Action<
+	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION,
+	{
+		transaction?: { transactionId: string; value: number };
+	}
+>;
 export type BookEntriesCreateCancel = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL, { templateId: string }>;
 export type BookEntriesCreateSubmit = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT, { templateId: string }>;

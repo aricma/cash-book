@@ -106,10 +106,7 @@ const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntr
 	};
 };
 
-const toBookEntryViewProps = (
-	appState: ApplicationState,
-	bookEntry: BookEntry,
-) => {
+const toBookEntryViewProps = (appState: ApplicationState, bookEntry: BookEntry) => {
 	const template = appState.transactions.templates[bookEntry.templateId];
 	return Object.entries(bookEntry.transactions).map(
 		([transactionId, value]): DataBookEntryViewProps | ErrorBookEnrtyViewProps => {

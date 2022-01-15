@@ -43,7 +43,7 @@ export const getAllDatesInRange = (from: Date, to: Date): Array<Date> => {
 	return addOneDate([from], to);
 };
 
-export const move = <T>(arr: Array<T>, fromIndex: number, toIndex: number): Array<T> =>  {
+export const move = <T>(arr: Array<T>, fromIndex: number, toIndex: number): Array<T> => {
 	const maxIndex = arr.length - 1;
 	if (fromIndex < 0 || maxIndex < fromIndex || toIndex < 0) return arr;
 	const element = arr[fromIndex];

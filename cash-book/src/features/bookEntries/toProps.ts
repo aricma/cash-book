@@ -102,16 +102,16 @@ const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntr
 				});
 			},
 		},
-		entries: toBookEntryViewProps(appState, bookEntry.date, bookEntry.transactions),
+		entries: toBookEntryViewProps(appState, bookEntry),
 	};
 };
 
 const toBookEntryViewProps = (
 	appState: ApplicationState,
-	date: string,
-	transactions: { [transactionId: string]: number }
+	bookEntry: BookEntry,
 ) => {
-	return Object.entries(transactions).map(
+	const template = appState.transactions.templates[bookEntry.templateId];
+	return Object.entries(bookEntry.transactions).map(
 		([transactionId, value]): DataBookEntryViewProps | ErrorBookEnrtyViewProps => {
 			const transaction = appState.transactions.transactions[transactionId];
 			if (transaction === undefined)
@@ -119,21 +119,21 @@ const toBookEntryViewProps = (
 					type: 'ERROR_BOOKING_VIEW_PROPS',
 					message: 'No transaction or id: ' + transactionId,
 				};
-			const fromAccount = appState.accounts.accounts[transaction.fromAccountId];
+			const fromAccount = appState.accounts.accounts[template.cashierAccountId];
 			if (fromAccount === undefined)
 				return {
 					type: 'ERROR_BOOKING_VIEW_PROPS',
-					message: 'No account for id: ' + transaction.fromAccountId,
+					message: 'No account for id: ' + template.cashierAccountId,
 				};
-			const toAccount = appState.accounts.accounts[transaction.toAccountId];
+			const toAccount = appState.accounts.accounts[transaction.accountId];
 			if (toAccount === undefined)
 				return {
 					type: 'ERROR_BOOKING_VIEW_PROPS',
-					message: 'No account for id: ' + transaction.toAccountId,
+					message: 'No account for id: ' + transaction.accountId,
 				};
 			return {
 				type: 'DATA_BOOKING_VIEW_PROPS',
-				date: DateWithoutTime.fromString(date).toLocaleDateString('de-DE', {
+				date: DateWithoutTime.fromString(bookEntry.date).toLocaleDateString('de-DE', {
 					weekday: 'long',
 					year: 'numeric',
 					month: 'long',

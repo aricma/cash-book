@@ -42,6 +42,7 @@ export interface BooleanInputProps {
 	type: 'BOOLEAN_INPUT_PROPS_TYPE';
 	title?: string;
 	value: boolean;
+	validation?: string;
 	onChange: () => void;
 }
 

@@ -1,7 +1,8 @@
 export enum TransactionType {
 	IN = 'TRANSACTION_TYPE/IN',
 	OUT = 'TRANSACTION_TYPE/OUT',
-	IN_AND_OUT = 'TRANSACTION_TYPE/IN_AND_OUT',
+	SYS_IN = 'TRANSACTION_TYPE/PROTECTED/IN',
+	SYS_OUT = 'TRANSACTION_TYPE/PROTECTED/OUT',
 }
 
 export interface TransactionsState {
@@ -19,6 +20,9 @@ export interface CreateTemplate {
 	name?: string;
 	cashierAccountId?: string;
 	diffAccountId?: string;
+	transactionIds: Array<string>;
+	autoDiffInId?: string;
+	autoDiffOutId?: string;
 	transactions: {
 		[transactionId: string]: CreateTransaction;
 	};
@@ -27,7 +31,6 @@ export interface CreateTemplate {
 export interface CreateTransaction {
 	id: string;
 	type: TransactionType;
-	order: number;
 	name?: string;
 	accountId?: string;
 }
@@ -35,20 +38,23 @@ export interface CreateTransaction {
 export interface Template {
 	id: string;
 	name: string;
+	cashierAccountId: string;
+	diffAccountId: string;
 	transactions: Array<string>;
+	autoDiffInId: string;
+	autoDiffOutId: string;
 }
 
 export interface Transaction {
 	id: string;
-	order: number;
 	type: TransactionType;
-	fromAccountId: string;
-	toAccountId: string;
+	accountId: string;
 	name: string;
 }
 
 export const initialState: TransactionsState = {
 	create: {
+		transactionIds: [],
 		transactions: {},
 	},
 	templates: {},

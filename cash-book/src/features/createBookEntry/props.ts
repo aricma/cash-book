@@ -3,7 +3,7 @@ import {
 	ButtonProps,
 	DisabledButtonProps,
 	DatePickerInputProps,
-	OptionsInputProps,
+	OptionsInputProps, BooleanInputProps, IconType,
 } from '../../models/props';
 
 export interface CreateBookEntryViewProps {
@@ -20,9 +20,19 @@ export interface CreateBookEntryTemplateConfigProps {
 	};
 	transactions: Array<TextInputProps>;
 	addTransaction: ButtonProps;
-	valueValidation?: string;
+	diffTransaction?: ToggleDiffViewProps;
 	cancel: ButtonProps;
 	submit: DisabledButtonProps | ButtonProps;
+}
+
+export interface ToggleDiffViewProps {
+	input: BooleanInputProps;
+	title: string;
+	cashierAccount: string;
+	direction: IconType;
+	diffAccount: string;
+	value: string;
+	description: string;
 }
 
 export interface OverrideDateConfirmationModalViewProps {

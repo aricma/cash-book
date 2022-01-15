@@ -50,6 +50,7 @@ export enum ApplicationActionType {
 	BOOK_ENTRIES_CREATE_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TEMPLATE/SET',
 	BOOK_ENTRIES_CREATE_SET_DATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TRANSACTION/SET',
+	BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DIFFERENCE/SET',
 	BOOK_ENTRIES_CREATE_CANCEL = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/CANCEL',
 	BOOK_ENTRIES_CREATE_SUBMIT = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/SUBMIT',
 }
@@ -180,6 +181,7 @@ export type BookingsAction =
 	| BookEntriesCreateSetTemplate
 	| BookEntriesCreateSetDate
 	| BookEntriesCreateSetTransaction
+	| BookEntriesCreateSetDiffTransaction
 	| BookEntriesCreateCancel
 	| BookEntriesCreateSubmit;
 export type BookingsSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { state: BookEntriesState }>;
@@ -199,5 +201,8 @@ export type BookEntriesCreateSetTransaction = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 	{ templateId: string; transactionId: string; value: string }
 >;
+export type BookEntriesCreateSetDiffTransaction = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION, {
+	transaction?: { transactionId: string; value: number }
+}>;
 export type BookEntriesCreateCancel = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL, { templateId: string }>;
 export type BookEntriesCreateSubmit = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT, { templateId: string }>;

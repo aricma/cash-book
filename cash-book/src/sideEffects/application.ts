@@ -5,19 +5,16 @@ import {
 	BookEntriesExportDay,
 	AccountsImport,
 } from '../applicationState/actions';
-import {SettingsSaveType} from '../features/settings/state';
-import {ApplicationState, selectAppState, dispatch} from '../applicationState';
-import {LOCAL_STORAGE_KEY} from '../variables/environments';
-import {DateWithoutTime} from '../models/domain/date';
-import {getFirstDateOfTheMonth, getLastDateOfTheMonth, pad} from '../models/utils';
+import { SettingsSaveType } from '../features/settings/state';
+import { ApplicationState, selectAppState } from '../applicationState';
+import { LOCAL_STORAGE_KEY } from '../variables/environments';
+import { DateWithoutTime } from '../models/domain/date';
+import { getFirstDateOfTheMonth, getLastDateOfTheMonth, pad } from '../models/utils';
 import hash from 'crypto-js/sha256';
-import {BookEntry} from '../features/bookEntries/state';
-import {TransactionType} from '../features/transactions/state';
+import { BookEntry } from '../features/bookEntries/state';
+import { TransactionType } from '../features/transactions/state';
 
-
-export const makeSaveAppStateToLocalStorage = (
-	setInLocalStorage: (key: string, value: string) => void
-) => {
+export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, value: string) => void) => {
 	return function* worker() {
 		while (true) {
 			try {
@@ -62,9 +59,7 @@ export const makeSaveAppStateToLocalStorage = (
 	};
 };
 
-export const makeLoadAppStateFromLocalStorage = (
-	loadFromLocalStorage: (key: string) => string | undefined
-) => {
+export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: string) => string | undefined) => {
 	return function* worker() {
 		while (true) {
 			try {
@@ -109,11 +104,10 @@ export const makeAccountsImport = () => {
 						accounts: {
 							...appState.accounts.accounts,
 							...action.accounts,
-						}
-					}
+						},
+					},
 				});
-			} catch (_) {
-			}
+			} catch (_) {}
 		}
 	};
 };
@@ -124,15 +118,14 @@ export const makeAccountsExport = () => {
 			try {
 				yield SE.take(ApplicationActionType.ACCOUNTS_EXPORT);
 				const appState: ApplicationState = yield SE.select(selectAppState);
-				const headline = ["name", "type", "number"];
+				const headline = ['name', 'type', 'number'];
 				const rows = Object.values(appState.accounts.accounts).map((account): Array<string> => {
 					return [account.name, account.type, account.id];
 				});
 				const unique = hash(new Date().toISOString());
 				const fileName = `accounts-${unique}.csv`;
 				exportRowsToCSV([headline, ...rows], fileName);
-			} catch (_) {
-			}
+			} catch (_) {}
 		}
 	};
 };
@@ -157,9 +150,7 @@ export const makeBookEntriesExportDay = () => {
 	return function* worker() {
 		while (true) {
 			try {
-				const action: BookEntriesExportDay = yield SE.take(
-					ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY,
-				);
+				const action: BookEntriesExportDay = yield SE.take(ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY);
 				const appState: ApplicationState = yield SE.select(selectAppState);
 				const bookEntry = appState.bookEntries.entries[action.date];
 				if (bookEntry !== undefined) {
@@ -173,8 +164,7 @@ export const makeBookEntriesExportDay = () => {
 					const fileName = `book-entry-${year}-${month}-${day}_${unique}.csv`;
 					exportRowsToCSV([headline, ...rows], fileName);
 				}
-			} catch (_) {
-			}
+			} catch (_) {}
 		}
 	};
 };
@@ -183,70 +173,53 @@ export const makeBookEntriesExportMonth = () => {
 	return function* worker() {
 		while (true) {
 			try {
-				const action: BookEntriesExportMonth = yield SE.take(
-					ApplicationActionType.BOOK_ENTRIES_EXPORT_MONTH,
-				);
+				const action: BookEntriesExportMonth = yield SE.take(ApplicationActionType.BOOK_ENTRIES_EXPORT_MONTH);
 				const appState: ApplicationState = yield SE.select(selectAppState);
 				const date = DateWithoutTime.fromString(action.date);
 				const fromDate = getFirstDateOfTheMonth(date).getTime();
 				const toDate = getLastDateOfTheMonth(date).getTime();
-				const bookEntries = Object.values(appState.bookEntries.entries).filter(
-					(bookEntry) => {
-						const currentDate = DateWithoutTime.fromString(
-							bookEntry.date,
-						).getTime();
-						return fromDate <= currentDate && currentDate < toDate;
-					},
-				);
-				const rows = bookEntries.reduce(
-					(rows: Array<Array<string>>, bookEntry) => {
-						return [...rows, ...bookEntryToRows(appState, bookEntry)];
-					},
-					[],
-				);
+				const bookEntries = Object.values(appState.bookEntries.entries).filter((bookEntry) => {
+					const currentDate = DateWithoutTime.fromString(bookEntry.date).getTime();
+					return fromDate <= currentDate && currentDate < toDate;
+				});
+				const rows = bookEntries.reduce((rows: Array<Array<string>>, bookEntry) => {
+					return [...rows, ...bookEntryToRows(appState, bookEntry)];
+				}, []);
 				const timeOfDownload = new Date().toISOString();
 				const year = date.getFullYear();
 				const month = pad(date.getMonth() + 1, 2);
 				const unique = hash(timeOfDownload);
 				const fileName = `book-entry-${year}-${month}_${unique}.csv`;
 				exportRowsToCSV([headline, ...rows], fileName);
-			} catch (_) {
-			}
+			} catch (_) {}
 		}
 	};
 };
 
-const bookEntryToRows = (
-	appState: ApplicationState,
-	bookEntry: BookEntry,
-): Array<Array<string>> => {
-	return Object.entries(bookEntry.transactions).map(
-		([transactionId, value]) => {
-			const transaction = appState.transactions.transactions[transactionId];
-			return Array(headline.length)
-				.fill('')
-				.map((placeholder, index) => {
-					switch (index) {
-						case 0:
-							return 'EUR';
-						case 1:
-							return (
-								(transaction.type === TransactionType.IN ? '+' : '-') + value
-							);
-						case 3: {
-							const date = DateWithoutTime.fromString(bookEntry.date);
-							const day = date.getDate();
-							const month = date.getMonth() + 1;
-							return pad(day, 2) + pad(month, 2);
-						}
-						case 4:
-							return transaction.name;
-						default:
-							return placeholder;
+const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry): Array<Array<string>> => {
+	return Object.entries(bookEntry.transactions).map(([transactionId, value]) => {
+		const transaction = appState.transactions.transactions[transactionId];
+		return Array(headline.length)
+			.fill('')
+			.map((placeholder, index) => {
+				switch (index) {
+					case 0:
+						return 'EUR';
+					case 1:
+						return (transaction.type === TransactionType.IN ? '+' : '-') + value;
+					case 3: {
+						const date = DateWithoutTime.fromString(bookEntry.date);
+						const day = date.getDate();
+						const month = date.getMonth() + 1;
+						return pad(day, 2) + pad(month, 2);
 					}
-				});
-		},
-	);
+					case 4:
+						return transaction.name;
+					default:
+						return placeholder;
+				}
+			});
+	});
 };
 
 const exportRowsToCSV = (rows: Array<Array<string>>, name?: string) => {

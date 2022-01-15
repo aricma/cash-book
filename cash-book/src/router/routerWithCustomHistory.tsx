@@ -6,9 +6,7 @@ export interface CustomRouterProps {
 	basename?: string;
 }
 
-export const MakeRouterWithHistory = (
-	history: History
-): React.FC<CustomRouterProps> => {
+export const MakeRouterWithHistory = (history: History): React.FC<CustomRouterProps> => {
 	return function Router(props) {
 		interface RouterState {
 			action: Action;

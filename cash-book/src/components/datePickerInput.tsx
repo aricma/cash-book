@@ -110,9 +110,7 @@ export const DatePickerInput: React.FC<DatePickerInputProps> = (props) => {
 
 	const viewProps = makeToDatePickerProps(
 		() => {
-			setState(
-				DateWithoutTime.fromString(props.value) || DateWithoutTime.new()
-			);
+			setState(DateWithoutTime.fromString(props.value) || DateWithoutTime.new());
 		},
 		() => {
 			const currentYear = state.getFullYear();
@@ -147,9 +145,7 @@ export const DatePickerInput: React.FC<DatePickerInputProps> = (props) => {
 		},
 		() => false
 	)({
-		selected: !!props.value
-			? DateWithoutTime.fromString(props.value)
-			: undefined,
+		selected: !!props.value ? DateWithoutTime.fromString(props.value) : undefined,
 		current: state,
 	});
 	return <DatePicker {...viewProps} />;

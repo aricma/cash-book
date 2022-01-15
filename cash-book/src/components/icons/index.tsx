@@ -1,10 +1,9 @@
 import * as Solid from '@heroicons/react/solid';
 import * as Outline from '@heroicons/react/outline';
 import React from 'react';
-import {WithClasses, WithIconType, IconType} from '../../models/props';
-import {Cashier} from './cashier';
-import {Spinner} from './spinner';
-
+import { WithClasses, WithIconType, IconType } from '../../models/props';
+import { Cashier } from './cashier';
+import { Spinner } from './spinner';
 
 export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 	switch (props.type) {
@@ -45,7 +44,7 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 		case IconType.PENCIL_ALT_FILL:
 			return <Solid.PencilAltIcon {...props} />;
 		case IconType.SPINNER:
-			return <Spinner {...props} />
+			return <Spinner {...props} />;
 		default:
 			return (
 				<svg {...props} viewBox="0 0 1 1" fill="currentColor" stroke="none">

@@ -22,7 +22,5 @@ sagaMiddleware.run(rootSaga);
 export type ApplicationState = ReturnType<typeof rootReducer>;
 export type Dispatch = (action: ApplicationAction) => void;
 export const dispatch: Dispatch = (action) => store.dispatch(action);
-export const useAppState = <T>(selector: (state: ApplicationState) => T) =>
-	useSelector<ApplicationState, T>(selector);
-export const selectAppState = (state: ApplicationState): ApplicationState =>
-	state;
+export const useAppState = <T>(selector: (state: ApplicationState) => T) => useSelector<ApplicationState, T>(selector);
+export const selectAppState = (state: ApplicationState): ApplicationState => state;

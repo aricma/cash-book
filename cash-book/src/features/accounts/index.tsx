@@ -7,12 +7,8 @@ import { CreateAccountView, AccountsView } from './views';
 export const Accounts: React.FC = () => {
 	const appState = useAppState(selectAppState);
 	const [showCreate, setShowCreate] = React.useState(false);
-	const accountsViewProps = toAccountsViewProps(appState, () =>
-		setShowCreate(true)
-	);
-	const createAccountViewProps = toCreateAccountViewProps(appState, () =>
-		setShowCreate(false)
-	);
+	const accountsViewProps = toAccountsViewProps(appState, () => setShowCreate(true));
+	const createAccountViewProps = toCreateAccountViewProps(appState, () => setShowCreate(false));
 	return (
 		<>
 			<AccountsView {...accountsViewProps} />

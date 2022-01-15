@@ -13,9 +13,7 @@ import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
 import { DateWithoutTime } from '../../models/domain/date';
 import { pad } from '../../models/utils';
 
-export const toBookingsViewProps = (
-	appState: ApplicationState
-): BookEntriesViewProps => ({
+export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => ({
 	title: 'Book Entries',
 	create: {
 		type: 'BUTTON_PROPS_TYPE',
@@ -35,31 +33,25 @@ export const toBookingsViewProps = (
 				const dateB = DateWithoutTime.fromString(b.date).getTime();
 				return dateB - dateA;
 			})
-			.reduce(
-				(
-					bookEntries: { [yearAndMonth: string]: BookEntryMonthViewProps },
-					bookEntry
-				) => {
-					const yearAndMonth = toYearAndMonth(bookEntry.date);
-					const dayEntry = toBookEntryDayViewProps(appState, bookEntry);
-					const hasMonth = bookEntries[yearAndMonth] !== undefined;
-					if (hasMonth) {
-						return {
-							...bookEntries,
-							[yearAndMonth]: {
-								...bookEntries[yearAndMonth],
-								entries: [...bookEntries[yearAndMonth].entries, dayEntry],
-							},
-						};
-					} else {
-						return {
-							...bookEntries,
-							[yearAndMonth]: toBookEntryMonthViewProps(appState, bookEntry),
-						};
-					}
-				},
-				{}
-			)
+			.reduce((bookEntries: { [yearAndMonth: string]: BookEntryMonthViewProps }, bookEntry) => {
+				const yearAndMonth = toYearAndMonth(bookEntry.date);
+				const dayEntry = toBookEntryDayViewProps(appState, bookEntry);
+				const hasMonth = bookEntries[yearAndMonth] !== undefined;
+				if (hasMonth) {
+					return {
+						...bookEntries,
+						[yearAndMonth]: {
+							...bookEntries[yearAndMonth],
+							entries: [...bookEntries[yearAndMonth].entries, dayEntry],
+						},
+					};
+				} else {
+					return {
+						...bookEntries,
+						[yearAndMonth]: toBookEntryMonthViewProps(appState, bookEntry),
+					};
+				}
+			}, {})
 	),
 });
 
@@ -70,18 +62,12 @@ const toYearAndMonth = (value: string) => {
 	return year + '-' + month;
 };
 
-const toBookEntryMonthViewProps = (
-	appState: ApplicationState,
-	bookEntry: BookEntry
-): BookEntryMonthViewProps => {
+const toBookEntryMonthViewProps = (appState: ApplicationState, bookEntry: BookEntry): BookEntryMonthViewProps => {
 	return {
-		date: DateWithoutTime.fromString(bookEntry.date).toLocaleDateString(
-			'de-DE',
-			{
-				year: 'numeric',
-				month: 'long',
-			}
-		),
+		date: DateWithoutTime.fromString(bookEntry.date).toLocaleDateString('de-DE', {
+			year: 'numeric',
+			month: 'long',
+		}),
 		export: {
 			type: 'BUTTON_PROPS_TYPE',
 			icon: IconType.DOWNLOAD_FILL,
@@ -97,20 +83,14 @@ const toBookEntryMonthViewProps = (
 	};
 };
 
-const toBookEntryDayViewProps = (
-	appState: ApplicationState,
-	bookEntry: BookEntry
-): BookEntryDayViewProps => {
+const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntry): BookEntryDayViewProps => {
 	return {
-		date: DateWithoutTime.fromString(bookEntry.date).toLocaleDateString(
-			'de-DE',
-			{
-				weekday: 'long',
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-			}
-		),
+		date: DateWithoutTime.fromString(bookEntry.date).toLocaleDateString('de-DE', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		}),
 		export: {
 			type: 'BUTTON_PROPS_TYPE',
 			icon: IconType.DOWNLOAD_FILL,
@@ -122,11 +102,7 @@ const toBookEntryDayViewProps = (
 				});
 			},
 		},
-		entries: toBookEntryViewProps(
-			appState,
-			bookEntry.date,
-			bookEntry.transactions
-		),
+		entries: toBookEntryViewProps(appState, bookEntry.date, bookEntry.transactions),
 	};
 };
 
@@ -136,9 +112,7 @@ const toBookEntryViewProps = (
 	transactions: { [transactionId: string]: number }
 ) => {
 	return Object.entries(transactions).map(
-		([transactionId, value]):
-			| DataBookEntryViewProps
-			| ErrorBookEnrtyViewProps => {
+		([transactionId, value]): DataBookEntryViewProps | ErrorBookEnrtyViewProps => {
 			const transaction = appState.transactions.transactions[transactionId];
 			if (transaction === undefined)
 				return {

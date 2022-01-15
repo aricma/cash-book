@@ -1,15 +1,9 @@
-import {
-	ButtonProps,
-	TextInputProps,
-	OptionsInputProps,
-	IconType,
-	DisabledButtonProps,
-} from '../../models/props';
+import { ButtonProps, TextInputProps, OptionsInputProps, IconType, DisabledButtonProps } from '../../models/props';
 
 export interface TransactionsViewProps {
 	title: string;
 	create: ButtonProps;
-	templates: Array<TemplateViewProps>
+	templates: Array<TemplateViewProps>;
 }
 
 export interface TemplateViewProps {

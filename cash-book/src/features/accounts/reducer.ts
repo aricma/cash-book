@@ -1,15 +1,9 @@
 import { Reducer } from '../../models/reducers';
 import { AccountsState, AccountType } from './state';
-import {
-	ApplicationActionType,
-	AccountsAction,
-} from '../../applicationState/actions';
-import {compactObject} from '../../models/utils';
+import { ApplicationActionType, AccountsAction } from '../../applicationState/actions';
+import { compactObject } from '../../models/utils';
 
-export const reducer: Reducer<AccountsState, AccountsAction> = (
-	state,
-	action
-) => {
+export const reducer: Reducer<AccountsState, AccountsAction> = (state, action) => {
 	switch (action.type) {
 		case ApplicationActionType.ACCOUNTS_SET:
 			return action.state;

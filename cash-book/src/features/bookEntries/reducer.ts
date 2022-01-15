@@ -1,12 +1,8 @@
 import { Reducer } from '../../models/reducers';
 import { BookEntriesState } from './state';
-import {
-	BookingsAction,
-	ApplicationActionType,
-} from '../../applicationState/actions';
-import {toNumber, compactObject} from '../../models/utils';
-import {DateWithoutTime} from '../../models/domain/date';
-
+import { BookingsAction, ApplicationActionType } from '../../applicationState/actions';
+import { toNumber, compactObject } from '../../models/utils';
+import { DateWithoutTime } from '../../models/domain/date';
 
 export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action) => {
 	switch (action.type) {

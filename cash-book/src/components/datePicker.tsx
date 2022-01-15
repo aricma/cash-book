@@ -23,23 +23,16 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
 			<div className="grid grid-cols-3">
 				<div className="justify-self-start px-2">
 					<Button {...props.year.prev} className="button button-xs">
-						{props.year.prev.icon && (
-							<Icon type={props.year.prev.icon} className="w-5 h-5" />
-						)}
+						{props.year.prev.icon && <Icon type={props.year.prev.icon} className="w-5 h-5" />}
 						<span className="sr-only">{props.year.prev.title}</span>
 					</Button>
 				</div>
-				<Button
-					{...props.year.current}
-					className="justify-self-center btn-2 btn-md text-2"
-				>
+				<Button {...props.year.current} className="justify-self-center btn-2 btn-md text-2">
 					{props.year.current.title}
 				</Button>
 				<div className="justify-self-end px-2">
 					<Button {...props.year.next} className="button button-xs">
-						{props.year.next.icon && (
-							<Icon type={props.year.next.icon} className="w-5 h-5" />
-						)}
+						{props.year.next.icon && <Icon type={props.year.next.icon} className="w-5 h-5" />}
 						<span className="sr-only">{props.year.next.title}</span>
 					</Button>
 				</div>
@@ -47,20 +40,14 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
 			<div className="grid grid-cols-3">
 				<div className="justify-self-start px-2">
 					<Button {...props.month.prev} className="button button-xs">
-						{props.month.prev.icon && (
-							<Icon type={props.month.prev.icon} className="w-5 h-5" />
-						)}
+						{props.month.prev.icon && <Icon type={props.month.prev.icon} className="w-5 h-5" />}
 						<span className="sr-only">{props.month.prev.title}</span>
 					</Button>
 				</div>
-				<span className="justify-self-center text-2">
-					{props.month.current}
-				</span>
+				<span className="justify-self-center text-2">{props.month.current}</span>
 				<div className="justify-self-end px-2">
 					<Button {...props.month.next} className="button button-xs">
-						{props.month.next.icon && (
-							<Icon type={props.month.next.icon} className="w-5 h-5" />
-						)}
+						{props.month.next.icon && <Icon type={props.month.next.icon} className="w-5 h-5" />}
 						<span className="sr-only">{props.month.next.title}</span>
 					</Button>
 				</div>
@@ -102,11 +89,7 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
 							}
 						case 'DISABLED_BUTTON_PROPS_TYPE':
 							return (
-								<DisabledButton
-									key={index}
-									{...buttonProps}
-									className="text-3 text-sm cursor-not-allowed"
-								>
+								<DisabledButton key={index} {...buttonProps} className="text-3 text-sm cursor-not-allowed">
 									{buttonProps.title}
 								</DisabledButton>
 							);

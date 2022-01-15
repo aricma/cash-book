@@ -1,2 +1,1 @@
-import {Account} from '../accounts/state';
-
+import { Account } from '../accounts/state';

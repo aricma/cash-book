@@ -12,9 +12,7 @@ export const TextInput: React.FC<Props> = (props) => {
 				<div className="relative w-full flex items-center justify-center">
 					<input
 						type="text"
-						className={
-							'peer w-full text-1 pt-4 placeholder:text-transparent focus:placeholder:text-3'
-						}
+						className={'peer w-full text-1 pt-4 placeholder:text-transparent focus:placeholder:text-3'}
 						autoFocus={props.autoFocus}
 						pattern={props.pattern}
 						value={props.value}
@@ -32,9 +30,7 @@ export const TextInput: React.FC<Props> = (props) => {
 					)}
 				</div>
 			</div>
-			{props.validation && (
-				<span className="ml-2 text-sm text-danger">{props.validation}</span>
-			)}
+			{props.validation && <span className="ml-2 text-sm text-danger">{props.validation}</span>}
 		</div>
 	);
 };

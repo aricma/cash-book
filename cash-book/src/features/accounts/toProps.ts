@@ -1,16 +1,12 @@
-import {ApplicationState, dispatch} from '../../applicationState';
-import {AccountType, Account} from './state';
-import {ApplicationActionType} from '../../applicationState/actions';
-import {BodyCellProps, IconType, ButtonProps, HeaderCellProps, DisabledButtonProps} from '../../models/props';
-import {CreateAccountViewProps, AccountsViewProps} from './props';
-import {isPrecedent} from '../../models/utils';
-import {accountTypePrecedenceTable} from './misc';
+import { ApplicationState, dispatch } from '../../applicationState';
+import { AccountType, Account } from './state';
+import { ApplicationActionType } from '../../applicationState/actions';
+import { BodyCellProps, IconType, ButtonProps, HeaderCellProps, DisabledButtonProps } from '../../models/props';
+import { CreateAccountViewProps, AccountsViewProps } from './props';
+import { isPrecedent } from '../../models/utils';
+import { accountTypePrecedenceTable } from './misc';
 
-
-export const toAccountsViewProps = (
-	appState: ApplicationState,
-	showCreateModel: () => void
-): AccountsViewProps => ({
+export const toAccountsViewProps = (appState: ApplicationState, showCreateModel: () => void): AccountsViewProps => ({
 	title: 'Accounts',
 	create: {
 		type: 'BUTTON_PROPS_TYPE',
@@ -31,11 +27,16 @@ export const toAccountsViewProps = (
 	accounts: toAccountsTableViewProps(appState.accounts.accounts, showCreateModel),
 });
 
-export const toAccountsTableViewProps = (accounts: {[accountId:string]: Account}, showCreateModel: () => void): Array<Array<HeaderCellProps | BodyCellProps | ButtonProps | DisabledButtonProps>> => [
-	['type', 'name', 'number', ''].map((value): HeaderCellProps => ({
-		type: 'HEADER_CELL_PROPS_TYPE',
-		value: value,
-	})),
+export const toAccountsTableViewProps = (
+	accounts: { [accountId: string]: Account },
+	showCreateModel: () => void
+): Array<Array<HeaderCellProps | BodyCellProps | ButtonProps | DisabledButtonProps>> => [
+	['type', 'name', 'number', ''].map(
+		(value): HeaderCellProps => ({
+			type: 'HEADER_CELL_PROPS_TYPE',
+			value: value,
+		})
+	),
 	...Object.values(accounts)
 		.sort((a, b) => isPrecedent(accountTypePrecedenceTable)(a.type, b.type))
 		.map((account): Array<BodyCellProps | ButtonProps | DisabledButtonProps> => {
@@ -71,7 +72,7 @@ export const toAccountsTableViewProps = (accounts: {[accountId:string]: Account}
 							accountId: account.id,
 						});
 						showCreateModel();
-					}
+					},
 				},
 				// {
 				// 	type: 'BUTTON_PROPS_TYPE',
@@ -86,7 +87,7 @@ export const toAccountsTableViewProps = (accounts: {[accountId:string]: Account}
 				// }
 			];
 		}),
-]
+];
 
 export const toCreateAccountViewProps = (
 	appState: ApplicationState,
@@ -193,14 +194,10 @@ interface CreateAccountValidationMap {
 	name?: string;
 	number?: string;
 }
-const validateCreateAccount = (
-	appState: ApplicationState
-): CreateAccountValidationMap | undefined => {
+const validateCreateAccount = (appState: ApplicationState): CreateAccountValidationMap | undefined => {
 	// const type =
 	const name = !!appState.accounts.create.name ? undefined : 'Name is missing!';
-	const number = !!appState.accounts.create.number
-		? undefined
-		: 'Number is missing!';
+	const number = !!appState.accounts.create.number ? undefined : 'Number is missing!';
 	if (name === undefined && number === undefined) return undefined;
 	return {
 		type: undefined,

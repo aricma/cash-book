@@ -5,7 +5,6 @@ export type ToReduxReducer = <State>(
 	reducer: Reducer<State, any>,
 	initialState: State
 ) => (state: State | undefined, action: any) => State;
-export const toReduxReducer: ToReduxReducer =
-	(reducer, initialState) => (state, action) => {
-		return reducer(state || initialState, action);
-	};
+export const toReduxReducer: ToReduxReducer = (reducer, initialState) => (state, action) => {
+	return reducer(state || initialState, action);
+};

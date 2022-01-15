@@ -11,13 +11,7 @@ import * as TransactionsReducer from '../features/transactions/reducer';
 
 export const rootReducer = combineReducers({
 	settings: toReduxReducer(SettingsReducer.reducer, SettingsState.initialState),
-	bookEntries: toReduxReducer(
-		BookingsReducer.reducer,
-		BookingsState.initialState
-	),
+	bookEntries: toReduxReducer(BookingsReducer.reducer, BookingsState.initialState),
 	accounts: toReduxReducer(AccountsReducer.reducer, AccountsState.initialState),
-	transactions: toReduxReducer(
-		TransactionsReducer.reducer,
-		TransactionsState.initialState
-	),
+	transactions: toReduxReducer(TransactionsReducer.reducer, TransactionsState.initialState),
 });

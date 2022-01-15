@@ -6,11 +6,7 @@ export const AppearModal: React.FC<{ isVisible: boolean }> = (props) => {
 	const container = document.getElementById('modals') || undefined;
 	if (container === undefined) return null;
 	return ReactDOM.createPortal(
-		<Transition
-			className="w-screen h-screen fixed indent-0"
-			appear
-			show={props.isVisible}
-		>
+		<Transition className="w-screen h-screen fixed indent-0" appear show={props.isVisible}>
 			{props.children}
 		</Transition>,
 		container
@@ -19,9 +15,7 @@ export const AppearModal: React.FC<{ isVisible: boolean }> = (props) => {
 
 export const DialogContainer: React.FC = (props) => (
 	<div className="w-full h-full px-2 flex items-center justify-center bg-gray-900/80">
-		<div className="bg-canvas rounded-2xl border border-gray-700">
-			{props.children}
-		</div>
+		<div className="bg-canvas rounded-2xl border border-gray-700">{props.children}</div>
 	</div>
 );
 

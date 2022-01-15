@@ -1,13 +1,11 @@
 import { DateWithoutTime } from './domain/date';
 
-export const compact = <T>(xs: Array<T | undefined>): Array<T> =>
-	xs.filter((x) => x !== undefined) as Array<T>;
+export const compact = <T>(xs: Array<T | undefined>): Array<T> => xs.filter((x) => x !== undefined) as Array<T>;
 
-export const compactObject = <T>(xs: { [key:string]: T | undefined }): { [key:string]: T } =>
-	Object.fromEntries(Object.entries(xs).filter(([key, value]) => value !== undefined)) as { [key:string]: T };
+export const compactObject = <T>(xs: { [key: string]: T | undefined }): { [key: string]: T } =>
+	Object.fromEntries(Object.entries(xs).filter(([key, value]) => value !== undefined)) as { [key: string]: T };
 
-export const allFromEnum = (x: object /*Enum*/) =>
-	Object.keys(x).filter((item) => isNaN(Number(item)));
+export const allFromEnum = (x: object /*Enum*/) => Object.keys(x).filter((item) => isNaN(Number(item)));
 
 export const toNumber = (value: string): number | undefined =>
 	Number.isNaN(Number(value)) ? undefined : Number(value);
@@ -22,7 +20,7 @@ export const isPrecedent =
 
 export const pad = (num: number, size: number, char?: string): string => {
 	let asString = num.toString();
-	while (asString.length < size) asString = (char || "0") + asString;
+	while (asString.length < size) asString = (char || '0') + asString;
 	return asString;
 };
 

@@ -11,15 +11,11 @@ import {
 	ROUTES_BOOK_ENTRIES,
 } from '../../variables/routes';
 
-export const Header: React.FC<{ back?: ButtonProps; title: string }> = (
-	props
-) => {
+export const Header: React.FC<{ back?: ButtonProps; title: string }> = (props) => {
 	return (
 		<div className="grid grid-cols-[1fr_max-content_1fr] gap-2">
 			<div />
-			<h2 className="text-lg font-medium text-2 place-self-center">
-				{props.title}
-			</h2>
+			<h2 className="text-lg font-medium text-2 place-self-center">{props.title}</h2>
 			<div>{props.children}</div>
 		</div>
 	);
@@ -108,14 +104,8 @@ export const MenuView: React.FC<MenuViewProps> = (props) => (
 				if (index === 2) {
 					return (
 						<div key={index} className="flex items-center justify-center">
-							<button
-								type="button"
-								onClick={buttonProps.onSelect}
-								className="button-prime button-md p-4 rounded-full"
-							>
-								{buttonProps.icon && (
-									<Icon type={buttonProps.icon} className="w-6 h-6" />
-								)}
+							<button type="button" onClick={buttonProps.onSelect} className="button-prime button-md p-4 rounded-full">
+								{buttonProps.icon && <Icon type={buttonProps.icon} className="w-6 h-6" />}
 								<span className="sr-only">{buttonProps.title}</span>
 							</button>
 						</div>
@@ -131,11 +121,7 @@ export const MenuView: React.FC<MenuViewProps> = (props) => (
 const MenuButton: React.FC<ButtonProps> = (props) => {
 	if (props.isSelected) {
 		return (
-			<button
-				type="button"
-				onClick={props.onSelect}
-				className="rounded-md text-blue-600 hover:focus:text-blue-700"
-			>
+			<button type="button" onClick={props.onSelect} className="rounded-md text-blue-600 hover:focus:text-blue-700">
 				<div className="flex flex-col items-center justify-center space-y-1">
 					{props.icon && <Icon type={props.icon} className="w-6 h-6" />}
 					<span className="text-xs">{props.title}</span>

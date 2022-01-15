@@ -45,15 +45,11 @@ code {
 	}
 
 	.shadow-inner-sm {
-		box-shadow:
-				inset -3px -3px 6px 0 rgb(250,251,239,1),
-				inset 3px 3px 6px 0 rgb(22,27,29,.23);
+		box-shadow: inset -3px -3px 6px 0 rgb(250, 251, 239, 1), inset 3px 3px 6px 0 rgb(22, 27, 29, 0.23);
 	}
 
 	.shadow-inner-md {
-		box-shadow:
-				inset -5px -5px 10px 0 rgb(250,251,239,1),
-				inset 5px 5px 10px 0 rgb(22,27,29,.23);
+		box-shadow: inset -5px -5px 10px 0 rgb(250, 251, 239, 1), inset 5px 5px 10px 0 rgb(22, 27, 29, 0.23);
 	}
 
 	._outline-common {
@@ -69,7 +65,6 @@ code {
 	.button-light {
 		@apply bg-white;
 		@apply shadow-button;
-
 	}
 
 	.button {

@@ -8,8 +8,8 @@ export interface BookEntriesState {
 export interface Create {
 	selectedTemplateId?: string;
 	templates: {
-		[templateId: string]: CreateBookEntry
-	}
+		[templateId: string]: CreateBookEntry;
+	};
 }
 
 export interface CreateBookEntry {

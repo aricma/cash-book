@@ -10,7 +10,7 @@ import {IconType} from '../../models/props';
 import {ApplicationActionType} from '../../applicationState/actions';
 import {AccountType} from '../accounts/state';
 import {TransactionType, Transaction, Template, CreateTransaction} from './state';
-import {compact} from '../../models/utils';
+import {compact, pad} from '../../models/utils';
 
 
 export const toTransactionsViewProps = (
@@ -24,11 +24,23 @@ export const toTransactionsViewProps = (
         icon: IconType.PLUS_FILL,
         onSelect: showCreateTransactionView,
     },
-    templates: Object.values(appState.transactions.templates).map((template) => toTemplateViewProps(appState, template)),
+    templates: Object.values(appState.transactions.templates).map((template) => toTemplateViewProps(appState, template, showCreateTransactionView)),
 });
 
-const toTemplateViewProps = (appState: ApplicationState, template: Template): TemplateViewProps => ({
+const toTemplateViewProps = (appState: ApplicationState, template: Template, openModal: () => void): TemplateViewProps => ({
     title: template.name,
+    edit: {
+        type: 'BUTTON_PROPS_TYPE',
+        icon: IconType.PENCIL_ALT_FILL,
+        title: "Edit Template",
+        onSelect: () => {
+            dispatch({
+                type: ApplicationActionType.TRANSACTIONS_EDIT,
+                templateId: template.id,
+            });
+            openModal();
+        }
+    },
     transactions: compact(Object
             .values(template.transactions)
             .map((transactionId) => appState.transactions.transactions[transactionId])

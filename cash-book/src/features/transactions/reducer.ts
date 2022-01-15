@@ -1,6 +1,6 @@
 import hash from 'crypto-js/sha1';
 import {Reducer} from '../../models/reducers';
-import {TransactionsState, Transaction, TransactionType, Template} from './state';
+import {TransactionsState, Transaction, TransactionType, Template, CreateTransaction} from './state';
 import {TransactionsAction, ApplicationActionType} from '../../applicationState/actions';
 import {compactObject, compact} from '../../models/utils';
 
@@ -12,6 +12,46 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
     switch (action.type) {
         case ApplicationActionType.TRANSACTIONS_SET:
             return action.state;
+        case ApplicationActionType.TRANSACTIONS_EDIT: {
+            const template = state.templates[action.templateId];
+            if (template === undefined) return state;
+            interface CreateConfig {
+                diffAccountId?: string,
+                cashierAccountId?: string,
+                transactions: {
+                    [transactionId:string]: CreateTransaction
+                }
+            }
+            const data = template.transactions.reduce((data: CreateConfig, transactionId) => {
+                const transaction = state.transactions[transactionId];
+                const cashierAccountId = transaction.type === TransactionType.IN ? transaction.toAccountId: transaction.fromAccountId;
+                const otherAccountId = transaction.type === TransactionType.IN ? transaction.fromAccountId: transaction.toAccountId;
+                return {
+                    ...data,
+                    cashierAccountId: cashierAccountId,
+                    transactions: {
+                        ...data.transactions,
+                        [transaction.id]: {
+                            id: transaction.id,
+                            type: transaction.type,
+                            order: transaction.order,
+                            name: transaction.name,
+                            accountId: otherAccountId,
+                        }
+                    }
+                }
+            }, { transactions: {} })
+            return {
+                ...state,
+                create: {
+                    id: template.id,
+                    name: template.name,
+                    cashierAccountId: data.cashierAccountId,
+                    diffAccountId: data.diffAccountId,
+                    transactions: data.transactions,
+                }
+            }
+        }
         case ApplicationActionType.TRANSACTIONS_ORDER_INC: {
             const template = state.templates[action.templateId];
             const transaction = state.transactions[action.transactionId];
@@ -91,24 +131,24 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
         case ApplicationActionType.TRANSACTIONS_CREATE_ORDER_INC:
             const transaction = state.create.transactions[action.transactionId];
             if (transaction === undefined) return state;
-            const prevTransaction =
+            const nextTransaction =
                 Object.values(state.create.transactions).find(
-                    ({order}) => order === transaction.order - 1,
+                    ({order}) => order === transaction.order + 1,
                 ) || undefined;
-            if (prevTransaction === undefined) return state;
+            if (nextTransaction === undefined) return state;
             return {
                 ...state,
                 create: {
                     ...state.create,
                     transactions: {
                         ...state.create.transactions,
-                        [prevTransaction.id]: {
-                            ...prevTransaction,
-                            order: prevTransaction.order + 1,
+                        [nextTransaction.id]: {
+                            ...nextTransaction,
+                            order: nextTransaction.order - 1,
                         },
                         [transaction.id]: {
                             ...transaction,
-                            order: transaction.order - 1,
+                            order: transaction.order + 1,
                         },
                     },
                 },
@@ -140,10 +180,11 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
         case ApplicationActionType.TRANSACTIONS_CREATE_TRANSACTION_ADD: {
             const transactionId = hash(new Date().toISOString()).toString();
             const allTransactions = Object.values(state.create.transactions);
-            const getLastOrderNumber =
-                allTransactions.map(({order}) => order).sort()[
-                allTransactions.length - 1
-                    ] || 0;
+            const lastIndex = allTransactions.length - 1;
+            const getLastOrderNumber = (allTransactions
+                .map(({order}) => order)
+                .sort((a, b) => a - b)
+            )[lastIndex] || 0;
             return {
                 ...state,
                 create: {
@@ -220,7 +261,7 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (
                 },
             };
         case ApplicationActionType.TRANSACTIONS_CREATE_TEMPLATE_SUBMIT: {
-            const templateId = hash(new Date().toISOString()).toString();
+            const templateId = state.create.id || hash(new Date().toISOString()).toString();
             if (state.create.name === undefined) return state;
             const newTransactions = compactObject(Object.fromEntries(Object.values(state.create.transactions).map((config): [transactionId: string, transaction: Transaction | undefined] => {
                 if (config.accountId === undefined) return [config.id, undefined];

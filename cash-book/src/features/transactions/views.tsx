@@ -43,8 +43,14 @@ export const TransactionsView: React.FC<TransactionsViewProps> = (props) => {
 
 const TemplateView: React.FC<TemplateViewProps> = props => (
     <div className="space-y-2">
-        <p className="text-2 text-lg font-medium">{props.title}</p>
-        <div className="space-y-2">
+        <div className="flex items-center justify-between space-x-2">
+            <p className="text-2 text-lg font-medium">{props.title}</p>
+            <button type="button" onClick={props.edit.onSelect} className="button-prime button-xs">
+                {props.edit.icon && (<Icon type={props.edit.icon} className="w-5 h-5"/>)}
+                <span className="sr-only">{props.edit.title}</span>
+            </button>
+        </div>
+        <div className="grid grid-cols-[max-content_1fr] gap-2">
             {
                 props.transactions.map((transactionsViewProps, index) => (
                     <React.Fragment key={index}>
@@ -57,8 +63,10 @@ const TemplateView: React.FC<TemplateViewProps> = props => (
 );
 
 const TransactionView: React.FC<TransactionViewProps> = props => (
-    <div className="flex items-center space-x-2">
-        <span className="text-2">{props.order}</span>
+    <>
+        <div className="flex items-center justify-end">
+            <span className="text-2">{props.order}</span>
+        </div>
         <div
             className="flex-grow bg-blue-200 dark:bg-blue-900 text-blue-500 dark:text-blue-300 rounded-md shadow-md shadow-blue-600/30 dark:shadow-gray-900 py-2 pl-4 pr-2">
             <div className="flex items-center justify-between space-x-2">
@@ -81,7 +89,7 @@ const TransactionView: React.FC<TransactionViewProps> = props => (
                 </div>
             </div>
         </div>
-    </div>
+    </>
 );
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -98,21 +106,21 @@ export const Button: React.FC<ButtonProps> = (props) => {
 };
 
 export const CreateTemplateView: React.FC<CreateTemplateViewProps> = props => (
-    <div className="h-full flex flex-col">
+    <div className="h-full pb-[100px] flex flex-col">
         <div className="flex-shrink-0 p-4">
-        <Header title={props.title}>
-            <div className="flex items-center justify-end">
-                <button
-                    type="button"
-                    onClick={props.close.onSelect}
-                    className="link link-sm">
-                    {props.close.icon && (
-                        <Icon type={props.close.icon} className="w-5 h-5"/>
-                    )}
-                    <span className="sr-only">{props.close.title}</span>
-                </button>
-            </div>
-        </Header>
+            <Header title={props.title}>
+                <div className="flex items-center justify-end">
+                    <button
+                        type="button"
+                        onClick={props.close.onSelect}
+                        className="link link-sm">
+                        {props.close.icon && (
+                            <Icon type={props.close.icon} className="w-5 h-5"/>
+                        )}
+                        <span className="sr-only">{props.close.title}</span>
+                    </button>
+                </div>
+            </Header>
         </div>
         <div className="flex-grow pb-[100px] space-y-8 overflow-auto p-4">
             <div className="space-y-2">
@@ -125,7 +133,8 @@ export const CreateTemplateView: React.FC<CreateTemplateViewProps> = props => (
                     <h3 className="text-lg text-2">Transactions</h3>
                     {
                         props.addTransaction && (
-                            <button type="button" onClick={props.addTransaction.onSelect} className="button-prime button-xs">
+                            <button type="button" onClick={props.addTransaction.onSelect}
+                                    className="button-prime button-xs">
                                 {props.addTransaction.icon && (
                                     <Icon type={props.addTransaction.icon} className="w-5 h-5"/>
                                 )}
@@ -134,18 +143,18 @@ export const CreateTemplateView: React.FC<CreateTemplateViewProps> = props => (
                         )
                     }
                 </div>
-                {
-                    props.transactions && props.transactions.map((transactionConfig, index) => (
-                        <React.Fragment key={index}>
-                            <div className="flex items-center space-x-2">
-                                <div>{transactionConfig.order}</div>
-                                <div className="flex-grow">
-                                    <CreateTransactionView {...transactionConfig} />
+                <div className="grid grid-cols-[max-content_1fr] gap-2">
+                    {
+                        props.transactions && props.transactions.map((transactionConfig, index) => (
+                            <React.Fragment key={index}>
+                                <div className="flex items-center justify-end">
+                                    <span className="text-2">{transactionConfig.order}</span>
                                 </div>
-                            </div>
-                        </React.Fragment>
-                    ))
-                }
+                                <CreateTransactionView {...transactionConfig} />
+                            </React.Fragment>
+                        ))
+                    }
+                </div>
             </div>
             <div className="flex items-center justify-end space-x-2">
                 <button
@@ -174,39 +183,41 @@ export const CreateTemplateView: React.FC<CreateTemplateViewProps> = props => (
 );
 
 export const CreateTransactionView: React.FC<CreateTransactionViewProps> = (props) => (
-    <div className="p-4 rounded-xl border-4 border-blue-200 dark:border-blue-900 space-y-2">
-        <div className="flex items-center justify-end">
-            <button type="button" onClick={props.remove.onSelect} className="hover:text-blue-500">
-                {props.remove.icon && (<Icon type={props.remove.icon} className="w-5 h-5"/>)}
-                <span className="sr-only">{props.remove.title}</span>
-            </button>
-        </div>
-        <div className="">
+    <div className="p-4 rounded-xl border-4 border-blue-200 dark:border-blue-900 flex space-x-2">
+        <div className="flex-grow space-y-2">
             <TextInput autoFocus {...props.name} />
+            <div className="flex items-end space-x-2">
+                <div className="">
+                    <div className="button-still button-md">{props.cashierAccount}</div>
+                </div>
+                <div className="flex-shrink-0">
+                    <button
+                        type="button"
+                        onClick={props.type.onSelect}
+                        className="button rounded-md p-2">
+                        {props.type.icon && (
+                            <Icon type={props.type.icon} className="w-6 h-6"/>
+                        )}
+                        <span className="sr-only">{props.type.title}</span>
+                    </button>
+                </div>
+                <div className="flex-grow">
+                    <Select {...props.account} />
+                    {props.account.validation && (
+                        <span className="ml-2 text-sm text-danger">{props.account.validation}</span>)}
+                </div>
+            </div>
         </div>
-        <div className="flex items-start space-x-2">
-            <div className="flex-shrink-0">
-                <div className="button-still button-md">{props.cashierAccount}</div>
-            </div>
-            <div className="flex-shrink-0">
-                <button
-                    type="button"
-                    onClick={props.type.onSelect}
-                    className="button rounded-md p-2">
-                    {props.type.icon && (
-                        <Icon type={props.type.icon} className="w-6 h-6"/>
-                    )}
-                    <span className="sr-only">{props.type.title}</span>
+        <div className="flex-shrink-0">
+            <div className="h-full flex flex-col items-center justify-between">
+                <button type="button" onClick={props.remove.onSelect} className="hover:text-blue-500">
+                    {props.remove.icon && (<Icon type={props.remove.icon} className="w-5 h-5"/>)}
+                    <span className="sr-only">{props.remove.title}</span>
                 </button>
-            </div>
-            <div className="flex-grow">
-                <Select {...props.account} />
-                {props.account.validation && (
-                    <span className="ml-2 text-sm text-danger">{props.account.validation}</span>)}
-            </div>
-            <div className="flex flex-col space-y-1">
-                <Button {...props.decreaseOrder} />
-                <Button {...props.increaseOrder} />
+                <div className="flex flex-col space-y-1">
+                    <Button {...props.decreaseOrder} />
+                    <Button {...props.increaseOrder} />
+                </div>
             </div>
         </div>
     </div>

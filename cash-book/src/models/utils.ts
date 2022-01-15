@@ -20,9 +20,9 @@ export const isPrecedent =
 		return row === undefined ? 0 : row[2];
 	};
 
-export const pad = (num: number, size: number): string => {
+export const pad = (num: number, size: number, char?: string): string => {
 	let asString = num.toString();
-	while (asString.length < size) asString = '0' + asString;
+	while (asString.length < size) asString = (char || "0") + asString;
 	return asString;
 };
 

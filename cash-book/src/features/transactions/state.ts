@@ -15,6 +15,7 @@ export interface TransactionsState {
 }
 
 export interface CreateTemplate {
+    id?: string;
     name?: string;
     cashierAccountId?: string;
     diffAccountId?: string;

@@ -14,6 +14,7 @@ export interface TransactionsViewProps {
 
 export interface TemplateViewProps {
 	title: string;
+	edit: ButtonProps;
 	transactions: Array<TransactionViewProps>;
 }
 

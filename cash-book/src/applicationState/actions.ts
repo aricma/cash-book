@@ -32,6 +32,7 @@ export enum ApplicationActionType {
     ACCOUNTS_CREATE_SUBMIT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/SUBMIT',
 
     TRANSACTIONS_SET = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/SET',
+    TRANSACTIONS_EDIT = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/EDIT',
     TRANSACTIONS_ORDER_INC = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/ORDER/INCREASE',
     TRANSACTIONS_ORDER_DEC = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/ORDER/DECREASE',
     TRANSACTIONS_CREATE_ORDER_INC = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/CREATE/ORDER/INCREASE',
@@ -110,6 +111,7 @@ export type AccountsCreateCancel = Action<ApplicationActionType.ACCOUNTS_CREATE_
 
 export type TransactionsAction =
     | TransactionsSet
+    | TransactionsEdit
     | TransactionsOrderInc
     | TransactionsOrderDec
     | TransactionsCreateOrderInc
@@ -125,6 +127,7 @@ export type TransactionsAction =
     | TransactionsCreateSubmit
     | TransactionsCreateCancel;
 export type TransactionsSet = Action<ApplicationActionType.TRANSACTIONS_SET, { state: TransactionsState }>;
+export type TransactionsEdit = Action<ApplicationActionType.TRANSACTIONS_EDIT, { templateId: string }>;
 export type TransactionsOrderInc = Action<ApplicationActionType.TRANSACTIONS_ORDER_INC, { templateId: string; transactionId: string }>;
 export type TransactionsOrderDec = Action<ApplicationActionType.TRANSACTIONS_ORDER_DEC,
     { templateId: string; transactionId: string }>;

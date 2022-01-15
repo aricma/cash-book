@@ -26,7 +26,7 @@ ReactDOM.render(
 			<Provider store={store}>
 				<ResolveStateFromLocalStorage>
 					<Router>
-						<div className="relative bg-canvas w-screen min-h-screen">
+						<div className="relative bg-canvas w-screen min-h-screen mobile-save-padding">
 							<div className="w-full p-4">
 								<div className="pb-[70px]">
 									<Routes>

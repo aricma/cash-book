@@ -1,4 +1,7 @@
 import { ApplicationState, dispatch } from '../../applicationState';
+import { IconType } from '../../models/props';
+import { ApplicationActionType } from '../../applicationState/actions';
+import { BookEntry } from './state';
 import {
 	BookEntriesViewProps,
 	BookEntryDayViewProps,
@@ -6,11 +9,8 @@ import {
 	ErrorBookEnrtyViewProps,
 	BookEntryMonthViewProps,
 } from './props';
-import { IconType } from '../../models/props';
-import { ApplicationActionType } from '../../applicationState/actions';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
 import { DateWithoutTime } from '../../models/domain/date';
-import { BookEntry } from './state';
 import { pad } from '../../models/utils';
 
 export const toBookingsViewProps = (

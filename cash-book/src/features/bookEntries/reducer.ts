@@ -4,22 +4,42 @@ import {
 	BookingsAction,
 	ApplicationActionType,
 } from '../../applicationState/actions';
-import { toNumber } from '../../models/utils';
-import { DateWithoutTime } from '../../models/domain/date';
+import {toNumber, compactObject} from '../../models/utils';
+import {DateWithoutTime} from '../../models/domain/date';
 
-export const reducer: Reducer<BookEntriesState, BookingsAction> = (
-	state,
-	action
-) => {
+
+export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action) => {
 	switch (action.type) {
 		case ApplicationActionType.BOOK_ENTRIES_SET:
 			return action.state;
+		case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE:
+			return {
+				...state,
+				create: {
+					...state.create,
+					selectedTemplateId: action.templateId,
+					templates: {
+						...state.create.templates,
+						[action.templateId]: {
+							templateId: action.templateId,
+							date: DateWithoutTime.new().toISOString(),
+							transactions: {},
+						},
+					},
+				},
+			};
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DATE:
 			return {
 				...state,
 				create: {
 					...state.create,
-					date: action.date,
+					templates: {
+						...state.create.templates,
+						[action.templateId]: {
+							...state.create.templates[action.templateId],
+							date: action.date,
+						},
+					},
 				},
 			};
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION:
@@ -27,9 +47,15 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (
 				...state,
 				create: {
 					...state.create,
-					transactions: {
-						...state.create.transactions,
-						[action.transactionId]: action.value,
+					templates: {
+						...state.create.templates,
+						[action.templateId]: {
+							...state.create.templates[action.templateId],
+							transactions: {
+								...(state.create.templates[action.templateId]?.transactions || {}),
+								[action.transactionId]: action.value,
+							},
+						},
 					},
 				},
 			};
@@ -37,38 +63,35 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (
 			return {
 				...state,
 				create: {
-					cash: {},
-					transactions: {},
+					...state.create,
+					templates: compactObject({
+						...state.create.templates,
+						[action.templateId]: undefined,
+					}),
 				},
 			};
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT:
-			if (state.create.date === undefined) return state;
-			// if (state.create.cash.start === undefined) return state;
-			// if (state.create.cash.end === undefined) return state;
-			const cashStart = 0; // toNumber(state.create.cash.start);
-			const cashEnd = 0; // toNumber(state.create.cash.end);
-			// if (cashStart === undefined) return state;
-			// if (cashEnd === undefined) return state;
-			const date = DateWithoutTime.fromString(state.create.date).toISOString();
+			const template = state.create.templates[action.templateId];
+			if (template.date === undefined) return state;
+			const date = template.date;
 			const transactions = Object.fromEntries(
-				Object.entries(state.create.transactions).map(([id, value]) => {
+				Object.entries(template.transactions).map(([id, value]) => {
 					return [id, toNumber(value) || 0];
 				})
 			);
 			return {
 				...state,
 				create: {
-					cash: {},
-					transactions: {},
+					...state.create,
+					transactions: compactObject({
+						...state.create.templates,
+						[action.templateId]: undefined,
+					}),
 				},
 				entries: {
 					...state.entries,
 					[date]: {
 						date: date,
-						cash: {
-							start: cashStart,
-							end: cashEnd,
-						},
 						transactions: transactions,
 					},
 				},

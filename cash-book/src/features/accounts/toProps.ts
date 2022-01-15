@@ -1,9 +1,10 @@
-import { ApplicationState, dispatch } from '../../applicationState';
-import { AccountType } from './state';
-import { ApplicationActionType } from '../../applicationState/actions';
-import { BodyCellProps, IconType, ButtonProps } from '../../models/props';
-import { CreateAccountViewProps, AccountsViewProps } from './props';
-import { PrecedenceTable, isPrecedent } from '../../models/utils';
+import {ApplicationState, dispatch} from '../../applicationState';
+import {AccountType, Account} from './state';
+import {ApplicationActionType} from '../../applicationState/actions';
+import {BodyCellProps, IconType, ButtonProps, HeaderCellProps} from '../../models/props';
+import {CreateAccountViewProps, AccountsViewProps} from './props';
+import {PrecedenceTable, isPrecedent} from '../../models/utils';
+
 
 const accountTypePrecedenceTable: PrecedenceTable<AccountType, AccountType> = [
 	[AccountType.CASH_STATION, AccountType.CASH_STATION, 0],
@@ -28,42 +29,54 @@ export const toAccountsViewProps = (
 		title: 'Create',
 		onSelect: showCreateModel,
 	},
-	accounts: [
-		['type', 'name', 'number'].map((value) => ({
-			type: 'HEADER_CELL_PROPS_TYPE',
-			value: value,
-		})),
-		...Object.values(appState.accounts.accounts)
-			.sort((a, b) => {
-				return isPrecedent(accountTypePrecedenceTable)(a.type, b.type);
-			})
-			.map((account): Array<BodyCellProps> => {
-				return [
-					{
-						type: 'BODY_CELL_PROPS_TYPE',
-						value: (() => {
-							switch (account.type) {
-								case AccountType.DEFAULT:
-									return '';
-								case AccountType.DIFFERENCE:
-									return 'Difference';
-								case AccountType.CASH_STATION:
-									return 'Cashier';
-							}
-						})(),
-					},
-					{
-						type: 'BODY_CELL_PROPS_TYPE',
-						value: account.name,
-					},
-					{
-						type: 'BODY_CELL_PROPS_TYPE',
-						value: account.id,
-					},
-				];
-			}),
-	],
+	export: {
+		type: 'BUTTON_PROPS_TYPE',
+		icon: IconType.DOWNLOAD_FILL,
+		title: 'Export',
+		onSelect: () => {
+			dispatch({
+				type: ApplicationActionType.ACCOUNTS_EXPORT,
+			});
+		},
+	},
+	accounts: toAccountsTableViewProps(appState.accounts.accounts),
 });
+
+export const toAccountsTableViewProps = (accounts: {[accountId:string]: Account}): Array<Array<HeaderCellProps | BodyCellProps>> => [
+	['type', 'name', 'number'].map((value) => ({
+		type: 'HEADER_CELL_PROPS_TYPE',
+		value: value,
+	})),
+	...Object.values(accounts)
+		.sort((a, b) => {
+			return isPrecedent(accountTypePrecedenceTable)(a.type, b.type);
+		})
+		.map((account): Array<BodyCellProps> => {
+			return [
+				{
+					type: 'BODY_CELL_PROPS_TYPE',
+					value: (() => {
+						switch (account.type) {
+							case AccountType.DEFAULT:
+								return '';
+							case AccountType.DIFFERENCE:
+								return 'Difference';
+							case AccountType.CASH_STATION:
+								return 'Cashier';
+						}
+					})(),
+				},
+				{
+					type: 'BODY_CELL_PROPS_TYPE',
+					value: account.name,
+				},
+				{
+					type: 'BODY_CELL_PROPS_TYPE',
+					value: account.id,
+				},
+			];
+		}),
+]
 
 export const toCreateAccountViewProps = (
 	appState: ApplicationState,

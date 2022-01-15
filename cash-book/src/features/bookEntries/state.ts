@@ -1,16 +1,20 @@
 export interface BookEntriesState {
-	create: CreateBookEntry;
+	create: Create;
 	entries: {
 		[date: string]: BookEntry;
 	};
 }
 
+export interface Create {
+	selectedTemplateId?: string;
+	templates: {
+		[templateId: string]: CreateBookEntry
+	}
+}
+
 export interface CreateBookEntry {
-	date?: string;
-	cash: {
-		start?: string;
-		end?: string;
-	};
+	templateId: string;
+	date: string;
 	transactions: {
 		[transactionId: string]: string;
 	};
@@ -18,10 +22,6 @@ export interface CreateBookEntry {
 
 export interface BookEntry {
 	date: string;
-	cash: {
-		start: number;
-		end: number;
-	};
 	transactions: {
 		[transactionId: string]: number;
 	};
@@ -29,8 +29,7 @@ export interface BookEntry {
 
 export const initialState: BookEntriesState = {
 	create: {
-		cash: {},
-		transactions: {},
+		templates: {},
 	},
 	entries: {},
 };

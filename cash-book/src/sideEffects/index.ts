@@ -4,16 +4,18 @@ import { makeGoToWorker } from './router';
 import {
 	makeSaveAppStateToLocalStorage,
 	makeLoadAppStateFromLocalStorage,
-} from './application';
-import {
-	makeBookEntriesExportDay,
 	makeBookEntriesExportMonth,
-} from './browser';
+	makeBookEntriesExportDay,
+	makeAccountsExport,
+	makeAccountsImport,
+} from './application';
 
 export function* rootSaga() {
 	yield SE.spawn(makeGoToWorker(history.push));
 	yield SE.spawn(makeSaveAppStateToLocalStorage(setInLocalStorage));
 	yield SE.spawn(makeLoadAppStateFromLocalStorage(loadFromLocalStorage));
+	yield SE.spawn(makeAccountsImport());
+	yield SE.spawn(makeAccountsExport());
 	yield SE.spawn(makeBookEntriesExportDay());
 	yield SE.spawn(makeBookEntriesExportMonth());
 }

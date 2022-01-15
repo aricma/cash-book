@@ -2,17 +2,23 @@ import {
 	TextInputProps,
 	ButtonProps,
 	DisabledButtonProps,
-	DatePickerInputProps,
+	DatePickerInputProps, OptionsInputProps,
 } from '../../models/props';
 
 export interface CreateBookEntryViewProps {
 	title: string;
+	template: OptionsInputProps;
+	templateConfig?: CreateBookEntryTemplateConfigProps
+}
+
+export interface CreateBookEntryTemplateConfigProps {
 	date: {
 		input: DatePickerInputProps;
 		yesterday: ButtonProps;
 		today: ButtonProps;
 	};
-	inputs: Array<TextInputProps>;
+	transactions: Array<TextInputProps>;
+	addTransaction: ButtonProps;
 	valueValidation?: string;
 	cancel: ButtonProps;
 	submit: DisabledButtonProps | ButtonProps;

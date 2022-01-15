@@ -3,6 +3,9 @@ import { DateWithoutTime } from './domain/date';
 export const compact = <T>(xs: Array<T | undefined>): Array<T> =>
 	xs.filter((x) => x !== undefined) as Array<T>;
 
+export const compactObject = <T>(xs: { [key:string]: T | undefined }): { [key:string]: T } =>
+	Object.fromEntries(Object.entries(xs).filter(([key, value]) => value !== undefined)) as { [key:string]: T };
+
 export const allFromEnum = (x: object /*Enum*/) =>
 	Object.keys(x).filter((item) => isNaN(Number(item)));
 

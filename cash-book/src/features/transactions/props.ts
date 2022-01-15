@@ -9,10 +9,12 @@ import {
 export interface TransactionsViewProps {
 	title: string;
 	create: ButtonProps;
-	transactions: {
-		headline: Array<string>;
-		transactions: Array<TransactionViewProps>;
-	};
+	templates: Array<TemplateViewProps>
+}
+
+export interface TemplateViewProps {
+	title: string;
+	transactions: Array<TransactionViewProps>;
 }
 
 export interface TransactionViewProps {
@@ -29,13 +31,25 @@ export interface TransactionViewProps {
 	increaseOrder: ButtonProps;
 }
 
-export interface CreateTransactionViewProps {
+export interface CreateTemplateViewProps {
 	close: ButtonProps;
 	title: string;
 	name: TextInputProps;
-	cashStation: OptionsInputProps;
-	type: ButtonProps;
-	otherAccount: OptionsInputProps;
+	cashierAccount: OptionsInputProps;
+	diffAccount: OptionsInputProps;
+	transactions?: Array<CreateTransactionViewProps>;
+	addTransaction?: ButtonProps;
 	cancel: ButtonProps;
 	submit: ButtonProps | DisabledButtonProps;
+}
+
+export interface CreateTransactionViewProps {
+	order: string;
+	name: TextInputProps;
+	cashierAccount: string;
+	type: ButtonProps;
+	account: OptionsInputProps;
+	remove: ButtonProps;
+	decreaseOrder: ButtonProps;
+	increaseOrder: ButtonProps;
 }

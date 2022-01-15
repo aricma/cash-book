@@ -15,7 +15,9 @@ export enum IconType {
 	CLOSE_FILL = 'ICON_TYPE/CLOSE/FILL',
 	BOOK_OPEN_FILL = 'ICON_TYPE/BOOK_OPEN/FILL',
 	BOOK_OPEN_STROKE = 'ICON_TYPE/BOOK_OPEN/STROKE',
+	UPLOAD_FILL = 'ICON_TYPE/UPLOAD/FILL',
 	DOWNLOAD_FILL = 'ICON_TYPE/DOWNLOAD/FILL',
+	SPINNER = 'ICON_TYPE/SPINNER',
 }
 
 export interface WithIconType {
@@ -48,6 +50,14 @@ export interface OptionsInputProps {
 	placeholder: string;
 	validation?: string;
 	options: Array<ButtonProps | DisabledButtonProps>;
+}
+
+export interface FileInputProps {
+	type: 'FILE_INPUT_PROPS_TYPE';
+	value?: File;
+	placeholder: string;
+	validation?: string;
+	onChange: (value: File) => void;
 }
 
 export interface ButtonProps {

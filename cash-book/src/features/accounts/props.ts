@@ -8,9 +8,10 @@ import {
 } from '../../models/props';
 
 export interface AccountsViewProps {
-	create: ButtonProps;
 	title: string;
-	accounts: Array<Array<HeaderCellProps | BodyCellProps | ButtonProps>>;
+	create: ButtonProps;
+	export: ButtonProps;
+	accounts: Array<Array<HeaderCellProps | BodyCellProps>>;
 }
 
 export interface CreateAccountViewProps {

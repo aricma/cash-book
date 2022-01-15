@@ -1,8 +1,10 @@
 import * as Solid from '@heroicons/react/solid';
 import * as Outline from '@heroicons/react/outline';
 import React from 'react';
-import { WithClasses, WithIconType, IconType } from '../../models/props';
-import { Cashier } from './cashier';
+import {WithClasses, WithIconType, IconType} from '../../models/props';
+import {Cashier} from './cashier';
+import {Spinner} from './spinner';
+
 
 export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 	switch (props.type) {
@@ -36,8 +38,12 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Outline.BookOpenIcon {...props} />;
 		case IconType.CASHIER:
 			return <Cashier {...props} />;
+		case IconType.UPLOAD_FILL:
+			return <Solid.UploadIcon {...props} />;
 		case IconType.DOWNLOAD_FILL:
 			return <Solid.DownloadIcon {...props} />;
+		case IconType.SPINNER:
+			return <Spinner {...props} />
 		default:
 			return (
 				<svg {...props} viewBox="0 0 1 1" fill="currentColor" stroke="none">

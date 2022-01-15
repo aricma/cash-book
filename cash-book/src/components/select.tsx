@@ -29,7 +29,7 @@ export const Select: React.FC<OptionsInputProps> = (props) => {
 			as="div"
 			value={props.value}
 			onChange={changeHandler}
-			className="relative"
+			className="relative w-full"
 		>
 			<Listbox.Button className="button button-md">
 				{props.value || props.placeholder}

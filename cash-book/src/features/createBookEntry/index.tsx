@@ -15,12 +15,12 @@ export const CreateBookEntry: React.FC = () => {
 		setShowDateOverrideConfirmationModal,
 	] = React.useState(false);
 	const [showValidation, setShowValidation] = React.useState(false);
-	const viewProps = toCreateBookEntryViewProps(
-		appState,
-		showValidation,
-		() => setShowValidation(true),
-		() => setShowDateOverrideConfirmationModal(true)
-	);
+	const viewProps = toCreateBookEntryViewProps({
+		appState: appState,
+		showValidation: showValidation,
+		setShowValidation: () => setShowValidation(true),
+		openDateOverrideConfirmationModal: () => setShowDateOverrideConfirmationModal(true),
+	});
 	const modalViewProps = toOverrideDateConfirmationModalViewProps(
 		appState,
 		() => setShowDateOverrideConfirmationModal(false)
@@ -30,7 +30,7 @@ export const CreateBookEntry: React.FC = () => {
 			<CreateBookEntryView {...viewProps} />
 			<AppearModal isVisible={showDateOverrideConfirmationModal}>
 				<DialogContainer>
-					<Dialog {...modalViewProps} />
+					{modalViewProps && (<Dialog {...modalViewProps} />)}
 				</DialogContainer>
 			</AppearModal>
 		</>

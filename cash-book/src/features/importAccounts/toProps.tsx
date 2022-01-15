@@ -1,9 +1,10 @@
 import {ImportAccountsViewProps} from './props';
-import {IconType} from '../../models/props';
-import {toAccountsTableViewProps} from '../accounts/toProps';
-import {dispatch} from '../../applicationState';
+import {IconType, HeaderCellProps, BodyCellProps, ButtonProps, DisabledButtonProps} from '../../models/props';
 import {ApplicationActionType} from '../../applicationState/actions';
-import {Account} from '../accounts/state';
+import {Account, AccountType} from '../accounts/state';
+import {dispatch} from '../../applicationState';
+import {isPrecedent} from '../../models/utils';
+import {accountTypePrecedenceTable} from '../accounts/misc';
 
 export interface RequestImportAccountsViewProps {
     modal: {
@@ -72,3 +73,38 @@ export const toImportAccountsViewProps = (req: RequestImportAccountsViewProps): 
         },
     };
 };
+
+export const toAccountsTableViewProps = (accounts: {[accountId:string]: Account}): Array<Array<HeaderCellProps | BodyCellProps>> => [
+    ['type', 'name', 'number'].map((value): HeaderCellProps => ({
+        type: 'HEADER_CELL_PROPS_TYPE',
+        value: value,
+    })),
+    ...Object.values(accounts)
+        .sort((a, b) => isPrecedent(accountTypePrecedenceTable)(a.type, b.type))
+        .map((account): Array<BodyCellProps> => {
+            return [
+                {
+                    type: 'BODY_CELL_PROPS_TYPE',
+                    value: (() => {
+                        switch (account.type) {
+                            case AccountType.DEFAULT:
+                                return '';
+                            case AccountType.DIFFERENCE:
+                                return 'Difference';
+                            case AccountType.CASH_STATION:
+                                return 'Cashier';
+                        }
+                    })(),
+                },
+                {
+                    type: 'BODY_CELL_PROPS_TYPE',
+                    value: account.name,
+                },
+                {
+                    type: 'BODY_CELL_PROPS_TYPE',
+                    value: account.id,
+                },
+            ];
+        }),
+]
+

@@ -23,6 +23,8 @@ export enum ApplicationActionType {
     ACCOUNTS_SET = 'APPLICATION_ACTION_TYPE/ACCOUNTS/SET',
     ACCOUNTS_IMPORT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/IMPORT',
     ACCOUNTS_EXPORT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/EXPORT',
+    ACCOUNTS_EDIT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/EDIT',
+    ACCOUNTS_REMOVE = 'APPLICATION_ACTION_TYPE/ACCOUNTS/REMOVE',
     ACCOUNTS_CREATE_SET_TYPE = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/TYPE/SET',
     ACCOUNTS_CREATE_SET_NAME = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/NAME/SET',
     ACCOUNTS_CREATE_SET_NUMBER = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/NUMBER/SET',
@@ -88,6 +90,8 @@ export type AccountsAction =
     | AccountsSet
     | AccountsImport
     | AccountsExport
+    | AccountsEdit
+    | AccountsRemove
     | AccountsCreateSetType
     | AccountsCreateSetName
     | AccountsCreteSetNumber
@@ -96,6 +100,8 @@ export type AccountsAction =
 export type AccountsSet = Action<ApplicationActionType.ACCOUNTS_SET, { state: AccountsState }>;
 export type AccountsImport = Action<ApplicationActionType.ACCOUNTS_IMPORT, { accounts: { [accountId: string]: Account } }>;
 export type AccountsExport = Action<ApplicationActionType.ACCOUNTS_EXPORT>;
+export type AccountsEdit = Action<ApplicationActionType.ACCOUNTS_EDIT, { accountId: string }>;
+export type AccountsRemove = Action<ApplicationActionType.ACCOUNTS_REMOVE, { accountId: string }>;
 export type AccountsCreateSetType = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_TYPE, { value: AccountType }>;
 export type AccountsCreateSetName = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_NAME, { value: string }>;
 export type AccountsCreteSetNumber = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_NUMBER, { value: string }>;

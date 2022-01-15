@@ -11,7 +11,7 @@ export interface AccountsViewProps {
 	title: string;
 	create: ButtonProps;
 	export: ButtonProps;
-	accounts: Array<Array<HeaderCellProps | BodyCellProps>>;
+	accounts: Array<Array<HeaderCellProps | BodyCellProps | ButtonProps | DisabledButtonProps>>;
 }
 
 export interface CreateAccountViewProps {

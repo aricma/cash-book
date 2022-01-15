@@ -6,7 +6,7 @@ import { Select } from '../../components/select';
 import { TextInput } from '../../components/textInput';
 import { Header } from '../menu';
 import {ImportAccounts} from '../importAccounts';
-import {HeaderCellProps, BodyCellProps} from '../../models/props';
+import {HeaderCellProps, BodyCellProps, DisabledButtonProps, ButtonProps} from '../../models/props';
 
 export const AccountsView: React.FC<AccountsViewProps> = (props) => (
 	<div className="space-y-12">
@@ -27,9 +27,9 @@ export const AccountsView: React.FC<AccountsViewProps> = (props) => (
 	</div>
 );
 
-export const AccountsTableView: React.FC<{ accounts: Array<Array<HeaderCellProps | BodyCellProps>>}> = (props) => (
-	<div className="grid grid-cols-3 gap-2">
-		{props.accounts.slice(0, 1).map((row, index) => {
+export const AccountsTableView: React.FC<{ accounts: Array<Array<HeaderCellProps | BodyCellProps | ButtonProps | DisabledButtonProps>>}> = (props) => (
+	<div className="grid grid-cols-[1fr_1fr_1fr_max-content] gap-2">
+		{props.accounts.slice(0, 1).map((row) => {
 			return row.map((cell, index) => {
 				return (
 					<React.Fragment key={index}>
@@ -38,13 +38,17 @@ export const AccountsTableView: React.FC<{ accounts: Array<Array<HeaderCellProps
 				);
 			});
 		})}
-		{props.accounts.slice(1).map((row, index) => {
+		{props.accounts.slice(1).map((row) => {
 			return row.map((cell, index) => {
 				return (
 					<React.Fragment key={index}>
 						{
 							index === 2 ? (
 								<div className="place-self-end">
+									<TableCell {...cell} />
+								</div>
+							) : index > 2 ? (
+								<div className="place-self-center">
 									<TableCell {...cell} />
 								</div>
 							) : (

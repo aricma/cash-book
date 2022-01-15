@@ -4,6 +4,7 @@ import {
 	ApplicationActionType,
 	AccountsAction,
 } from '../../applicationState/actions';
+import {compactObject} from '../../models/utils';
 
 export const reducer: Reducer<AccountsState, AccountsAction> = (
 	state,
@@ -12,6 +13,25 @@ export const reducer: Reducer<AccountsState, AccountsAction> = (
 	switch (action.type) {
 		case ApplicationActionType.ACCOUNTS_SET:
 			return action.state;
+		case ApplicationActionType.ACCOUNTS_EDIT:
+			const account = state.accounts[action.accountId];
+			if (account === undefined) return state;
+			return {
+				...state,
+				create: {
+					type: account.type,
+					name: account.name,
+					number: account.id,
+				},
+			};
+		case ApplicationActionType.ACCOUNTS_REMOVE:
+			return {
+				...state,
+				accounts: compactObject({
+					...state.accounts,
+					[action.accountId]: undefined,
+				}),
+			};
 		case ApplicationActionType.ACCOUNTS_CREATE_SET_TYPE:
 			return {
 				...state,

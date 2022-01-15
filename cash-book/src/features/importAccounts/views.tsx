@@ -4,8 +4,8 @@ import {FileInput} from '../../components/fileInput';
 import {Icon} from '../../components/icons';
 import {SlideInModal, OverlayContainer} from '../../components/modal';
 import {Header} from '../menu';
-import {AccountsTableView} from '../accounts/views';
-import {IconType} from '../../models/props';
+import {IconType, HeaderCellProps, BodyCellProps} from '../../models/props';
+import {TableCell} from '../../components/tableCell';
 
 
 export const ImportAccountsView: React.FC<ImportAccountsViewProps> = (props) => (
@@ -73,3 +73,34 @@ const ImportAccountsModalView: React.FC<ImportAccountsModalViewProps> = (props) 
         </div>
     </div>
 );
+
+export const AccountsTableView: React.FC<{ accounts: Array<Array<HeaderCellProps | BodyCellProps>>}> = (props) => (
+    <div className="grid grid-cols-3 gap-2">
+        {props.accounts.slice(0, 1).map((row, index) => {
+            return row.map((cell, index) => {
+                return (
+                    <React.Fragment key={index}>
+                        <TableCell {...cell} />
+                    </React.Fragment>
+                );
+            });
+        })}
+        {props.accounts.slice(1).map((row, index) => {
+            return row.map((cell, index) => {
+                return (
+                    <React.Fragment key={index}>
+                        {
+                            index === 2 ? (
+                                <div className="place-self-end">
+                                    <TableCell {...cell} />
+                                </div>
+                            ) : (
+                                <TableCell {...cell} />
+                            )
+                        }
+                    </React.Fragment>
+                );
+            });
+        })}
+    </div>
+)

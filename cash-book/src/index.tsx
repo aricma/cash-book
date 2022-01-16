@@ -17,8 +17,10 @@ import {
 	ROUTES_ACCOUNTS,
 	ROUTES_TRANSACTIONS,
 	ROUTES_BOOK_ENTRIES,
+	ROUTES_SETTINGS,
 } from './variables/routes';
 import reportWebVitals from './reportWebVitals';
+import { Settings } from './features/settings';
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -34,6 +36,7 @@ ReactDOM.render(
 										<Route path={ROUTES_ACCOUNTS} element={<Accounts />} />
 										<Route path={ROUTES_TRANSACTIONS} element={<Transactions />} />
 										<Route path={ROUTES_BOOK_ENTRIES} element={<Bookings />} />
+										<Route path={ROUTES_SETTINGS} element={<Settings />} />
 									</Routes>
 								</div>
 							</div>

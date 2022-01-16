@@ -1,7 +1,7 @@
 import { ApplicationState } from '../../applicationState';
 import { AccountType } from '../accounts/state';
 import { TransactionType } from '../transactions/state';
-import { toNumber } from '../../models/utils';
+import { toInt } from '../../models/utils';
 
 export const transactionValue = (appState: ApplicationState): number => {
 	const selectedTemplateId = appState.bookEntries.create.selectedTemplateId;
@@ -21,15 +21,14 @@ export const transactionValue = (appState: ApplicationState): number => {
 		}) || undefined;
 	if (differenceAccount === undefined) return 0;
 
-	return (
-		template.transactions.reduce((value, transactionId) => {
-			const transaction = appState.transactions.transactions[transactionId];
-			const transactionValue = toNumber(config.transactions[transactionId]) || 0;
-			if (transaction.type === TransactionType.OUT) {
-				return Math.trunc(value - transactionValue * 100);
-			} else {
-				return Math.trunc(value + transactionValue * 100);
-			}
-		}, 0) / 100
-	);
+	const valueAsInt = template.transactions.reduce((value, transactionId) => {
+		const transaction = appState.transactions.transactions[transactionId];
+		const transactionValue = toInt(config.transactions[transactionId]) || 0;
+		if (transaction.type === TransactionType.OUT) {
+			return value - transactionValue;
+		} else {
+			return value + transactionValue;
+		}
+	}, 0);
+	return valueAsInt / 100;
 };

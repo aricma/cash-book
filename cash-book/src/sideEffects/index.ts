@@ -7,11 +7,16 @@ import {
 	makeBookEntriesExportMonth,
 	makeBookEntriesExportDay,
 	makeAccountsExport,
-	makeAccountsImport, makeReset,
+	makeAccountsImport,
+	makeReset,
+	makeBackupWorker,
+	makeLoadBackupWorker,
 } from './application';
 
 export function* rootSaga() {
 	yield SE.spawn(makeGoToWorker(history.push));
+	yield SE.spawn(makeBackupWorker());
+	yield SE.spawn(makeLoadBackupWorker(setInLocalStorage));
 	yield SE.spawn(makeReset(setInLocalStorage));
 	yield SE.spawn(makeSaveAppStateToLocalStorage(setInLocalStorage));
 	yield SE.spawn(makeLoadAppStateFromLocalStorage(loadFromLocalStorage));

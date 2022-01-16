@@ -9,6 +9,7 @@ import {
 	ROUTES_CREATE_BOOK_ENTRY,
 	ROUTES_TRANSACTIONS,
 	ROUTES_BOOK_ENTRIES,
+	ROUTES_SETTINGS,
 } from '../../variables/routes';
 
 export const Header: React.FC<{ back?: ButtonProps; title: string }> = (props) => {
@@ -78,12 +79,12 @@ export const Menu: React.FC = () => {
 			},
 			{
 				type: 'BUTTON_PROPS_TYPE',
-				icon: IconType.CLOSE_FILL,
-				title: 'Reset',
+				icon: IconType.COG_FILL,
+				title: 'Settings',
 				onSelect: () => {
-					window.confirm("Do you really want to reset your app? Everything will be deleted! This action can not be undone!")
 					dispatch({
-					    type: ApplicationActionType.APPLICATION_RESET,
+						type: ApplicationActionType.ROUTER_GO_TO,
+						path: ROUTES_SETTINGS,
 					});
 				},
 			},

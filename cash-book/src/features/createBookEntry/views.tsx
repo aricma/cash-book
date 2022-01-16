@@ -32,7 +32,7 @@ const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props)
 		{props.transactions.map((inputProps, index) => (
 			<React.Fragment key={index}>
 				<div className="space-y-1">
-					<TextInput {...inputProps} autoFocus={index === 0} pattern="\d*" />
+					<TextInput {...inputProps} autoFocus={index === 0} pattern="\d*" onBlur={inputProps.onFinish} />
 				</div>
 			</React.Fragment>
 		))}

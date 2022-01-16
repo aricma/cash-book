@@ -11,6 +11,7 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (state, a
 		case ApplicationActionType.TRANSACTIONS_EDIT: {
 			const template = state.templates[action.templateId];
 			if (template === undefined) return state;
+			if (template.id === state.create.id) return state;
 
 			interface CreateConfig {
 				diffAccountId?: string;

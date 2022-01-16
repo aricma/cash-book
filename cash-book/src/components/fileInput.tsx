@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { FileInputProps } from '../models/props';
 
 export type Props = FileInputProps & {
-	accept: string;
+	accept?: string;
 	button: React.FC<{ isLoading: boolean; onSelect: () => void }>;
 };
 export const FileInput: React.FC<Props> = (props) => {
@@ -21,7 +21,6 @@ export const FileInput: React.FC<Props> = (props) => {
 					const file = e.target.files[0];
 					props.onChange(file);
 					setLoading(false);
-					console.log('ONCHANGE IS DONE', ref);
 				}}
 			/>
 			<props.button

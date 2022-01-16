@@ -11,7 +11,7 @@ import {
 } from './props';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
 import { DateWithoutTime } from '../../models/domain/date';
-import { pad, compact } from '../../models/utils';
+import { pad, compact, toInt } from '../../models/utils';
 import { TransactionType, Transaction } from '../transactions/state';
 
 export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => ({
@@ -78,21 +78,18 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
 							value: transactionWithValue.value,
 						},
 					};
-				console.log(
-					{
-						title: account.title,
-						number: account.number,
-						value: account.value + transactionWithValue.value,
-					},
-					account,
-					transactionWithValue
-				);
+				const accountValue = toInt('' + account.value);
+				if (accountValue === undefined) return accounts;
+				const transactionValue = toInt('' + transactionWithValue.value);
+				if (transactionValue === undefined) return accounts;
+				const value = toInt('' + (accountValue + transactionValue));
+				if (value === undefined) return accounts;
 				return {
 					...accounts,
 					[template.diffAccountId]: {
 						title: account.title,
 						number: account.number,
-						value: (account.value * 100 + transactionWithValue.value * 100) / 100,
+						value: value / 100,
 					},
 				};
 			},

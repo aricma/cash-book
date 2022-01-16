@@ -120,16 +120,35 @@ export const toTemplateConfigProps = (
 						? undefined
 						: validationMap?.transactions[transaction.id]
 					: undefined,
+				onFinish: (value) => {
+					let newValue = value;
+					if (/^[.,]+.*$/.test(newValue)) newValue = '0.' + newValue.replace(/[,.]+/, '');
+					if (/^[.,]$/.test(newValue)) newValue = '0';
+					if (/^[.,]\d+$/.test(newValue)) newValue = '0' + newValue;
+					if (/^\d+[.,]$/.test(newValue)) newValue = newValue.slice(0, -1);
+					if (/^\d+[.,]\d$/.test(newValue)) newValue = newValue + '0';
+					if (/^\d+[,]\d{2}$/.test(newValue)) newValue = newValue.replace(',', '.');
+					if (newValue === value) return;
+					dispatch({
+						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
+						templateId: config.templateId,
+						transactionId: transaction.id,
+						value: newValue,
+					});
+				},
 				onChange: (value) => {
-					if (/^[\d.]*$/.test(value)) {
-						if (/^\d+[.]\d{3}$/.test(value)) return;
-						dispatch({
-							type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
-							templateId: config.templateId,
-							transactionId: transaction.id,
-							value: value,
-						});
-					}
+					const newValue = ((): string | undefined => {
+						if (!/^[\d.,]*$/.test(value)) return undefined;
+						if (/^\d+[.,]\d{2}.$/.test(value)) return undefined;
+						return value;
+					})();
+					if (newValue === undefined) return;
+					dispatch({
+						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
+						templateId: config.templateId,
+						transactionId: transaction.id,
+						value: newValue,
+					});
 				},
 			};
 		}),

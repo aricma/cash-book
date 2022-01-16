@@ -19,6 +19,7 @@ export enum IconType {
 	DOWNLOAD_FILL = 'ICON_TYPE/DOWNLOAD/FILL',
 	SPINNER = 'ICON_TYPE/SPINNER',
 	PENCIL_ALT_FILL = 'ICON_TYPE/PENCIL_ALT/FILL',
+	COG_FILL = 'ICON_TYPE/COG/FILL',
 }
 
 export interface WithIconType {
@@ -36,6 +37,7 @@ export interface TextInputProps {
 	placeholder: string;
 	validation?: string;
 	onChange: (value: string) => void;
+	onFinish?: (value: string) => void;
 }
 
 export interface BooleanInputProps {

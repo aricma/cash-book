@@ -5,6 +5,8 @@ import { BookEntriesState } from '../features/bookEntries/state';
 import { SettingsState } from '../features/settings/state';
 
 export enum ApplicationActionType {
+	APPLICATION_BACKUP = 'APPLICATION_ACTION_TYPE/BACKUP',
+	APPLICATION_BACKUP_LOAD = 'APPLICATION_ACTION_TYPE/BACKUP/LOAD',
 	APPLICATION_LOAD = 'APPLICATION_ACTION_TYPE/LOAD',
 	APPLICATION_SET = 'APPLICATION_ACTION_TYPE/SET',
 	APPLICATION_SAVE = 'APPLICATION_ACTION_TYPE/SAVE',
@@ -66,7 +68,9 @@ export type ApplicationAction =
 	| AccountsAction
 	| TransactionsAction;
 
-export type Misc = Load | Set | Save | Reset;
+export type Misc = Backup | LoadBackup | Load | Set | Save | Reset;
+export type Backup = Action<ApplicationActionType.APPLICATION_BACKUP>;
+export type LoadBackup = Action<ApplicationActionType.APPLICATION_BACKUP_LOAD, { file: File }>;
 export type Load = Action<ApplicationActionType.APPLICATION_LOAD>;
 export type Set = Action<ApplicationActionType.APPLICATION_SET, { state: any }>;
 export type Save = Action<ApplicationActionType.APPLICATION_SAVE>;

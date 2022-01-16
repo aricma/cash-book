@@ -4,6 +4,7 @@ import {
 	BookEntriesExportMonth,
 	BookEntriesExportDay,
 	AccountsImport,
+	LoadBackup,
 } from '../applicationState/actions';
 import { SettingsSaveType } from '../features/settings/state';
 import { ApplicationState, selectAppState } from '../applicationState';
@@ -100,6 +101,10 @@ export const makeReset = (setInLocalStorage: (key: string, value: string) => voi
 		while (true) {
 			try {
 				yield SE.take(ApplicationActionType.APPLICATION_RESET);
+				const noUserConsent = !window.confirm(
+					'Do you really want to reset your app? Everything will be deleted! This action can not be undone!'
+				);
+				if (noUserConsent) continue;
 				const value = JSON.stringify({
 					settings: SettingsState.initialState,
 					bookEntries: BookingsState.initialState,
@@ -136,6 +141,39 @@ export const makeAccountsImport = () => {
 	};
 };
 
+export const makeBackupWorker = () => {
+	return function* worker() {
+		while (true) {
+			try {
+				yield SE.take(ApplicationActionType.APPLICATION_BACKUP);
+				const appState: ApplicationState = yield SE.select(selectAppState);
+				const timestamp = new Date().toISOString();
+				const fileName = `cash-book-backup-${timestamp}.json`;
+				exportToFile(toJSONContent(appState), fileName);
+			} catch (_) {}
+		}
+	};
+};
+
+export const makeLoadBackupWorker = (setInLocalStorage: (key: string, value: string) => void) => {
+	return function* worker() {
+		while (true) {
+			try {
+				const action: LoadBackup = yield SE.take(ApplicationActionType.APPLICATION_BACKUP_LOAD);
+				const text: string = yield SE.call(() => action.file.text());
+				const noUserConsent = !window.confirm(
+					'Do you really want to load this backup? This action will overwrite your current state of the app! This action can not be undone!'
+				);
+				if (noUserConsent) continue;
+				setInLocalStorage(LOCAL_STORAGE_KEY, text);
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_LOAD,
+				});
+			} catch (_) {}
+		}
+	};
+};
+
 export const makeAccountsExport = () => {
 	return function* worker() {
 		while (true) {
@@ -148,7 +186,7 @@ export const makeAccountsExport = () => {
 				});
 				const unique = hash(new Date().toISOString());
 				const fileName = `accounts-${unique}.csv`;
-				exportRowsToCSV([headline, ...rows], fileName);
+				exportToFile(toCSVContent([headline, ...rows]), fileName);
 			} catch (_) {}
 		}
 	};
@@ -186,7 +224,7 @@ export const makeBookEntriesExportDay = () => {
 					const day = pad(date.getDate(), 2);
 					const unique = hash(timeOfDownload);
 					const fileName = `book-entry-${year}-${month}-${day}_${unique}.csv`;
-					exportRowsToCSV([headline, ...rows], fileName);
+					exportToFile(toCSVContent([headline, ...rows]), fileName);
 				}
 			} catch (_) {}
 		}
@@ -214,7 +252,7 @@ export const makeBookEntriesExportMonth = () => {
 				const month = pad(date.getMonth() + 1, 2);
 				const unique = hash(timeOfDownload);
 				const fileName = `book-entry-${year}-${month}_${unique}.csv`;
-				exportRowsToCSV([headline, ...rows], fileName);
+				exportToFile(toCSVContent([headline, ...rows]), fileName);
 			} catch (_) {}
 		}
 	};
@@ -250,20 +288,14 @@ const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry): Arra
 	});
 };
 
-const exportRowsToCSV = (rows: Array<Array<string>>, name?: string) => {
-	const csvContent =
-		'data:text/csv;charset=utf-8,' +
-		rows
-			.map((row) => {
-				return row.map((cell) => `"${cell}"`).join(';');
-			})
-			.join('\n');
-	const encodedUri = encodeURI(csvContent);
+// https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
+// https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
+const exportToFile = (content: string, name?: string) => {
+	const encodedUri = encodeURI(content);
 
 	if (name === undefined) {
 		window.open(encodedUri);
 	} else {
-		// https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
 		const link = document.createElement('a');
 		link.setAttribute('href', encodedUri);
 		link.setAttribute('download', name);
@@ -273,3 +305,41 @@ const exportRowsToCSV = (rows: Array<Array<string>>, name?: string) => {
 		link.remove();
 	}
 };
+
+const toCSVContent = (rows: Array<Array<string>>): string => {
+	return (
+		'data:text/csv;charset=utf-8,' +
+		rows
+			.map((row) => {
+				return row.map((cell) => `"${cell}"`).join(';');
+			})
+			.join('\n')
+	);
+};
+
+const toJSONContent = (object: any) => {
+	return 'data:text/json;charset=utf-8,' + JSON.stringify(object);
+};
+
+// const importFromFile = (): Promise<File | null> => {
+// 	const input: HTMLInputElement = document.createElement('input');
+// 	return new Promise<File | null>((resolve) => {
+// 		input.setAttribute('class', 'hidden');
+// 		input.setAttribute('type', "file");
+// 		input.setAttribute('value', "");
+// 		input.addEventListener('input', (e: InputEvent) => {
+// 			e.target.files
+//
+// 		});
+// 		input.onchange = (globalEvent:InputEvent, event: ChangeEvent<HTMLInputElement>) => {
+// 			if (event.target.files === null) resolve(null);
+// 			const file: File = globalEvent.files[0];
+// 			resolve(file);
+// 			input.remove();
+// 		};
+// 		document.body.appendChild(input);
+// 		input.click();
+// 	}).finally(() => {
+// 		input.remove();
+// 	});
+// }

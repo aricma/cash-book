@@ -43,6 +43,8 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Solid.DownloadIcon {...props} />;
 		case IconType.PENCIL_ALT_FILL:
 			return <Solid.PencilAltIcon {...props} />;
+		case IconType.COG_FILL:
+			return <Solid.CogIcon {...props} />;
 		case IconType.SPINNER:
 			return <Spinner {...props} />;
 		default:

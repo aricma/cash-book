@@ -1,8 +1,10 @@
-import { ButtonProps } from '../../models/props';
+import {ButtonProps, OptionsInputProps} from '../../models/props';
 
 export interface BookEntriesViewProps {
 	title: string;
 	create: ButtonProps;
+	accounts: Array<{ title: string; number: string; value: number }>
+	template: OptionsInputProps;
 	entries: Array<BookEntryMonthViewProps>;
 }
 

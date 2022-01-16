@@ -1,5 +1,6 @@
 export interface AccountsState {
 	create: {
+		id?: string;
 		type: AccountType;
 		name?: string;
 		number?: string;
@@ -16,9 +17,10 @@ export enum AccountType {
 }
 
 export interface Account {
-	type: AccountType;
 	id: string;
+	type: AccountType;
 	name: string;
+	number: string;
 }
 
 export const initialState: AccountsState = {

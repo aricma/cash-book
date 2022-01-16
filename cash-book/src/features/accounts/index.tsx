@@ -6,13 +6,19 @@ import { CreateAccountView, AccountsView } from './views';
 
 export const Accounts: React.FC = () => {
 	const appState = useAppState(selectAppState);
-	const [showCreate, setShowCreate] = React.useState(false);
-	const accountsViewProps = toAccountsViewProps(appState, () => setShowCreate(true));
-	const createAccountViewProps = toCreateAccountViewProps(appState, () => setShowCreate(false));
+	const [showValidation, setShowValidation] = React.useState(false);
+	const [showModal, setShowModal] = React.useState(false);
+	const accountsViewProps = toAccountsViewProps(appState, () => setShowModal(true));
+	const createAccountViewProps = toCreateAccountViewProps(
+		appState,
+		showValidation,
+		() => setShowValidation(prv => !prv),
+		() => setShowModal(false)
+	);
 	return (
 		<>
 			<AccountsView {...accountsViewProps} />
-			<SlideInModal isVisible={showCreate}>
+			<SlideInModal isVisible={showModal}>
 				<OverlayContainer>
 					<CreateAccountView {...createAccountViewProps} />
 				</OverlayContainer>

@@ -23,11 +23,12 @@ export const ImportAccounts: React.FC = () => {
 				file.text().then((text) => {
 					const rowsWithoutHeadline = text.split('\n').slice(1);
 					const accounts = rowsWithoutHeadline.reduce((accounts, row) => {
-						const [name, type, number] = row.split(';').map((cell) => cell.slice(1, -1));
+						const [id, name, type, number] = row.split(';').map((cell) => cell.slice(1, -1));
 						const account: Account = {
-							id: number,
+							id: id,
 							type: type as AccountType,
 							name: name,
+							number: number,
 						};
 						return {
 							...accounts,

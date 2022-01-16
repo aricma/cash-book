@@ -47,6 +47,7 @@ export enum ApplicationActionType {
 	BOOK_ENTRIES_SET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/SET',
 	BOOK_ENTRIES_EXPORT_DAY = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EXPORT/DAY',
 	BOOK_ENTRIES_EXPORT_MONTH = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EXPORT/MONTH',
+	BOOK_ENTRIES_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/TEMPLATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TEMPLATE/SET',
 	BOOK_ENTRIES_CREATE_SET_DATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TRANSACTION/SET',
@@ -178,6 +179,7 @@ export type BookingsAction =
 	| BookingsSet
 	| BookEntriesExportDay
 	| BookEntriesExportMonth
+	| BookEntriesSetTemplate
 	| BookEntriesCreateSetTemplate
 	| BookEntriesCreateSetDate
 	| BookEntriesCreateSetTransaction
@@ -187,6 +189,7 @@ export type BookingsAction =
 export type BookingsSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { state: BookEntriesState }>;
 export type BookEntriesExportDay = Action<ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY, { date: string }>;
 export type BookEntriesExportMonth = Action<ApplicationActionType.BOOK_ENTRIES_EXPORT_MONTH, { date: string }>;
+export type BookEntriesSetTemplate = Action<ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE, { templateId: string }>;
 export type BookEntriesCreateSetTemplate = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
 	{

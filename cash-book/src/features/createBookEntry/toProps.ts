@@ -122,6 +122,7 @@ export const toTemplateConfigProps = (
 					: undefined,
 				onChange: (value) => {
 					if (/^[\d.]*$/.test(value)) {
+						if (/^\d+[.]\d{3}$/.test(value)) return;
 						dispatch({
 							type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 							templateId: config.templateId,
@@ -296,11 +297,17 @@ const validateTransactions = (
 		const value = config.transactions[transactionId];
 		return {
 			...map,
-			[transactionId]: !!value ? undefined : 'Transaction is missing!',
+			[transactionId]: validateTransaction(value),
 		};
 	}, {});
 	if (compact(Object.values(map)).length === 0) return undefined;
 	return map;
+};
+
+const validateTransaction = (value?: string): string | undefined => {
+	if (value === undefined) return 'Transaction is missing!';
+	if (!/^\d+([.]\d{2})?$/.test(value)) return 'Value needs 2 decimals(format: 0.00)!';
+	return undefined;
 };
 
 const validateTransactionValue = (appState: ApplicationState): string | undefined => {

@@ -8,6 +8,11 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 	switch (action.type) {
 		case ApplicationActionType.BOOK_ENTRIES_SET:
 			return action.state;
+		case ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE:
+			return {
+				...state,
+				selectedTemplateId: action.templateId,
+			}
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE:
 			return {
 				...state,

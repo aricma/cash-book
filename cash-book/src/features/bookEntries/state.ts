@@ -1,5 +1,6 @@
 export interface BookEntriesState {
 	create: Create;
+	selectedTemplateId?: string;
 	entries: {
 		[date: string]: BookEntry;
 	};

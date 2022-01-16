@@ -10,9 +10,10 @@ import { Icon } from '../../components/icons';
 import { IconType } from '../../models/props';
 import { Disclosure } from '@headlessui/react';
 import { Header } from '../menu';
+import {Select} from '../../components/select';
 
 export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
-	<div className="space-y-12">
+	<div className="space-y-12 pb-[100px]">
 		<Header title={props.title}>
 			<div className="flex items-center justify-end">
 				<button type="button" onClick={props.create.onSelect} className="button-prime button-xs">
@@ -21,6 +22,28 @@ export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
 				</button>
 			</div>
 		</Header>
+		<Select {...props.template} />
+		<div className="flex items-center space-x-2">
+			{
+				props.accounts.map((accountProps, index) => (
+					<React.Fragment key={index}>
+						<div className="bg-blue-200 p-4 rounded-md space-y-2 text-blue-600">
+							<p className="text-xl font-medium">{accountProps.title}</p>
+							<p className="">{accountProps.number}</p>
+							<div className="flex justify-end">
+							{
+								accountProps.value > 0 ? (
+									<p className="text-green-600 text-xl font-medium">{accountProps.value}</p>
+								) : (
+									<p className="text-red-700 text-xl font-medium">{accountProps.value}</p>
+								)
+							}
+							</div>
+						</div>
+					</React.Fragment>
+				))
+			}
+		</div>
 		<div className="space-y-4">
 			{props.entries.map((bookEntryMonthViewProps, index) => (
 				<React.Fragment key={index}>

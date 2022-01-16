@@ -25,9 +25,9 @@ export const transactionValue = (appState: ApplicationState): number => {
 		const transaction = appState.transactions.transactions[transactionId];
 		const transactionValue = toNumber(config.transactions[transactionId]) || 0;
 		if (transaction.type === TransactionType.OUT) {
-			return value - transactionValue;
+			return Math.trunc(value - (transactionValue * 100));
 		} else {
-			return value + transactionValue;
+			return Math.trunc(value + (transactionValue * 100));
 		}
-	}, 0);
+	}, 0) / 100;
 };

@@ -53,7 +53,9 @@ export const AccountsTableView: React.FC<{
 								<TableCell {...cell} />
 							</div>
 						) : (
-							<TableCell {...cell} />
+							<div className="flex items-center">
+								<TableCell {...cell} />
+							</div>
 						)}
 					</React.Fragment>
 				);
@@ -72,7 +74,7 @@ export const CreateAccountView: React.FC<CreateAccountViewProps> = (props) => (
 				</button>
 			</div>
 		</Header>
-		<div className="flex items-center space-x-2">
+		<div className="flex items-start space-x-2">
 			<div>
 				<Select {...props.type} />
 				{props.type.validation && <span className="ml-2 text-sm text-danger">{props.type.validation}</span>}

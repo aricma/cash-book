@@ -1,5 +1,6 @@
+import hash from 'crypto-js/sha1';
 import { Reducer } from '../../models/reducers';
-import { AccountsState, AccountType } from './state';
+import {AccountsState, AccountType, Account} from './state';
 import { ApplicationActionType, AccountsAction } from '../../applicationState/actions';
 import { compactObject } from '../../models/utils';
 
@@ -13,9 +14,10 @@ export const reducer: Reducer<AccountsState, AccountsAction> = (state, action) =
 			return {
 				...state,
 				create: {
+					id: account.id,
 					type: account.type,
 					name: account.name,
-					number: account.id,
+					number: account.number,
 				},
 			};
 		case ApplicationActionType.ACCOUNTS_REMOVE:
@@ -53,6 +55,12 @@ export const reducer: Reducer<AccountsState, AccountsAction> = (state, action) =
 		case ApplicationActionType.ACCOUNTS_CREATE_SUBMIT:
 			if (state.create.number === undefined) return state;
 			if (state.create.name === undefined) return state;
+			const newAccount: Account = {
+				id: state.create.id || hash(new Date().toISOString()).toString(),
+				type: state.create.type,
+				name: state.create.name,
+				number: state.create.number,
+			}
 			return {
 				...state,
 				create: {
@@ -60,11 +68,7 @@ export const reducer: Reducer<AccountsState, AccountsAction> = (state, action) =
 				},
 				accounts: {
 					...state.accounts,
-					[state.create.number]: {
-						type: state.create.type,
-						id: state.create.number,
-						name: state.create.name,
-					},
+					[newAccount.id]: newAccount,
 				},
 			};
 		case ApplicationActionType.ACCOUNTS_CREATE_CANCEL:

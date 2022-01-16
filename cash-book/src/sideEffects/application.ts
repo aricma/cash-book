@@ -118,9 +118,9 @@ export const makeAccountsExport = () => {
 			try {
 				yield SE.take(ApplicationActionType.ACCOUNTS_EXPORT);
 				const appState: ApplicationState = yield SE.select(selectAppState);
-				const headline = ['name', 'type', 'number'];
+				const headline = ['id', 'name', 'type', 'number'];
 				const rows = Object.values(appState.accounts.accounts).map((account): Array<string> => {
-					return [account.name, account.type, account.id];
+					return [account.id, account.name, account.type, account.number];
 				});
 				const unique = hash(new Date().toISOString());
 				const fileName = `accounts-${unique}.csv`;
@@ -197,8 +197,10 @@ export const makeBookEntriesExportMonth = () => {
 };
 
 const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry): Array<Array<string>> => {
-	return Object.entries(bookEntry.transactions).map(([transactionId, value]) => {
+	return appState.transactions.templates[bookEntry.templateId].transactions.map(transactionId => {
+		const value = bookEntry.transactions[transactionId];
 		const transaction = appState.transactions.transactions[transactionId];
+		const account = appState.accounts.accounts[transaction.accountId];
 		return Array(headline.length)
 			.fill('')
 			.map((placeholder, index) => {
@@ -206,7 +208,7 @@ const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry): Arra
 					case 0:
 						return 'EUR';
 					case 1:
-						return (transaction.type === TransactionType.IN ? '+' : '-') + value;
+						return (transaction.type === TransactionType.IN ? '+' : '-') + value.toString().replace('.', ',');
 					case 3: {
 						const date = DateWithoutTime.fromString(bookEntry.date);
 						const day = date.getDate();
@@ -215,6 +217,8 @@ const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry): Arra
 					}
 					case 4:
 						return transaction.name;
+					case 7:
+						return account.number;
 					default:
 						return placeholder;
 				}

@@ -1,6 +1,6 @@
 import hash from 'crypto-js/sha1';
 import { Reducer } from '../../models/reducers';
-import {AccountsState, AccountType, Account} from './state';
+import { AccountsState, AccountType, Account } from './state';
 import { ApplicationActionType, AccountsAction } from '../../applicationState/actions';
 import { compactObject } from '../../models/utils';
 
@@ -60,7 +60,7 @@ export const reducer: Reducer<AccountsState, AccountsAction> = (state, action) =
 				type: state.create.type,
 				name: state.create.name,
 				number: state.create.number,
-			}
+			};
 			return {
 				...state,
 				create: {

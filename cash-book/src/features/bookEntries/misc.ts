@@ -21,13 +21,15 @@ export const transactionValue = (appState: ApplicationState): number => {
 		}) || undefined;
 	if (differenceAccount === undefined) return 0;
 
-	return template.transactions.reduce((value, transactionId) => {
-		const transaction = appState.transactions.transactions[transactionId];
-		const transactionValue = toNumber(config.transactions[transactionId]) || 0;
-		if (transaction.type === TransactionType.OUT) {
-			return Math.trunc(value - (transactionValue * 100));
-		} else {
-			return Math.trunc(value + (transactionValue * 100));
-		}
-	}, 0) / 100;
+	return (
+		template.transactions.reduce((value, transactionId) => {
+			const transaction = appState.transactions.transactions[transactionId];
+			const transactionValue = toNumber(config.transactions[transactionId]) || 0;
+			if (transaction.type === TransactionType.OUT) {
+				return Math.trunc(value - transactionValue * 100);
+			} else {
+				return Math.trunc(value + transactionValue * 100);
+			}
+		}, 0) / 100
+	);
 };

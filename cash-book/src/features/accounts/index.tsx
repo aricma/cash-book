@@ -12,7 +12,7 @@ export const Accounts: React.FC = () => {
 	const createAccountViewProps = toCreateAccountViewProps(
 		appState,
 		showValidation,
-		() => setShowValidation(prv => !prv),
+		() => setShowValidation((prv) => !prv),
 		() => setShowModal(false)
 	);
 	return (

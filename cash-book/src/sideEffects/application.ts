@@ -197,7 +197,7 @@ export const makeBookEntriesExportMonth = () => {
 };
 
 const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry): Array<Array<string>> => {
-	return appState.transactions.templates[bookEntry.templateId].transactions.map(transactionId => {
+	return appState.transactions.templates[bookEntry.templateId].transactions.map((transactionId) => {
 		const value = bookEntry.transactions[transactionId];
 		const transaction = appState.transactions.transactions[transactionId];
 		const account = appState.accounts.accounts[transaction.accountId];

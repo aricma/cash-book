@@ -12,7 +12,7 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 			return {
 				...state,
 				selectedTemplateId: action.templateId,
-			}
+			};
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE:
 			return {
 				...state,

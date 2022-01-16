@@ -1,7 +1,7 @@
-import {ApplicationState, dispatch} from '../../applicationState';
-import {IconType, ButtonProps} from '../../models/props';
-import {ApplicationActionType} from '../../applicationState/actions';
-import {BookEntry} from './state';
+import { ApplicationState, dispatch } from '../../applicationState';
+import { IconType, ButtonProps } from '../../models/props';
+import { ApplicationActionType } from '../../applicationState/actions';
+import { BookEntry } from './state';
 import {
 	BookEntriesViewProps,
 	BookEntryDayViewProps,
@@ -9,11 +9,10 @@ import {
 	ErrorBookEnrtyViewProps,
 	BookEntryMonthViewProps,
 } from './props';
-import {ROUTES_CREATE_BOOK_ENTRY} from '../../variables/routes';
-import {DateWithoutTime} from '../../models/domain/date';
-import {pad, compact} from '../../models/utils';
-import {TransactionType, Transaction} from '../transactions/state';
-
+import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
+import { DateWithoutTime } from '../../models/domain/date';
+import { pad, compact } from '../../models/utils';
+import { TransactionType, Transaction } from '../transactions/state';
 
 export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => ({
 	title: 'Book Entries',
@@ -30,60 +29,76 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
 	},
 	template: {
 		type: 'OPTIONS_INPUT_PROPS_TYPE',
-		value: appState.transactions.templates[appState.bookEntries.selectedTemplateId || ""]?.name || "",
+		value: appState.transactions.templates[appState.bookEntries.selectedTemplateId || '']?.name || '',
 		placeholder: 'set template',
-		options: compact(Object.keys(appState.transactions.templates).map((templateId): ButtonProps | undefined => {
-			const template = appState.transactions.templates[templateId];
-			if (template === undefined) return undefined;
-			return {
-				type: 'BUTTON_PROPS_TYPE',
-				title: template.name,
-				onSelect: () => {
-					dispatch({
-						type: ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE,
-						templateId: templateId
-					});
-				}
-			}
-		})),
+		options: compact(
+			Object.keys(appState.transactions.templates).map((templateId): ButtonProps | undefined => {
+				const template = appState.transactions.templates[templateId];
+				if (template === undefined) return undefined;
+				return {
+					type: 'BUTTON_PROPS_TYPE',
+					title: template.name,
+					onSelect: () => {
+						dispatch({
+							type: ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE,
+							templateId: templateId,
+						});
+					},
+				};
+			})
+		),
 	},
-	accounts: Object.values(Object.values(appState.bookEntries.entries).reduce((accounts: { [accountId:string]: { title: string; number:string; value: number } }, bookEntry) => {
-		const template = appState.transactions.templates[bookEntry.templateId];
-		if (template === undefined) return accounts;
-		const transactionWithValue = Object.entries(bookEntry.transactions).reduce((diffTransaction: Transaction & { value: number } | undefined, [transactionId, value]) => {
-			const transaction = appState.transactions.transactions[transactionId];
-			if (transaction.accountId === template.diffAccountId) return {
-				...transaction,
-				value: transaction.type === TransactionType.SYS_OUT ? value : value * -1,
-			};
-			return undefined;
-		}, undefined);
-		if (transactionWithValue === undefined) return accounts;
-		const account = accounts[template.diffAccountId];
-		const diffAccount = appState.accounts.accounts[template.diffAccountId];
-		if (diffAccount === undefined) return accounts;
-		if (account === undefined) return {
-			...accounts,
-			[template.diffAccountId]: {
-				title: diffAccount.name,
-				number: diffAccount.number,
-				value: transactionWithValue.value,
-			}
-		};
-		console.log({
-			title: account.title,
-			number: account.number,
-			value: account.value + transactionWithValue.value,
-		}, account, transactionWithValue);
-		return {
-			...accounts,
-			[template.diffAccountId]: {
-				title: account.title,
-				number: account.number,
-				value: ((account.value * 100) + (transactionWithValue.value * 100)) / 100,
-			}
-		};
-	}, {})),
+	accounts: Object.values(
+		Object.values(appState.bookEntries.entries).reduce(
+			(accounts: { [accountId: string]: { title: string; number: string; value: number } }, bookEntry) => {
+				const template = appState.transactions.templates[bookEntry.templateId];
+				if (template === undefined) return accounts;
+				const transactionWithValue = Object.entries(bookEntry.transactions).reduce(
+					(diffTransaction: (Transaction & { value: number }) | undefined, [transactionId, value]) => {
+						const transaction = appState.transactions.transactions[transactionId];
+						if (transaction.accountId === template.diffAccountId)
+							return {
+								...transaction,
+								value: transaction.type === TransactionType.SYS_OUT ? value : value * -1,
+							};
+						return undefined;
+					},
+					undefined
+				);
+				if (transactionWithValue === undefined) return accounts;
+				const account = accounts[template.diffAccountId];
+				const diffAccount = appState.accounts.accounts[template.diffAccountId];
+				if (diffAccount === undefined) return accounts;
+				if (account === undefined)
+					return {
+						...accounts,
+						[template.diffAccountId]: {
+							title: diffAccount.name,
+							number: diffAccount.number,
+							value: transactionWithValue.value,
+						},
+					};
+				console.log(
+					{
+						title: account.title,
+						number: account.number,
+						value: account.value + transactionWithValue.value,
+					},
+					account,
+					transactionWithValue
+				);
+				return {
+					...accounts,
+					[template.diffAccountId]: {
+						title: account.title,
+						number: account.number,
+						value: (account.value * 100 + transactionWithValue.value * 100) / 100,
+					},
+				};
+			},
+			{}
+		)
+	),
 	entries: Object.values(
 		Object.values(appState.bookEntries.entries)
 			.filter((bookEntry) => bookEntry.templateId === appState.bookEntries.selectedTemplateId)

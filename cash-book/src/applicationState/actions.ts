@@ -8,6 +8,7 @@ export enum ApplicationActionType {
 	APPLICATION_LOAD = 'APPLICATION_ACTION_TYPE/LOAD',
 	APPLICATION_SET = 'APPLICATION_ACTION_TYPE/SET',
 	APPLICATION_SAVE = 'APPLICATION_ACTION_TYPE/SAVE',
+	APPLICATION_RESET = 'APPLICATION_ACTION_TYPE/RESET',
 
 	BROWSER_LOCAL_STORAGE_SET = 'APPLICATION_ACTION_TYPE/BROWSER/LOCAL_STORAGE/SET',
 	BROWSER_LOCAL_STORAGE_REMOVE = 'APPLICATION_ACTION_TYPE/BROWSER/LOCAL_STORAGE/REMOVE',
@@ -65,10 +66,11 @@ export type ApplicationAction =
 	| AccountsAction
 	| TransactionsAction;
 
-export type Misc = Load | Set | Save;
+export type Misc = Load | Set | Save | Reset;
 export type Load = Action<ApplicationActionType.APPLICATION_LOAD>;
 export type Set = Action<ApplicationActionType.APPLICATION_SET, { state: any }>;
 export type Save = Action<ApplicationActionType.APPLICATION_SAVE>;
+export type Reset = Action<ApplicationActionType.APPLICATION_RESET>;
 
 export type BrowserAction = BrowserLocalStorageSet | BrowserLocalStorageRemove;
 export type BrowserLocalStorageSet = Action<

@@ -11,6 +11,10 @@ import { LOCAL_STORAGE_KEY } from '../variables/environments';
 import { DateWithoutTime } from '../models/domain/date';
 import { getFirstDateOfTheMonth, getLastDateOfTheMonth, pad } from '../models/utils';
 import hash from 'crypto-js/sha256';
+import * as SettingsState from '../features/settings/state';
+import * as BookingsState from '../features/bookEntries/state';
+import * as AccountsState from '../features/accounts/state';
+import * as TransactionsState from '../features/transactions/state';
 import { BookEntry } from '../features/bookEntries/state';
 import { TransactionType } from '../features/transactions/state';
 
@@ -87,6 +91,26 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 			} catch (e) {
 				console.log('LOAD', e);
 			}
+		}
+	};
+};
+
+export const makeReset = (setInLocalStorage: (key: string, value: string) => void) => {
+	return function* worker() {
+		while (true) {
+			try {
+				yield SE.take(ApplicationActionType.APPLICATION_RESET);
+				const value = JSON.stringify({
+					settings: SettingsState.initialState,
+					bookEntries: BookingsState.initialState,
+					accounts: AccountsState.initialState,
+					transactions: TransactionsState.initialState,
+				});
+				setInLocalStorage(LOCAL_STORAGE_KEY, value);
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_LOAD,
+				});
+			} catch (_) {}
 		}
 	};
 };

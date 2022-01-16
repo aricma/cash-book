@@ -78,7 +78,7 @@ export const Menu: React.FC = () => {
 			},
 			{
 				type: 'BUTTON_PROPS_TYPE',
-				icon: IconType.DEFAULT,
+				icon: IconType.CLOSE_FILL,
 				title: 'Reset',
 				onSelect: () => {
 					window.confirm("Do you really want to reset your app? Everything will be deleted! This action can not be undone!")

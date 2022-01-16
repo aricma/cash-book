@@ -91,7 +91,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 };
 
 export const CreateTemplateView: React.FC<CreateTemplateViewProps> = (props) => (
-	<div className="h-full pb-[100px] flex flex-col">
+	<div className="h-full pb-[250px] flex flex-col">
 		<div className="flex-shrink-0 p-4">
 			<Header title={props.title}>
 				<div className="flex items-center justify-end">

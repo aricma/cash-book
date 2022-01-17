@@ -109,6 +109,14 @@ const toTransactionViewProps = (
 				});
 			},
 		},
+		move: (fromIndex: number, toIndex: number) => {
+			dispatch({
+				type: ApplicationActionType.TRANSACTIONS_MOVE,
+				templateId: templateId,
+				fromIndex: fromIndex,
+				toIndex: toIndex,
+			});
+		}
 	};
 };
 

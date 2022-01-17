@@ -324,7 +324,7 @@ const validateTransactions = (
 };
 
 const validateTransaction = (value?: string): string | undefined => {
-	if (value === undefined) return 'Transaction is missing!';
+	if (value === undefined) return undefined; // 'Transaction is missing!';
 	if (!/^\d+([.]\d{2})?$/.test(value)) return 'Value needs 2 decimals(format: 0.00)!';
 	return undefined;
 };

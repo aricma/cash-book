@@ -63,7 +63,7 @@ const ImportAccountsModalView: React.FC<ImportAccountsModalViewProps> = (props) 
 );
 
 export const AccountsTableView: React.FC<{ accounts: Array<Array<HeaderCellProps | BodyCellProps>> }> = (props) => (
-	<div className="grid grid-cols-3 gap-2">
+	<div className="grid grid-cols-[repeat(4,_minmax(0,_1fr))] gap-2">
 		{props.accounts.slice(0, 1).map((row, index) => {
 			return row.map((cell, index) => {
 				return (
@@ -77,7 +77,9 @@ export const AccountsTableView: React.FC<{ accounts: Array<Array<HeaderCellProps
 			return row.map((cell, index) => {
 				return (
 					<React.Fragment key={index}>
-						{index === 2 ? (
+						{(index === 0) ? (
+							<span className="text-ellipsis overflow-hidden" title={cell.value}>{cell.value}</span>
+						) : (index === 3) ? (
 							<div className="place-self-end">
 								<TableCell {...cell} />
 							</div>

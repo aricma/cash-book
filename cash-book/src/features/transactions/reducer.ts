@@ -54,6 +54,22 @@ export const reducer: Reducer<TransactionsState, TransactionsAction> = (state, a
 				},
 			};
 		}
+		case ApplicationActionType.TRANSACTIONS_MOVE: {
+			const template = state.templates[action.templateId];
+			if (template === undefined) return state;
+			const transactions = template.transactions;
+			const newOrder = move(transactions, action.fromIndex, action.toIndex);
+			return {
+				...state,
+				templates: {
+					...state.templates,
+					[action.templateId]: {
+						...template,
+						transactions: newOrder,
+					},
+				},
+			};
+		}
 		case ApplicationActionType.TRANSACTIONS_ORDER_INC: {
 			const template = state.templates[action.templateId];
 			if (template === undefined) return state;

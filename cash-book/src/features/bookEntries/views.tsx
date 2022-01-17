@@ -6,11 +6,12 @@ import {
 	DataBookEntryViewProps,
 	BookEntryMonthViewProps,
 } from './props';
-import { Icon } from '../../components/icons';
-import { IconType } from '../../models/props';
-import { Disclosure } from '@headlessui/react';
-import { Header } from '../menu';
-import { Select } from '../../components/select';
+import {IconType} from '../../models/props';
+import {Icon} from '../../components/icons';
+import {Disclosure} from '@headlessui/react';
+import {Header} from '../menu';
+import {Select} from '../../components/select';
+
 
 export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
 	<div className="space-y-12 pb-[100px]">
@@ -26,9 +27,9 @@ export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
 		<div className="flex items-center space-x-2">
 			{props.accounts.map((accountProps, index) => (
 				<React.Fragment key={index}>
-					<div className="bg-blue-200 p-4 rounded-md space-y-2 text-blue-600">
+					<div className="bg-blue-200 dark:bg-blue-900 p-4 rounded-md space-y-2 text-blue-600 dark:text-blue-200">
 						<p className="text-xl font-medium">{accountProps.title}</p>
-						<p className="">{accountProps.number}</p>
+						<p className="dark:text-blue-400">{accountProps.number}</p>
 						<div className="flex justify-end">
 							{accountProps.value > 0 ? (
 								<p className="text-green-600 text-xl font-medium">{accountProps.value}</p>
@@ -87,9 +88,14 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 						</button>
 					</div>
 					<Disclosure.Panel>
-						<div className="w-full px-2 text-2 grid grid-cols-[repeat(5,_minmax(max-content,_1fr))] gap-2">
+						<div className="w-full px-2 text-2 grid grid-cols-[repeat(5,_minmax(min-content,_1fr))] gap-2">
 							{props.entries.map((bookingProps, index) => {
-								return <BookEntry key={index} {...bookingProps} />;
+								return (
+									<React.Fragment key={index}>
+										{index !== 0 && <div className="col-span-5 border-b border-gray-300 dark:border-gray-600" />}
+										<BookEntry {...bookingProps} />
+									</React.Fragment>
+								);
 							})}
 						</div>
 					</Disclosure.Panel>
@@ -105,16 +111,22 @@ export const BookEntry: React.FC<DataBookEntryViewProps | ErrorBookEnrtyViewProp
 			return (
 				<>
 					<div className="flex items-center">
-						<span>{props.title}</span>
+						<span className="text-ellipsis">{props.title}</span>
 					</div>
 					<div className="bg-blue-200 dark:bg-blue-900 py-1 px-2 rounded-md flex items-center justify-center">
-						<span className="text-blue-500 dark:text-blue-300">{props.from}</span>
+						<span className="text-blue-500 dark:text-blue-300">{props.cashierAccount}</span>
 					</div>
 					<div className="place-self-center">
-						<Icon type={IconType.ARROW_NARROW_RIGHT_STROKE} className="mx-2 w-5 h-5" />
+						{
+							props.direction === IconType.ARROW_NARROW_LEFT_STROKE ? (
+								<Icon type={props.direction} className="mx-2 w-6 h-6 text-green-500" />
+							) : (
+								<Icon type={props.direction} className="mx-2 w-6 h-6 text-red-500" />
+							)
+						}
 					</div>
 					<div className="bg-blue-200 dark:bg-blue-900 py-1 px-2 rounded-md flex items-center justify-center">
-						<span className="text-blue-500 dark:text-blue-300">{props.to}</span>
+						<span className="text-blue-500 dark:text-blue-300">{props.otherAccount}</span>
 					</div>
 					<div className="flex items-center justify-end">
 						<span className="text-1">{props.value}</span>

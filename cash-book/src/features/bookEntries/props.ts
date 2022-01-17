@@ -1,10 +1,19 @@
-import { ButtonProps, OptionsInputProps } from '../../models/props';
+import {ButtonProps, OptionsInputProps, IconType} from '../../models/props';
 
-export interface BookEntriesViewProps {
+export enum BookEntriesViewPropsType {
+	SKELETON = "BOOK_ENTRIES_VIEW_PROPS_TYPE/SKELETON",
+	SELECT_TEMPLATE = "BOOK_ENTRIES_VIEW_PROPS_TYPE/SELECT_TEMPLATE",
+	BOOK_ENTRIES = "BOOK_ENTRIES_VIEW_PROPS_TYPE/BOOK_ENTRIES",
+	ERROR = "BOOK_ENTRIES_VIEW_PROPS_TYPE/ERROR",
+}
+
+export type BookEntriesViewProps = EntriesBookEntriesViewProps;
+
+export interface EntriesBookEntriesViewProps {
 	title: string;
+	template: OptionsInputProps;
 	create: ButtonProps;
 	accounts: Array<{ title: string; number: string; value: number }>;
-	template: OptionsInputProps;
 	entries: Array<BookEntryMonthViewProps>;
 }
 
@@ -24,8 +33,9 @@ export interface DataBookEntryViewProps {
 	type: 'DATA_BOOKING_VIEW_PROPS';
 	date: string;
 	title: string;
-	from: string;
-	to: string;
+	cashierAccount: string;
+	direction: IconType;
+	otherAccount: string;
 	value: string;
 }
 

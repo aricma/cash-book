@@ -24,6 +24,7 @@ export interface TransactionViewProps {
 	};
 	decreaseOrder: ButtonProps;
 	increaseOrder: ButtonProps;
+	move: (fromIndex: number, toIndex: number) => void;
 }
 
 export interface CreateTemplateViewProps {

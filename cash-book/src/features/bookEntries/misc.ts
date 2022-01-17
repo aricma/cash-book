@@ -1,5 +1,5 @@
 import {ApplicationState} from '../../applicationState';
-import {AccountType} from '../accounts/state';
+import {AccountType, Account} from '../accounts/state';
 import {TransactionType, Transaction} from '../transactions/state';
 import {toCurrencyInt} from '../../models/currencyInt';
 
@@ -34,104 +34,13 @@ export const getTransactionValue = (transactionsWithValues: TransactionsWithValu
                 return value + transactionValue;
             case TransactionType.OUT:
             case TransactionType.SYS_OUT:
+            default:
                 return value - transactionValue;
         }
     }, 0) / 100;
 };
 
-// type AccountWithValue = Account & { value: number };
-//
-// interface AccountsWithValues {
-//     [accountId: string]: AccountWithValue;
-// }
-//
-// export const accountsWithValues = (appState: ApplicationState): AccountsWithValues => {
-//     if (appState.bookEntries.selectedTemplateId === undefined) return {};
-//     const template = appState.transactions.templates[appState.bookEntries.selectedTemplateId];
-//     return Object.values(appState.accounts.accounts).reduce((accounts: AccountsWithValues, account) => {
-//         const transactionWithValue = Object.entries(bookEntry.transactions).reduce(
-//             (diffTransaction: (Transaction & { value: number }) | undefined, [transactionId, value]) => {
-//                 const transaction = appState.transactions.transactions[transactionId];
-//                 if (transaction.accountId === template.diffAccountId)
-//                     return {
-//                         ...transaction,
-//                         value: transaction.type === TransactionType.SYS_OUT ? value : value * -1,
-//                     };
-//                 return undefined;
-//             },
-//             undefined,
-//         );
-//         if (transactionWithValue === undefined) return accounts;
-//         const account = accounts[template.diffAccountId];
-//         const diffAccount = appState.accounts.accounts[template.diffAccountId];
-//         if (diffAccount === undefined) return accounts;
-//         if (account === undefined)
-//             return {
-//                 ...accounts,
-//                 [template.diffAccountId]: {
-//                     title: diffAccount.name,
-//                     number: diffAccount.number,
-//                     value: transactionWithValue.value,
-//                 },
-//             };
-//         const accountValue = toInt('' + account.value);
-//         if (accountValue === undefined) return accounts;
-//         const transactionValue = toInt('' + transactionWithValue.value);
-//         if (transactionValue === undefined) return accounts;
-//         const value = toInt('' + (accountValue + transactionValue));
-//         if (value === undefined) return accounts;
-//         return {
-//             ...accounts,
-//             [template.diffAccountId]: {
-//                 title: account.title,
-//                 number: account.number,
-//                 value: value / 100,
-//             },
-//         };
-//     }, {});
-// };
-
-// export const accountWithValue = (appState: ApplicationState, accountId: string): AccountWithValue => {
-//     // const account = appState.accounts.accounts[accountId];
-//     return Object.values(appState.transactions.accounts).reduce((accounts: AccountsWithValues, account) => {
-//         const transactionWithValue = Object.entries(bookEntry.transactions).reduce(
-//             (diffTransaction: (Transaction & { value: number }) | undefined, [transactionId, value]) => {
-//                 const transaction = appState.transactions.transactions[transactionId];
-//                 if (transaction.accountId === template.diffAccountId)
-//                     return {
-//                         ...transaction,
-//                         value: transaction.type === TransactionType.SYS_OUT ? value : value * -1,
-//                     };
-//                 return undefined;
-//             },
-//             undefined,
-//         );
-//         if (transactionWithValue === undefined) return accounts;
-//         const account = accounts[template.diffAccountId];
-//         const diffAccount = appState.accounts.accounts[template.diffAccountId];
-//         if (diffAccount === undefined) return accounts;
-//         if (account === undefined)
-//             return {
-//                 ...accounts,
-//                 [template.diffAccountId]: {
-//                     title: diffAccount.name,
-//                     number: diffAccount.number,
-//                     value: transactionWithValue.value,
-//                 },
-//             };
-//         const accountValue = toInt('' + account.value);
-//         if (accountValue === undefined) return accounts;
-//         const transactionValue = toInt('' + transactionWithValue.value);
-//         if (transactionValue === undefined) return accounts;
-//         const value = toInt('' + (accountValue + transactionValue));
-//         if (value === undefined) return accounts;
-//         return {
-//             ...accounts,
-//             [template.diffAccountId]: {
-//                 title: account.title,
-//                 number: account.number,
-//                 value: value / 100,
-//             },
-//         };
-//     }, {});
-// };
+export type AccountWithValue = Account & { value: number };
+export const accountWithValue = (account: Account, transactionsWithValues: TransactionsWithValues): AccountWithValue => {
+    return {...account, value: getTransactionValue(transactionsWithValues) }
+};

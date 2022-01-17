@@ -78,7 +78,7 @@ export const toImportAccountsViewProps = (req: RequestImportAccountsViewProps): 
 export const toAccountsTableViewProps = (accounts: {
 	[accountId: string]: Account;
 }): Array<Array<HeaderCellProps | BodyCellProps>> => [
-	['type', 'name', 'number'].map(
+	['id', 'type', 'name', 'number'].map(
 		(value): HeaderCellProps => ({
 			type: 'HEADER_CELL_PROPS_TYPE',
 			value: value,
@@ -88,6 +88,10 @@ export const toAccountsTableViewProps = (accounts: {
 		.sort((a, b) => isPrecedent(accountTypePrecedenceTable)(a.type, b.type))
 		.map((account): Array<BodyCellProps> => {
 			return [
+				{
+					type: 'BODY_CELL_PROPS_TYPE',
+					value: account.id,
+				},
 				{
 					type: 'BODY_CELL_PROPS_TYPE',
 					value: (() => {
@@ -107,7 +111,7 @@ export const toAccountsTableViewProps = (accounts: {
 				},
 				{
 					type: 'BODY_CELL_PROPS_TYPE',
-					value: account.id,
+					value: account.number,
 				},
 			];
 		}),

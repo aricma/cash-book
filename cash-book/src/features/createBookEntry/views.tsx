@@ -56,7 +56,7 @@ const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props)
 
 const DifferenceAccount: React.FC<ToggleDiffViewProps> = (props) => (
 	<div className="bg-blue-100 dark:bg-blue-900 p-4 rounded-xl flex items-center justify-between space-x-4 text-blue-600 text-blue-400">
-		<input type="checkbox" checked={props.input.value} onChange={props.input.onChange} />
+		<input type="checkbox" checked={props.input.value} onChange={props.input.onChange} className="shrink-0" />
 		<div className="space-y-4">
 			<p className="text-blue-900 dark:text-blue-200 text-lg font-medium">{props.title}</p>
 			<div className="space-y-2">

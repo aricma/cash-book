@@ -42,7 +42,10 @@
 		"extends": [
 			"react-app",
 			"react-app/jest"
-		]
+		],
+		"rules": {
+			"jest/valid-title": "off"
+		}
 	},
 	"browserslist": {
 		"production": [

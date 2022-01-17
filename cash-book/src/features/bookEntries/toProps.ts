@@ -11,8 +11,9 @@ import {
 } from './props';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
 import { DateWithoutTime } from '../../models/domain/date';
-import { pad, compact, toInt } from '../../models/utils';
+import { pad, compact} from '../../models/utils';
 import { TransactionType, Transaction } from '../transactions/state';
+import {toCurrencyInt} from '../../models/currencyInt';
 
 export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => ({
 	title: 'Book Entries',
@@ -78,11 +79,11 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
 							value: transactionWithValue.value,
 						},
 					};
-				const accountValue = toInt('' + account.value);
+				const accountValue = toCurrencyInt('' + account.value);
 				if (accountValue === undefined) return accounts;
-				const transactionValue = toInt('' + transactionWithValue.value);
+				const transactionValue = toCurrencyInt('' + transactionWithValue.value);
 				if (transactionValue === undefined) return accounts;
-				const value = toInt('' + (accountValue + transactionValue));
+				const value = toCurrencyInt('' + (accountValue + transactionValue));
 				if (value === undefined) return accounts;
 				return {
 					...accounts,

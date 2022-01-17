@@ -1,4 +1,5 @@
-import { DateWithoutTime } from './domain/date';
+import {DateWithoutTime} from './domain/date';
+
 
 export const compact = <T>(xs: Array<T | undefined>): Array<T> => xs.filter((x) => x !== undefined) as Array<T>;
 
@@ -9,15 +10,6 @@ export const allFromEnum = (x: object /*Enum*/) => Object.keys(x).filter((item) 
 
 export const toNumber = (value: string): number | undefined =>
 	Number.isNaN(Number(value)) ? undefined : Number(value);
-
-export const toInt = (value: string): number | undefined => {
-	if (value === '') return undefined;
-	if (Number.isNaN(Number(value))) return undefined;
-	if (/^\d+$/.test(value)) return Number(value);
-	// if (/^\d+[,.]\d$/.test(value)) return Number(value.replace(/[,.]/, '') + "0");
-	if (/^\d+[,.]\d{2}$/.test(value)) return Number(value.replace(/[,.]/, ''));
-	return undefined;
-};
 
 export type PrecedenceTable<A, B> = Array<[A, B, -1 | 0 | 1]>;
 export const isPrecedent =

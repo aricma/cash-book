@@ -27,7 +27,7 @@ export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
 		<div className="flex items-center space-x-2">
 			{props.accounts.map((accountProps, index) => (
 				<React.Fragment key={index}>
-					<div className="bg-blue-200 dark:bg-blue-900 p-4 rounded-md space-y-2 text-blue-600 dark:text-blue-200">
+					<div className="min-w-[12rem] bg-blue-200 dark:bg-blue-900 p-4 rounded-md space-y-2 text-blue-600 dark:text-blue-200">
 						<p className="text-xl font-medium">{accountProps.title}</p>
 						<p className="dark:text-blue-400">{accountProps.number}</p>
 						<div className="flex justify-end">

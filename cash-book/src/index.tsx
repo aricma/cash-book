@@ -23,35 +23,38 @@ import reportWebVitals from './reportWebVitals';
 import {Settings} from './features/settings';
 import {DndProvider} from 'react-dnd';
 import {dndBackend} from './misc/dnd';
+import {GlobalStateWrapper} from './features/application';
 
 
 ReactDOM.render(
     <React.StrictMode>
         <ErrorBoundary>
             <Provider store={store}>
-                <DndProvider backend={dndBackend()}>
-                    <ResolveStateFromLocalStorage>
-                        <Router>
-                            <div className="relative bg-canvas w-screen min-h-screen mobile-save-padding">
-                                <div className="w-full p-4">
-                                    <div className="pb-[70px]">
-                                        <Routes>
-                                            <Route path={ROUTES_CREATE_BOOK_ENTRY} element={<CreateBookEntry/>}/>
-                                            <Route path={ROUTES_ACCOUNTS} element={<Accounts/>}/>
-                                            <Route path={ROUTES_TRANSACTIONS} element={<Transactions/>}/>
-                                            <Route path={ROUTES_BOOK_ENTRIES} element={<Bookings/>}/>
-                                            <Route path={ROUTES_SETTINGS} element={<Settings/>}/>
-                                        </Routes>
+                <ResolveStateFromLocalStorage>
+                    <GlobalStateWrapper>
+                        <DndProvider backend={dndBackend()}>
+                            <Router>
+                                <div className="relative bg-canvas w-screen min-h-screen mobile-save-padding">
+                                    <div className="w-full p-4">
+                                        <div className="pb-[70px]">
+                                            <Routes>
+                                                <Route path={ROUTES_CREATE_BOOK_ENTRY} element={<CreateBookEntry/>}/>
+                                                <Route path={ROUTES_ACCOUNTS} element={<Accounts/>}/>
+                                                <Route path={ROUTES_TRANSACTIONS} element={<Transactions/>}/>
+                                                <Route path={ROUTES_BOOK_ENTRIES} element={<Bookings/>}/>
+                                                <Route path={ROUTES_SETTINGS} element={<Settings/>}/>
+                                            </Routes>
+                                        </div>
                                     </div>
+                                    <div className="fixed z-20 bottom-0 w-full h-[70px]">
+                                        <Menu/>
+                                    </div>
+                                    <div id="modals" className="fixed z-10 top-0"/>
                                 </div>
-                                <div className="fixed z-20 bottom-0 w-full h-[70px]">
-                                    <Menu/>
-                                </div>
-                                <div id="modals" className="fixed z-10 top-0"/>
-                            </div>
-                        </Router>
-                    </ResolveStateFromLocalStorage>
-                </DndProvider>
+                            </Router>
+                        </DndProvider>
+                    </GlobalStateWrapper>
+                </ResolveStateFromLocalStorage>
             </Provider>
         </ErrorBoundary>
     </React.StrictMode>,

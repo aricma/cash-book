@@ -51,6 +51,15 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
             }),
         ),
     };
+    if (template === undefined) {
+        return {
+            title: title,
+            create: createButton,
+            template: templateSelect,
+            accounts: [],
+            entries: [],
+        };
+    }
     const differenceAccount = appState.accounts.accounts[template.diffAccountId];
     const differenceTransactions = Object.values(appState.bookEntries.entries).reduce((transactions: Array<TransactionWithValue>, bookEntry) => {
         return [
@@ -61,15 +70,6 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
             })),
         ];
     }, []).filter((transaction) => transaction.accountId !== template.diffAccountId);
-    if (/*template === undefined || */differenceAccount === undefined) {
-        return {
-            title: title,
-            create: createButton,
-            template: templateSelect,
-            accounts: [],
-            entries: [],
-        };
-    }
     return ({
         title: title,
         create: createButton,

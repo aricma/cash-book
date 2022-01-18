@@ -70,6 +70,9 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 		while (true) {
 			try {
 				yield SE.take(ApplicationActionType.APPLICATION_LOAD);
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_LOADING,
+				});
 				const value = loadFromLocalStorage(LOCAL_STORAGE_KEY);
 				if (value !== undefined) {
 					const appState: ApplicationState = JSON.parse(value);
@@ -88,6 +91,9 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 					yield SE.put({
 						type: ApplicationActionType.SETTINGS_SET,
 						state: appState.settings,
+					});
+					yield SE.put({
+						type: ApplicationActionType.APPLICATION_DEFAULT,
 					});
 				}
 			} catch (e) {

@@ -300,7 +300,8 @@ const validateCreateBookEntry = (appState: ApplicationState): CreateBookEntryVal
 const validateIfDateExists = (appState: ApplicationState): string | undefined => {
 	const templateConfig = appState.bookEntries.create.templates[appState.bookEntries.create.selectedTemplateId || ''];
 	if (templateConfig === undefined) return undefined;
-	return Object.keys(appState.bookEntries.entries).includes(templateConfig.date) ? 'Date already exists!' : undefined;
+	const entries = appState.bookEntries.templates[templateConfig.templateId] || {};
+	return Object.keys(entries).includes(templateConfig.date) ? 'Date already exists!' : undefined;
 };
 
 const validateTransactions = (

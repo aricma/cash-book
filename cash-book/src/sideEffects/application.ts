@@ -221,7 +221,9 @@ export const makeBookEntriesExportDay = () => {
 			try {
 				const action: BookEntriesExportDay = yield SE.take(ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY);
 				const appState: ApplicationState = yield SE.select(selectAppState);
-				const bookEntry = appState.bookEntries.entries[action.date];
+				const selectedTemplatesId = appState.bookEntries.selectedTemplateId;
+				if (selectedTemplatesId === undefined) continue;
+				const bookEntry = appState.bookEntries.templates[selectedTemplatesId][action.date];
 				if (bookEntry !== undefined) {
 					const rows = bookEntryToRows(appState, bookEntry);
 					const timeOfDownload = new Date().toISOString();
@@ -247,7 +249,9 @@ export const makeBookEntriesExportMonth = () => {
 				const date = DateWithoutTime.fromString(action.date);
 				const fromDate = getFirstDateOfTheMonth(date).getTime();
 				const toDate = getLastDateOfTheMonth(date).getTime();
-				const bookEntries = Object.values(appState.bookEntries.entries).filter((bookEntry) => {
+				const selectedTemplatesId = appState.bookEntries.selectedTemplateId;
+				if (selectedTemplatesId === undefined) continue;
+				const bookEntries = Object.values(appState.bookEntries.templates[selectedTemplatesId]).filter((bookEntry) => {
 					const currentDate = DateWithoutTime.fromString(bookEntry.date).getTime();
 					return fromDate <= currentDate && currentDate < toDate;
 				});

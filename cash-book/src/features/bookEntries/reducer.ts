@@ -106,16 +106,19 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 						[action.templateId]: undefined,
 					}),
 				},
-				entries: {
-					...state.entries,
-					[date]: {
-						date: date,
-						templateId: action.templateId,
-						transactions: compactObject({
-							...transactions,
-							[config.diffTransaction?.transactionId || '']: config.diffTransaction?.value,
-						}),
-					},
+				templates: {
+					...state.templates,
+					[action.templateId]: {
+						...(state.templates[action.templateId] || {}),
+						[date]: {
+							date: date,
+							templateId: action.templateId,
+							transactions: compactObject({
+								...transactions,
+								[config.diffTransaction?.transactionId || '']: config.diffTransaction?.value,
+							}),
+						},
+					}
 				},
 			};
 		}

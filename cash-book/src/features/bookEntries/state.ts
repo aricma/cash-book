@@ -1,8 +1,10 @@
 export interface BookEntriesState {
 	create: Create;
 	selectedTemplateId?: string;
-	entries: {
-		[date: string]: BookEntry;
+	templates: {
+		[templateId:string]: {
+			[date: string]: BookEntry;
+		};
 	};
 }
 
@@ -34,5 +36,5 @@ export const initialState: BookEntriesState = {
 	create: {
 		templates: {},
 	},
-	entries: {},
+	templates: {},
 };

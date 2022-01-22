@@ -100,7 +100,6 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 			return {
 				...state,
 				create: {
-					...state.create,
 					templates: compactObject({
 						...state.create.templates,
 						[action.templateId]: undefined,

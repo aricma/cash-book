@@ -60,8 +60,9 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
             entries: [],
         };
     }
+    const entries = appState.bookEntries.templates[template.id] || {};
     const differenceAccount = appState.accounts.accounts[template.diffAccountId];
-    const differenceTransactions = Object.values(appState.bookEntries.templates[template.id]).reduce((transactions: Array<TransactionWithValue>, bookEntry) => {
+    const differenceTransactions = Object.values(entries).reduce((transactions: Array<TransactionWithValue>, bookEntry) => {
         return [
             ...transactions,
             ...Object.entries(bookEntry.transactions).map(([transactionId, value]): TransactionWithValue => ({
@@ -82,7 +83,7 @@ export const toBookingsViewProps = (appState: ApplicationState): BookEntriesView
             };
         }),
         entries: Object.values(
-            Object.values(appState.bookEntries.templates[template.id])
+            Object.values(entries)
                 .filter((bookEntry) => bookEntry.templateId === appState.bookEntries.selectedTemplateId)
                 .sort((a, b) => {
                     const dateA = DateWithoutTime.fromString(a.date).getTime();

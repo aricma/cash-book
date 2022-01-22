@@ -43,7 +43,7 @@ const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props)
 				</div>
 			</React.Fragment>
 		))}
-		<TextInput {...props.cashEnd} autoFocus pattern="\d*" onBlur={props.cashEnd.onFinish} />
+		<TextInput {...props.cashEnd} pattern="\d*" onBlur={props.cashEnd.onFinish} />
 		{props.diffTransaction && <DifferenceAccount {...props.diffTransaction} />}
 		<div className="flex items-center justify-end space-x-2">
 			<button type="button" onClick={props.cancel.onSelect} className="button button-md">

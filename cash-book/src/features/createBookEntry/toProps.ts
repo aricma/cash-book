@@ -114,7 +114,7 @@ export const toTemplateConfigProps = (
 			value: config.cash.start,
 			placeholder: '',
 			onFinish: (value) => {
-				const newValue = parseTextInputOnFinish(value);
+				const newValue = value === "" ? "0" : parseTextInputOnFinish(value);
 				if (newValue === undefined) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
@@ -135,10 +135,10 @@ export const toTemplateConfigProps = (
 		cashEnd: {
 			type: 'TEXT_INPUT_PROPS_TYPE',
 			label: 'Cash Station: End Value',
-			value: config.cash.start,
+			value: config.cash.end,
 			placeholder: '',
 			onFinish: (value) => {
-				const newValue = parseTextInputOnFinish(value);
+				const newValue = value === "" ? "0" : parseTextInputOnFinish(value);
 				if (newValue === undefined) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,

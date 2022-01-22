@@ -18,7 +18,7 @@ import * as AccountsState from '../features/accounts/state';
 import * as TransactionsState from '../features/transactions/state';
 import { BookEntry } from '../features/bookEntries/state';
 import { TransactionType } from '../features/transactions/state';
-import {stateMigrations} from '../stateMigrations';
+import { stateMigrations } from '../stateMigrations';
 
 export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, value: string) => void) => {
 	return function* worker() {

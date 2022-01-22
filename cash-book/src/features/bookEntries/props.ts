@@ -1,10 +1,10 @@
-import {ButtonProps, OptionsInputProps, IconType} from '../../models/props';
+import { ButtonProps, OptionsInputProps, IconType } from '../../models/props';
 
 export enum BookEntriesViewPropsType {
-	SKELETON = "BOOK_ENTRIES_VIEW_PROPS_TYPE/SKELETON",
-	SELECT_TEMPLATE = "BOOK_ENTRIES_VIEW_PROPS_TYPE/SELECT_TEMPLATE",
-	BOOK_ENTRIES = "BOOK_ENTRIES_VIEW_PROPS_TYPE/BOOK_ENTRIES",
-	ERROR = "BOOK_ENTRIES_VIEW_PROPS_TYPE/ERROR",
+	SKELETON = 'BOOK_ENTRIES_VIEW_PROPS_TYPE/SKELETON',
+	SELECT_TEMPLATE = 'BOOK_ENTRIES_VIEW_PROPS_TYPE/SELECT_TEMPLATE',
+	BOOK_ENTRIES = 'BOOK_ENTRIES_VIEW_PROPS_TYPE/BOOK_ENTRIES',
+	ERROR = 'BOOK_ENTRIES_VIEW_PROPS_TYPE/ERROR',
 }
 
 export type BookEntriesViewProps = EntriesBookEntriesViewProps;
@@ -33,7 +33,7 @@ export interface BookEntryDayViewProps {
 		subtract: string;
 		end: string;
 		diff: string;
-	}
+	};
 	entries: Array<DataBookEntryViewProps | ErrorBookEnrtyViewProps>;
 }
 

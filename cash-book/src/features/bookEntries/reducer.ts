@@ -27,12 +27,12 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 								end: bookEntry.cash.end,
 							},
 							transactions: {
-								...bookEntry.transactions
-							}
-						}
-					}
-				}
-			}
+								...bookEntry.transactions,
+							},
+						},
+					},
+				},
+			};
 		}
 		case ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE:
 			return {
@@ -52,8 +52,8 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 							templateId: action.templateId,
 							date: DateWithoutTime.new().toISOString(),
 							cash: {
-								start: "0",
-								end: "0",
+								start: '0',
+								end: '0',
 							},
 							transactions: {},
 						},
@@ -74,7 +74,7 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 							cash: {
 								...template.cash,
 								start: action.value,
-							}
+							},
 						},
 					},
 				},
@@ -94,7 +94,7 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 							cash: {
 								...template.cash,
 								end: action.value,
-							}
+							},
 						},
 					},
 				},
@@ -176,7 +176,7 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 								[config.diffTransaction?.transactionId || '']: String(config.diffTransaction?.value),
 							}),
 						},
-					}
+					},
 				},
 			};
 		}

@@ -116,7 +116,7 @@ const toTransactionViewProps = (
 				fromIndex: fromIndex,
 				toIndex: toIndex,
 			});
-		}
+		},
 	};
 };
 

@@ -110,7 +110,7 @@ export const toTemplateConfigProps = (
 		},
 		cashStart: {
 			type: 'TEXT_INPUT_PROPS_TYPE',
-			label: "Cash Station: Start Value",
+			label: 'Cash Station: Start Value',
 			value: config.cash.start,
 			placeholder: '',
 			onFinish: (value) => {
@@ -134,7 +134,7 @@ export const toTemplateConfigProps = (
 		},
 		cashEnd: {
 			type: 'TEXT_INPUT_PROPS_TYPE',
-			label: "Cash Station: End Value",
+			label: 'Cash Station: End Value',
 			value: config.cash.start,
 			placeholder: '',
 			onFinish: (value) => {
@@ -382,7 +382,7 @@ const parseTextInputOnChange = (value: string): string | undefined => {
 	if (!/^[\d.,]*$/.test(value)) return undefined;
 	if (/^\d+[.,]\d{2}.$/.test(value)) return undefined;
 	return value;
-}
+};
 
 const parseTextInputOnFinish = (value: string): string | undefined => {
 	let newValue = value;
@@ -394,4 +394,4 @@ const parseTextInputOnFinish = (value: string): string | undefined => {
 	if (/^\d+[,]\d{2}$/.test(newValue)) newValue = newValue.replace(',', '.');
 	if (newValue === value) return undefined;
 	return newValue;
-}
+};

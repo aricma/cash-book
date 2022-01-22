@@ -9,11 +9,14 @@ import { Icon } from '../../components/icons';
 export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) => {
 	return (
 		<form className="w-full pb-[100px] space-y-4">
-			<Header title={props.title} left={() => (
-				<div className="flex items-center justify-start">
-					<Select {...props.template} />
-				</div>
-			)}/>
+			<Header
+				title={props.title}
+				left={() => (
+					<div className="flex items-center justify-start">
+						<Select {...props.template} />
+					</div>
+				)}
+			/>
 			{props.templateConfig && <TemplateConfigView {...props.templateConfig} />}
 		</form>
 	);

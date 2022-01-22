@@ -1,5 +1,4 @@
-import {DateWithoutTime} from './domain/date';
-
+import { DateWithoutTime } from './domain/date';
 
 export const compact = <T>(xs: Array<T | undefined>): Array<T> => xs.filter((x) => x !== undefined) as Array<T>;
 

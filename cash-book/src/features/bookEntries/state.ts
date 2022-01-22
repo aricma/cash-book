@@ -2,7 +2,7 @@ export interface BookEntriesState {
 	create: Create;
 	selectedTemplateId?: string;
 	templates: {
-		[templateId:string]: {
+		[templateId: string]: {
 			[date: string]: BookEntry;
 		};
 	};
@@ -21,7 +21,7 @@ export interface CreateBookEntry {
 	cash: {
 		start: string;
 		end: string;
-	},
+	};
 	transactions: {
 		[transactionId: string]: string;
 	};
@@ -33,7 +33,7 @@ export interface BookEntry {
 	cash: {
 		start: string;
 		end: string;
-	},
+	};
 	transactions: {
 		[transactionId: string]: string;
 	};

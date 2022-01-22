@@ -144,11 +144,14 @@ export type TransactionsAction =
 	| TransactionsCreateCancel;
 export type TransactionsSet = Action<ApplicationActionType.TRANSACTIONS_SET, { state: TransactionsState }>;
 export type TransactionsEdit = Action<ApplicationActionType.TRANSACTIONS_EDIT, { templateId: string }>;
-export type TransactionsMove = Action<ApplicationActionType.TRANSACTIONS_MOVE, {
-	templateId: string;
-	fromIndex: number;
-	toIndex: number;
-}>;
+export type TransactionsMove = Action<
+	ApplicationActionType.TRANSACTIONS_MOVE,
+	{
+		templateId: string;
+		fromIndex: number;
+		toIndex: number;
+	}
+>;
 export type TransactionsOrderInc = Action<
 	ApplicationActionType.TRANSACTIONS_ORDER_INC,
 	{ templateId: string; transactionId: string }
@@ -222,12 +225,20 @@ export type BookEntriesCreateSetTemplate = Action<
 		templateId: string;
 	}
 >;
-export type BookEntriesCreateSetCashStart = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START, {
-	templateId: string; value: string;
-}>;
-export type BookEntriesCreateSetCashEnd = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END, {
-	templateId: string; value: string;
-}>;
+export type BookEntriesCreateSetCashStart = Action<
+	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
+	{
+		templateId: string;
+		value: string;
+	}
+>;
+export type BookEntriesCreateSetCashEnd = Action<
+	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
+	{
+		templateId: string;
+		value: string;
+	}
+>;
 export type BookEntriesCreateSetDate = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DATE,
 	{ templateId: string; date: string }

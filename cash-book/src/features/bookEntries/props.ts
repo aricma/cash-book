@@ -26,6 +26,14 @@ export interface BookEntryMonthViewProps {
 export interface BookEntryDayViewProps {
 	date: string;
 	export: ButtonProps;
+	edit: ButtonProps;
+	cashInfo: {
+		start: string;
+		add: string;
+		subtract: string;
+		end: string;
+		diff: string;
+	}
 	entries: Array<DataBookEntryViewProps | ErrorBookEnrtyViewProps>;
 }
 

@@ -18,6 +18,7 @@ import * as AccountsState from '../features/accounts/state';
 import * as TransactionsState from '../features/transactions/state';
 import { BookEntry } from '../features/bookEntries/state';
 import { TransactionType } from '../features/transactions/state';
+import {stateMigrations} from '../stateMigrations';
 
 export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, value: string) => void) => {
 	return function* worker() {
@@ -75,7 +76,7 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 				});
 				const value = loadFromLocalStorage(LOCAL_STORAGE_KEY);
 				if (value !== undefined) {
-					const appState: ApplicationState = JSON.parse(value);
+					const appState: ApplicationState = stateMigrations(JSON.parse(value));
 					yield SE.put({
 						type: ApplicationActionType.ACCOUNTS_SET,
 						state: appState.accounts,

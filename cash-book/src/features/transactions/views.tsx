@@ -17,14 +17,14 @@ import {Target} from './dndDraggable';
 export const TransactionsView: React.FC<TransactionsViewProps> = (props) => {
     return (
         <div className="space-y-12 pb-[100px]">
-            <Header title={props.title}>
+            <Header title={props.title} right={() => (
                 <div className="flex items-center justify-end">
                     <button type="button" onClick={props.create.onSelect} className="button-prime button-xs">
                         {props.create.icon && <Icon type={props.create.icon} className="w-5 h-5"/>}
                         <span className="sr-only">{props.create.title}</span>
                     </button>
                 </div>
-            </Header>
+            )}/>
             <div className="space-y-8">
                 {props.templates.map((templateViewProps, index) => (
                     <React.Fragment key={index}>
@@ -100,14 +100,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
 export const CreateTemplateView: React.FC<CreateTemplateViewProps> = (props) => (
     <div className="h-full flex flex-col">
         <div className="flex-shrink-0 p-4">
-            <Header title={props.title}>
+            <Header title={props.title} right={() => (
                 <div className="flex items-center justify-end">
                     <button type="button" onClick={props.close.onSelect} className="link link-sm">
                         {props.close.icon && <Icon type={props.close.icon} className="w-5 h-5"/>}
                         <span className="sr-only">{props.close.title}</span>
                     </button>
                 </div>
-            </Header>
+            )}/>
         </div>
         <div className="flex-grow pb-[250px] space-y-8 overflow-auto p-4">
             <div className="space-y-2">
@@ -136,6 +136,14 @@ export const CreateTemplateView: React.FC<CreateTemplateViewProps> = (props) => 
                                 <CreateTransactionView {...transactionConfig} />
                             </React.Fragment>
                         ))}
+                </div>
+                <div className="flex items-center justify-end">
+                    {props.transactions && props.transactions?.length > 0 && props.addTransaction && (
+                        <button type="button" onClick={props.addTransaction.onSelect} className="button-prime button-xs">
+                            {props.addTransaction.icon && <Icon type={props.addTransaction.icon} className="w-5 h-5"/>}
+                            <span className="sr-only">{props.addTransaction.title}</span>
+                        </button>
+                    )}
                 </div>
             </div>
             <div className="flex items-center justify-end space-x-2">
@@ -179,7 +187,7 @@ export const CreateTransactionView: React.FC<CreateTransactionViewProps> = (prop
         </div>
         <div className="flex-shrink-0">
             <div className="h-full flex flex-col items-center justify-between">
-                <button type="button" onClick={props.remove.onSelect} className="hover:text-blue-500">
+                <button type="button" onClick={props.remove.onSelect} className="text-1 hover:text-blue-500">
                     {props.remove.icon && <Icon type={props.remove.icon} className="w-5 h-5"/>}
                     <span className="sr-only">{props.remove.title}</span>
                 </button>

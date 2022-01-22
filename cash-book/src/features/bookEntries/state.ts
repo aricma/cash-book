@@ -9,7 +9,6 @@ export interface BookEntriesState {
 }
 
 export interface Create {
-	selectedTemplateId?: string;
 	templates: {
 		[templateId: string]: CreateBookEntry;
 	};
@@ -19,6 +18,10 @@ export interface CreateBookEntry {
 	templateId: string;
 	date: string;
 	diffTransaction?: { transactionId: string; value: number };
+	cash: {
+		start: string;
+		end: string;
+	},
 	transactions: {
 		[transactionId: string]: string;
 	};
@@ -27,8 +30,12 @@ export interface CreateBookEntry {
 export interface BookEntry {
 	date: string;
 	templateId: string;
+	cash: {
+		start: string;
+		end: string;
+	},
 	transactions: {
-		[transactionId: string]: number;
+		[transactionId: string]: string;
 	};
 }
 

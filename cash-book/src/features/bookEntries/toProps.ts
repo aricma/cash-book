@@ -13,7 +13,7 @@ import {TransactionType} from '../transactions/state';
 import {TransactionWithValue, accountWithValue} from './misc';
 import {ROUTES_CREATE_BOOK_ENTRY} from '../../variables/routes';
 import {DateWithoutTime} from '../../models/domain/date';
-import {pad, compact} from '../../models/utils';
+import {pad, compact, toNumber} from '../../models/utils';
 
 
 export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => {
@@ -141,6 +141,51 @@ const toBookEntryMonthViewProps = (appState: ApplicationState, bookEntry: BookEn
     };
 };
 
+export const toAddInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
+    return Object.entries(bookEntry.transactions).reduce((addInfo: string, [transactionId, value]) => {
+        const transaction = appState.transactions.transactions[transactionId]
+        if (transaction === undefined) return addInfo;
+        switch (transaction.type) {
+            case TransactionType.SYS_IN:
+            case TransactionType.IN:
+                return String(toNumberOrZero(addInfo) + toNumberOrZero(value));
+            default: return addInfo;
+        }
+    }, "0");
+}
+
+export const toSubtractInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
+    return Object.entries(bookEntry.transactions).reduce((subInfo: string, [transactionId, value]) => {
+        const transaction = appState.transactions.transactions[transactionId]
+        if (transaction === undefined) return subInfo;
+        switch (transaction.type) {
+            case TransactionType.SYS_OUT:
+            case TransactionType.OUT:
+                return String(toNumberOrZero(subInfo) - toNumberOrZero(value));
+            default: return subInfo;
+        }
+    }, "0");
+}
+
+export const toDiffInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
+    const aggregatedEnd = Object.entries(bookEntry.transactions).reduce((diffInfo: string, [transactionId, value]) => {
+        const transaction = appState.transactions.transactions[transactionId]
+        if (transaction === undefined) return diffInfo;
+        switch (transaction.type) {
+            case TransactionType.SYS_IN:
+            case TransactionType.IN:
+                return String(toNumberOrZero(diffInfo) + toNumberOrZero(value));
+            case TransactionType.SYS_OUT:
+            case TransactionType.OUT:
+                return String(toNumberOrZero(diffInfo) - toNumberOrZero(value));
+            default: return diffInfo;
+        }
+    }, bookEntry.cash.start);
+    return String(toNumberOrZero(aggregatedEnd) + toNumberOrZero(bookEntry.cash.end));
+}
+
+export const toNumberOrZero = (value: string) => toNumber(value) || 0;
+
 const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntry): BookEntryDayViewProps => {
     return {
         date: DateWithoutTime.fromString(bookEntry.date).toLocaleDateString('de-DE', {
@@ -159,6 +204,32 @@ const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntr
                     date: bookEntry.date,
                 });
             },
+        },
+        edit: {
+            type: 'BUTTON_PROPS_TYPE',
+            icon: IconType.PENCIL_ALT_FILL,
+            title: 'Edit',
+            onSelect: () => {
+                const hasCreateStateForTemplateId = !!appState.bookEntries.create.templates[bookEntry.templateId];
+                const userConfirmation = hasCreateStateForTemplateId && window.confirm(OVERWRITE_CREATE_STATE_CONFIRM_MESSAGE);
+                if (hasCreateStateForTemplateId && !userConfirmation) return;
+                dispatch({
+                    type: ApplicationActionType.BOOK_ENTRIES_EDIT,
+                    templateId: bookEntry.templateId,
+                    date: bookEntry.date,
+                });
+                dispatch({
+                    type: ApplicationActionType.ROUTER_GO_TO,
+                    path: ROUTES_CREATE_BOOK_ENTRY,
+                });
+            },
+        },
+        cashInfo: {
+            start: bookEntry.cash.start,
+            add: toAddInfo(appState, bookEntry),
+            subtract: toSubtractInfo(appState, bookEntry).replace("-", "- "),
+            end: bookEntry.cash.end,
+            diff: toDiffInfo(appState, bookEntry),
         },
         entries: toBookEntryViewProps(appState, bookEntry),
     };
@@ -212,3 +283,5 @@ const toBookEntryViewProps = (appState: ApplicationState, bookEntry: BookEntry) 
         },
     );
 };
+
+const OVERWRITE_CREATE_STATE_CONFIRM_MESSAGE = "Do you really want to edit this date, while you still haven't submitted your current date? This action can not be undone!";

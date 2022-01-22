@@ -5,7 +5,7 @@ import {toCurrencyInt} from '../../models/currencyInt';
 
 
 export const transactionValue = (appState: ApplicationState): number => {
-    const selectedTemplateId = appState.bookEntries.create.selectedTemplateId;
+    const selectedTemplateId = appState.bookEntries.selectedTemplateId;
     if (selectedTemplateId === undefined) return 0;
     const template = appState.transactions.templates[selectedTemplateId];
     const config = appState.bookEntries.create.templates[selectedTemplateId];

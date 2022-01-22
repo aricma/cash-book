@@ -9,8 +9,11 @@ import { Icon } from '../../components/icons';
 export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) => {
 	return (
 		<form className="w-full pb-[100px] space-y-4">
-			<Header title={props.title} />
-			<Select {...props.template} />
+			<Header title={props.title} left={() => (
+				<div className="flex items-center justify-start">
+					<Select {...props.template} />
+				</div>
+			)}/>
 			{props.templateConfig && <TemplateConfigView {...props.templateConfig} />}
 		</form>
 	);
@@ -29,13 +32,15 @@ const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props)
 			</div>
 			<DatePickerInput {...props.date.input} />
 		</div>
+		<TextInput {...props.cashStart} autoFocus pattern="\d*" onBlur={props.cashStart.onFinish} />
 		{props.transactions.map((inputProps, index) => (
 			<React.Fragment key={index}>
 				<div className="space-y-1">
-					<TextInput {...inputProps} autoFocus={index === 0} pattern="\d*" onBlur={inputProps.onFinish} />
+					<TextInput {...inputProps} pattern="\d*" onBlur={inputProps.onFinish} />
 				</div>
 			</React.Fragment>
 		))}
+		<TextInput {...props.cashEnd} autoFocus pattern="\d*" onBlur={props.cashEnd.onFinish} />
 		{props.diffTransaction && <DifferenceAccount {...props.diffTransaction} />}
 		<div className="flex items-center justify-end space-x-2">
 			<button type="button" onClick={props.cancel.onSelect} className="button button-md">

@@ -20,8 +20,9 @@ export interface CreateBookEntryTemplateConfigProps {
 		yesterday: ButtonProps;
 		today: ButtonProps;
 	};
+	cashStart: TextInputProps;
 	transactions: Array<TextInputProps>;
-	addTransaction: ButtonProps;
+	cashEnd: TextInputProps;
 	diffTransaction?: ToggleDiffViewProps;
 	cancel: ButtonProps;
 	submit: DisabledButtonProps | ButtonProps;

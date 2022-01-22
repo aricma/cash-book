@@ -51,10 +51,13 @@ export enum ApplicationActionType {
 	TRANSACTIONS_CREATE_TEMPLATE_SUBMIT = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/CREATE/TEMPLATE/SUBMIT',
 
 	BOOK_ENTRIES_SET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/SET',
+	BOOK_ENTRIES_EDIT = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EDIT',
 	BOOK_ENTRIES_EXPORT_DAY = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EXPORT/DAY',
 	BOOK_ENTRIES_EXPORT_MONTH = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EXPORT/MONTH',
 	BOOK_ENTRIES_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/TEMPLATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TEMPLATE/SET',
+	BOOK_ENTRIES_CREATE_SET_CASH_START = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/CASH/START',
+	BOOK_ENTRIES_CREATE_SET_CASH_END = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/CASH/END',
 	BOOK_ENTRIES_CREATE_SET_DATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TRANSACTION/SET',
 	BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DIFFERENCE/SET',
@@ -196,16 +199,20 @@ export type TransactionsCreateCancel = Action<ApplicationActionType.TRANSACTIONS
 
 export type BookingsAction =
 	| BookingsSet
+	| BookingsEdit
 	| BookEntriesExportDay
 	| BookEntriesExportMonth
 	| BookEntriesSetTemplate
 	| BookEntriesCreateSetTemplate
+	| BookEntriesCreateSetCashStart
+	| BookEntriesCreateSetCashEnd
 	| BookEntriesCreateSetDate
 	| BookEntriesCreateSetTransaction
 	| BookEntriesCreateSetDiffTransaction
 	| BookEntriesCreateCancel
 	| BookEntriesCreateSubmit;
 export type BookingsSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { state: BookEntriesState }>;
+export type BookingsEdit = Action<ApplicationActionType.BOOK_ENTRIES_EDIT, { templateId: string; date: string }>;
 export type BookEntriesExportDay = Action<ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY, { date: string }>;
 export type BookEntriesExportMonth = Action<ApplicationActionType.BOOK_ENTRIES_EXPORT_MONTH, { date: string }>;
 export type BookEntriesSetTemplate = Action<ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE, { templateId: string }>;
@@ -215,6 +222,12 @@ export type BookEntriesCreateSetTemplate = Action<
 		templateId: string;
 	}
 >;
+export type BookEntriesCreateSetCashStart = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START, {
+	templateId: string; value: string;
+}>;
+export type BookEntriesCreateSetCashEnd = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END, {
+	templateId: string; value: string;
+}>;
 export type BookEntriesCreateSetDate = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DATE,
 	{ templateId: string; date: string }

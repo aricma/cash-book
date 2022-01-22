@@ -29,6 +29,10 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Outline.ArrowNarrowRightIcon {...props} />;
 		case IconType.ARROW_NARROW_LEFT_STROKE:
 			return <Outline.ArrowNarrowLeftIcon {...props} />;
+		case IconType.TRENDING_UP_FILL:
+			return <Outline.TrendingUpIcon {...props} />;
+		case IconType.TRENDING_DOWN_FILL:
+			return <Outline.TrendingDownIcon {...props} />;
 		case IconType.CLOSE_FILL:
 			return <Solid.XIcon {...props} />;
 		case IconType.BOOK_OPEN_FILL:

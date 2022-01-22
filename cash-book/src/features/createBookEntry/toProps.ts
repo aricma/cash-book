@@ -24,14 +24,14 @@ export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsReques
 		title: 'New Book Entry',
 		template: {
 			type: 'OPTIONS_INPUT_PROPS_TYPE',
-			value: req.appState.transactions.templates[req.appState.bookEntries.create.selectedTemplateId || '']?.name || '',
+			value: req.appState.transactions.templates[req.appState.bookEntries.selectedTemplateId || '']?.name || '',
 			placeholder: 'Set transaction template',
 			options: Object.values(req.appState.transactions.templates).map((template) => ({
 				type: 'BUTTON_PROPS_TYPE',
 				title: template.name,
 				onSelect: () => {
 					dispatch({
-						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
+						type: ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE,
 						templateId: template.id,
 					});
 				},
@@ -51,7 +51,7 @@ interface ToTemplateConfigPropsRequest {
 export const toTemplateConfigProps = (
 	req: ToTemplateConfigPropsRequest
 ): CreateBookEntryTemplateConfigProps | undefined => {
-	const selectedTemplateId = req.appState.bookEntries.create.selectedTemplateId;
+	const selectedTemplateId = req.appState.bookEntries.selectedTemplateId;
 	const config = req.appState.bookEntries.create.templates[selectedTemplateId || ''];
 	const template = req.appState.transactions.templates[selectedTemplateId || ''];
 	if (config === undefined) return undefined;
@@ -108,6 +108,54 @@ export const toTemplateConfigProps = (
 				},
 			},
 		},
+		cashStart: {
+			type: 'TEXT_INPUT_PROPS_TYPE',
+			label: "Cash Station: Start Value",
+			value: config.cash.start,
+			placeholder: '',
+			onFinish: (value) => {
+				const newValue = parseTextInputOnFinish(value);
+				if (newValue === undefined) return;
+				dispatch({
+					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
+					templateId: config.templateId,
+					value: newValue,
+				});
+			},
+			onChange: (value) => {
+				const newValue = parseTextInputOnChange(value);
+				if (newValue === undefined) return;
+				dispatch({
+					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
+					templateId: config.templateId,
+					value: newValue,
+				});
+			},
+		},
+		cashEnd: {
+			type: 'TEXT_INPUT_PROPS_TYPE',
+			label: "Cash Station: End Value",
+			value: config.cash.start,
+			placeholder: '',
+			onFinish: (value) => {
+				const newValue = parseTextInputOnFinish(value);
+				if (newValue === undefined) return;
+				dispatch({
+					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
+					templateId: config.templateId,
+					value: newValue,
+				});
+			},
+			onChange: (value) => {
+				const newValue = parseTextInputOnChange(value);
+				if (newValue === undefined) return;
+				dispatch({
+					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
+					templateId: config.templateId,
+					value: newValue,
+				});
+			},
+		},
 		transactions: template.transactions.map((transactionsId) => {
 			const transaction = req.appState.transactions.transactions[transactionsId];
 			return {
@@ -121,14 +169,8 @@ export const toTemplateConfigProps = (
 						: validationMap?.transactions[transaction.id]
 					: undefined,
 				onFinish: (value) => {
-					let newValue = value;
-					if (/^[.,]+.*$/.test(newValue)) newValue = '0.' + newValue.replace(/[,.]+/, '');
-					if (/^[.,]$/.test(newValue)) newValue = '0';
-					if (/^[.,]\d+$/.test(newValue)) newValue = '0' + newValue;
-					if (/^\d+[.,]$/.test(newValue)) newValue = newValue.slice(0, -1);
-					if (/^\d+[.,]\d$/.test(newValue)) newValue = newValue + '0';
-					if (/^\d+[,]\d{2}$/.test(newValue)) newValue = newValue.replace(',', '.');
-					if (newValue === value) return;
+					const newValue = parseTextInputOnFinish(value);
+					if (newValue === undefined) return;
 					dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 						templateId: config.templateId,
@@ -137,11 +179,7 @@ export const toTemplateConfigProps = (
 					});
 				},
 				onChange: (value) => {
-					const newValue = ((): string | undefined => {
-						if (!/^[\d.,]*$/.test(value)) return undefined;
-						if (/^\d+[.,]\d{2}.$/.test(value)) return undefined;
-						return value;
-					})();
+					const newValue = parseTextInputOnChange(value);
 					if (newValue === undefined) return;
 					dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
@@ -152,16 +190,6 @@ export const toTemplateConfigProps = (
 				},
 			};
 		}),
-		addTransaction: {
-			type: 'BUTTON_PROPS_TYPE',
-			icon: IconType.PLUS_FILL,
-			title: 'Add Transaction',
-			onSelect: () => {
-				dispatch({
-					type: ApplicationActionType.TRANSACTIONS_CREATE_TRANSACTION_ADD,
-				});
-			},
-		},
 		diffTransaction:
 			diffValue !== 0
 				? {
@@ -239,7 +267,7 @@ export const toOverrideDateConfirmationModalViewProps = (
 	appState: ApplicationState,
 	closeModal: () => void
 ): OverrideDateConfirmationModalViewProps | undefined => {
-	const selectedTemplateId = appState.bookEntries.create.selectedTemplateId;
+	const selectedTemplateId = appState.bookEntries.selectedTemplateId;
 	const config = appState.bookEntries.create.templates[selectedTemplateId || ''];
 	if (config === undefined) return undefined;
 	const dateDisplay = DateWithoutTime.fromString(config.date).toLocaleDateString('de-DE', {
@@ -298,7 +326,7 @@ const validateCreateBookEntry = (appState: ApplicationState): CreateBookEntryVal
 };
 
 const validateIfDateExists = (appState: ApplicationState): string | undefined => {
-	const templateConfig = appState.bookEntries.create.templates[appState.bookEntries.create.selectedTemplateId || ''];
+	const templateConfig = appState.bookEntries.create.templates[appState.bookEntries.selectedTemplateId || ''];
 	if (templateConfig === undefined) return undefined;
 	const entries = appState.bookEntries.templates[templateConfig.templateId] || {};
 	return Object.keys(entries).includes(templateConfig.date) ? 'Date already exists!' : undefined;
@@ -307,7 +335,7 @@ const validateIfDateExists = (appState: ApplicationState): string | undefined =>
 const validateTransactions = (
 	appState: ApplicationState
 ): { [transactionId: string]: string | undefined } | undefined => {
-	const selectedTemplateId = appState.bookEntries.create.selectedTemplateId;
+	const selectedTemplateId = appState.bookEntries.selectedTemplateId;
 	if (selectedTemplateId === undefined) return undefined;
 	const template = appState.transactions.templates[selectedTemplateId];
 	const config = appState.bookEntries.create.templates[selectedTemplateId];
@@ -331,7 +359,7 @@ const validateTransaction = (value?: string): string | undefined => {
 };
 
 const validateTransactionValue = (appState: ApplicationState): string | undefined => {
-	const selectedTemplateId = appState.bookEntries.create.selectedTemplateId;
+	const selectedTemplateId = appState.bookEntries.selectedTemplateId;
 	if (selectedTemplateId === undefined) return 'No Template selected!';
 	const config = appState.bookEntries.create.templates[selectedTemplateId];
 	if (config === undefined) return 'Found no config!';
@@ -349,3 +377,21 @@ const validateTransactionValue = (appState: ApplicationState): string | undefine
 	const value = transactionValue(appState);
 	return value === 0 ? undefined : 'Transactions result to ' + value + '!';
 };
+
+const parseTextInputOnChange = (value: string): string | undefined => {
+	if (!/^[\d.,]*$/.test(value)) return undefined;
+	if (/^\d+[.,]\d{2}.$/.test(value)) return undefined;
+	return value;
+}
+
+const parseTextInputOnFinish = (value: string): string | undefined => {
+	let newValue = value;
+	if (/^[.,]+.*$/.test(newValue)) newValue = '0.' + newValue.replace(/[,.]+/, '');
+	if (/^[.,]$/.test(newValue)) newValue = '0';
+	if (/^[.,]\d+$/.test(newValue)) newValue = '0' + newValue;
+	if (/^\d+[.,]$/.test(newValue)) newValue = newValue.slice(0, -1);
+	if (/^\d+[.,]\d$/.test(newValue)) newValue = newValue + '0';
+	if (/^\d+[,]\d{2}$/.test(newValue)) newValue = newValue.replace(',', '.');
+	if (newValue === value) return undefined;
+	return newValue;
+}

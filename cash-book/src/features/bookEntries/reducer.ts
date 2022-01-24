@@ -151,21 +151,28 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT: {
 			const config = state.create.templates[action.templateId];
 			if (config.date === undefined) return state;
-			const date = config.date;
 			return {
 				...state,
 				create: {
 					templates: compactObject({
 						...state.create.templates,
-						[action.templateId]: undefined,
+						[action.templateId]: {
+							...state.create.templates[action.templateId],
+							diffTransaction: undefined,
+							cash: {
+								start: "0",
+								end: "0",
+							},
+							transactions: {},
+						},
 					}),
 				},
 				templates: {
 					...state.templates,
 					[action.templateId]: {
 						...(state.templates[action.templateId] || {}),
-						[date]: {
-							date: date,
+						[config.date]: {
+							date: config.date,
 							templateId: action.templateId,
 							cash: {
 								start: config.cash.start,

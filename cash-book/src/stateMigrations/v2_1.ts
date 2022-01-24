@@ -1,6 +1,4 @@
 import { V2 } from './v2';
-import { V1 } from './v1';
-import { compactObject } from '../models/utils';
 
 export interface V2_1 {
 	__version__: 'v2.1';

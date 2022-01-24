@@ -13,7 +13,7 @@ import { TransactionType, Transaction } from '../transactions/state';
 import { TransactionWithValue, accountWithValue } from './misc';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
 import { DateWithoutTime } from '../../models/domain/date';
-import { pad, compact, toNumber } from '../../models/utils';
+import { pad, compact } from '../../models/utils';
 import { toCurrencyInt } from '../../models/currencyInt';
 
 export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => {

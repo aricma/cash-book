@@ -1,5 +1,10 @@
-export interface V1 {
-    __version__: 'v1';
+import {V2} from './v2';
+import {V1} from './v1';
+import {compactObject} from '../models/utils';
+
+
+export interface V2_1 {
+    __version__: 'v2.1';
     global: {
         type: string;
     };
@@ -12,7 +17,11 @@ export interface V1 {
                 [templateId: string]: {
                     templateId: string;
                     date: string;
-                    diffTransaction?: { transactionId: string; value: number };
+                    diffTransaction?: { transactionId: string; value: string };
+                    cash: {
+                        start: string;
+                        end: string;
+                    };
                     transactions: {
                         [transactionId: string]: string;
                     };
@@ -25,8 +34,12 @@ export interface V1 {
                 [date: string]: {
                     date: string;
                     templateId: string;
+                    cash: {
+                        start: string;
+                        end: string;
+                    };
                     transactions: {
-                        [transactionId: string]: number;
+                        [transactionId: string]: string;
                     };
                 };
             };
@@ -88,9 +101,40 @@ export interface V1 {
     };
 }
 
-export const toV1 = (state: any): V1 => {
+export const toV2_1 = (state: V2): V2_1 => {
     return {
         ...state,
-        __version__: 'v1',
+        __version__: 'v2.1',
+        bookEntries: {
+            ...state.bookEntries,
+            templates: {
+                ...Object.fromEntries(
+                    Object.entries(state.bookEntries.templates).map(([id, template]) => {
+                        return [
+                            id,
+                            {
+                                ...Object.fromEntries(
+                                    Object.entries(template).map(([id, entry]) => {
+                                        return [
+                                            id,
+                                            {
+                                                ...entry,
+                                                transactions: {
+                                                    ...Object.fromEntries(
+                                                        Object.entries(entry.transactions)
+                                                            .filter(([_, value]) => !(/^0+([.]0*)?$/.test(value)))
+                                                            .map(([id, value]) => [id, String(value)]),
+                                                    ),
+                                                },
+                                            },
+                                        ];
+                                    }),
+                                ),
+                            },
+                        ];
+                    }),
+                ),
+            },
+        },
     };
 };

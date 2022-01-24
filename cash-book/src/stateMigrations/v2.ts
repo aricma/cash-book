@@ -1,3 +1,6 @@
+import {V1} from './v1';
+
+
 export interface V2 {
 	__version__: 'v2';
 	global: {
@@ -95,3 +98,67 @@ export interface V2 {
 		};
 	};
 }
+
+export const toV2 = (state: V1): V2 => {
+	return {
+		...state,
+		__version__: 'v2',
+		bookEntries: {
+			...state.bookEntries,
+			create: {
+				templates: {
+					...Object.fromEntries(
+						Object.entries(state.bookEntries.create.templates).map(([id, entry]) => {
+							return [
+								id,
+								{
+									...entry,
+									diffTransaction: entry.diffTransaction ? {
+										...entry.diffTransaction,
+										value: String(entry.diffTransaction.value),
+									} : undefined,
+									cash: {
+										start: '0',
+										end: '0',
+									},
+								},
+							];
+						}),
+					),
+				},
+			},
+			templates: {
+				...Object.fromEntries(
+					Object.entries(state.bookEntries.templates).map(([id, template]) => {
+						return [
+							id,
+							{
+								...Object.fromEntries(
+									Object.entries(template).map(([id, entry]) => {
+										return [
+											id,
+											{
+												...entry,
+												cash: {
+													start: '0',
+													end: '0',
+												},
+												transactions: {
+													...Object.fromEntries(
+														Object.entries(entry.transactions).map(([id, value]) => {
+															return [id, String(value)];
+														}),
+													),
+												},
+											},
+										];
+									}),
+								),
+							},
+						];
+					}),
+				),
+			},
+		},
+	};
+};

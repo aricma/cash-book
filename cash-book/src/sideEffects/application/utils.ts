@@ -29,8 +29,18 @@ export const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry
             switch (index) {
                 case 0:
                     return 'EUR';
-                case 1:
-                    return (transaction.type === TransactionType.IN ? '+' : '-') + value.replace('.', ',');
+                case 1: {
+                    const parsedValue = value.replace('.', ',');
+                    switch (transaction.type) {
+                        case TransactionType.IN:
+                        case TransactionType.SYS_IN:
+                            return '+' + parsedValue;
+                        case TransactionType.OUT:
+                        case TransactionType.SYS_OUT:
+                            return '-' + parsedValue;
+                        default: return "";
+                    }
+                }
                 case 3: {
                     const date = DateWithoutTime.fromString(bookEntry.date);
                     const day = date.getDate();

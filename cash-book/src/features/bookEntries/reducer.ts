@@ -179,7 +179,8 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 								end: config.cash.end,
 							},
 							transactions: compactObject({
-								...config.transactions,
+								...Object.fromEntries(Object.entries(config.transactions)
+									.map(([key, value]) => [key, value === "" ? undefined : value])),
 								[config.diffTransaction?.transactionId || '']: String(config.diffTransaction?.value),
 							}),
 						},

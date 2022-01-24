@@ -7,7 +7,7 @@ import {
 } from './props';
 import { ApplicationState, dispatch } from '../../applicationState';
 import { DateWithoutTime } from '../../models/domain/date';
-import { compact, subtractDays } from '../../models/utils';
+import {compact, subtractDays, toNumber} from '../../models/utils';
 import { IconType } from '../../models/props';
 import { transactionValue } from '../bookEntries/misc';
 import { ROUTES_BOOK_ENTRIES } from '../../variables/routes';
@@ -355,6 +355,7 @@ const validateTransactions = (
 const validateTransaction = (value?: string): string | undefined => {
 	if (value === undefined) return undefined;
 	if (value === "") return undefined;
+	if ((toNumber(value) || 0) === 0) return 'Transactions can not be 0!';
 	if (!/^\d+([.]\d{2})?$/.test(value)) return 'Value needs 2 decimals(format: 0.00)!';
 	return undefined;
 };

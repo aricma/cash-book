@@ -110,14 +110,14 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 						</button>
 					</div>
 					<Disclosure.Panel className="space-y-4">
-						<p className="ml-2 text-blue-300 font-medium">Cash Station information</p>
+						<p className="ml-2 text-blue-900 dark:text-blue-300 font-medium">Cash Station information</p>
 						<div className="grid grid-cols-5 gap-2">
 							{cashInformation.map((props, index) => (
 								<React.Fragment key={index}>
-									<div className="bg-blue-900 rounded-md text-blue-300 py-1 px-4">
+									<div className="bg-blue-200 dark:bg-blue-900 rounded-md text-blue-600 dark:text-blue-300 py-1 px-4">
 										<div className="space-y-2">
 											<p className="font-medium text-left">{props[0]}</p>
-											<div className="flex items-center space-x-2">
+											<div className="flex items-center justify-between space-x-2">
 												{props[2] ? (
 													props[2] === IconType.TRENDING_UP_FILL ? (
 														<Icon type={IconType.TRENDING_UP_FILL} className="w-5 h-5 text-green-600" />
@@ -132,7 +132,7 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 								</React.Fragment>
 							))}
 						</div>
-						<p className="ml-2 text-blue-300 font-medium">Transactions</p>
+						<p className="ml-2 text-blue-900 dark:text-blue-300 font-medium">Transactions</p>
 						<div className="w-full px-2 text-2 grid grid-cols-[repeat(5,_minmax(min-content,_1fr))] gap-2">
 							{props.entries.map((bookingProps, index) => {
 								return (

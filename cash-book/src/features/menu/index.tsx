@@ -117,21 +117,23 @@ export interface MenuViewProps {
 export const MenuView: React.FC<MenuViewProps> = (props) => (
 	<div className="relative context w-screen h-full">
 		<div className="absolute indent-0 w-[110%] h-full bg-blue-500 dark:bg-blue-900 blur-lg" />
-		<div className="absolute z-10 bg-canvas w-full h-full px-2 py-2 grid grid-cols-[1fr_1fr_max-content_1fr_1fr] gap-2">
-			{props.pages.slice(0, 5).map((buttonProps, index) => {
-				if (index === 2) {
-					return (
-						<div key={index} className="flex items-center justify-center">
-							<button type="button" onClick={buttonProps.onSelect} className="button-prime button-md p-4 rounded-full">
-								{buttonProps.icon && <Icon type={buttonProps.icon} className="w-6 h-6" />}
-								<span className="sr-only">{buttonProps.title}</span>
-							</button>
-						</div>
-					);
-				} else {
-					return <MenuButton key={index} {...buttonProps} />;
-				}
-			})}
+		<div className="absolute z-10 bg-canvas w-full h-full">
+			<div className="w-full max-w-2xl h-full mx-auto px-2 py-2 grid grid-cols-[1fr_1fr_max-content_1fr_1fr] gap-2">
+				{props.pages.slice(0, 5).map((buttonProps, index) => {
+					if (index === 2) {
+						return (
+							<div key={index} className="flex items-center justify-center">
+								<button type="button" onClick={buttonProps.onSelect} className="button-prime button-md p-4 rounded-full">
+									{buttonProps.icon && <Icon type={buttonProps.icon} className="w-6 h-6" />}
+									<span className="sr-only">{buttonProps.title}</span>
+								</button>
+							</div>
+						);
+					} else {
+						return <MenuButton key={index} {...buttonProps} />;
+					}
+				})}
+			</div>
 		</div>
 	</div>
 );

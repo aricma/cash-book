@@ -210,7 +210,7 @@ export const toTemplateConfigProps = (
 									const transactionId = diffValue < 0 ? template.autoDiffInId : template.autoDiffOutId;
 									dispatch({
 										type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION,
-										transaction: { transactionId, value: Math.abs(diffValue) },
+										transaction: { transactionId, value: String(Math.abs(diffValue)) },
 									});
 								} else {
 									dispatch({ type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION });

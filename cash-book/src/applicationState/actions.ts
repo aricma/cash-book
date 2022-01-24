@@ -250,7 +250,7 @@ export type BookEntriesCreateSetTransaction = Action<
 export type BookEntriesCreateSetDiffTransaction = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION,
 	{
-		transaction?: { transactionId: string; value: number };
+		transaction?: { transactionId: string; value: string };
 	}
 >;
 export type BookEntriesCreateCancel = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL, { templateId: string }>;

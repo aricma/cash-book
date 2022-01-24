@@ -14,6 +14,7 @@ import { TransactionWithValue, accountWithValue } from './misc';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../variables/routes';
 import { DateWithoutTime } from '../../models/domain/date';
 import { pad, compact, toNumber } from '../../models/utils';
+import {toCurrencyInt} from '../../models/currencyInt';
 
 export const toBookingsViewProps = (appState: ApplicationState): BookEntriesViewProps => {
 	const title = 'Book Entries';
@@ -145,52 +146,48 @@ const toBookEntryMonthViewProps = (appState: ApplicationState, bookEntry: BookEn
 };
 
 export const toAddInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
-	return Object.entries(bookEntry.transactions).reduce((addInfo: string, [transactionId, value]) => {
+	return String(Object.entries(bookEntry.transactions).reduce((addInfo: number, [transactionId, value]) => {
 		const transaction = appState.transactions.transactions[transactionId];
 		if (transaction === undefined) return addInfo;
 		switch (transaction.type) {
-			case TransactionType.SYS_IN:
 			case TransactionType.IN:
-				return String(toNumberOrZero(addInfo) + toNumberOrZero(value));
+				return addInfo + toNumberOrZero(value);
 			default:
 				return addInfo;
 		}
-	}, '0');
+	}, 0) / 100);
 };
 
 export const toSubtractInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
-	return Object.entries(bookEntry.transactions).reduce((subInfo: string, [transactionId, value]) => {
+	return String(Object.entries(bookEntry.transactions).reduce((subInfo: number, [transactionId, value]) => {
 		const transaction = appState.transactions.transactions[transactionId];
 		if (transaction === undefined) return subInfo;
 		switch (transaction.type) {
-			case TransactionType.SYS_OUT:
 			case TransactionType.OUT:
-				return String(toNumberOrZero(subInfo) - toNumberOrZero(value));
+				return subInfo - toNumberOrZero(value);
 			default:
 				return subInfo;
 		}
-	}, '0');
+	}, 0) / 100);
 };
 
 export const toDiffInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
-	const aggregatedEnd = Object.entries(bookEntry.transactions).reduce((diffInfo: string, [transactionId, value]) => {
+	const aggregatedEnd = Object.entries(bookEntry.transactions).reduce((diffInfo: number, [transactionId, value]) => {
 		const transaction = appState.transactions.transactions[transactionId];
 		if (transaction === undefined) return diffInfo;
 		switch (transaction.type) {
-			case TransactionType.SYS_IN:
 			case TransactionType.IN:
-				return String(toNumberOrZero(diffInfo) + toNumberOrZero(value));
-			case TransactionType.SYS_OUT:
+				return diffInfo + toNumberOrZero(value);
 			case TransactionType.OUT:
-				return String(toNumberOrZero(diffInfo) - toNumberOrZero(value));
+				return diffInfo - toNumberOrZero(value);
 			default:
 				return diffInfo;
 		}
-	}, bookEntry.cash.start);
-	return String(toNumberOrZero(aggregatedEnd) + toNumberOrZero(bookEntry.cash.end));
+	}, toNumberOrZero(bookEntry.cash.start));
+	return String((aggregatedEnd - toNumberOrZero(bookEntry.cash.end)) / 100);
 };
 
-export const toNumberOrZero = (value: string) => toNumber(value) || 0;
+export const toNumberOrZero = (value: string) => toCurrencyInt(value) || 0;
 
 const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntry): BookEntryDayViewProps => {
 	return {

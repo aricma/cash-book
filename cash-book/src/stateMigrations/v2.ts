@@ -1,5 +1,4 @@
-import {V1} from './v1';
-
+import { V1 } from './v1';
 
 export interface V2 {
 	__version__: 'v2';
@@ -113,17 +112,19 @@ export const toV2 = (state: V1): V2 => {
 								id,
 								{
 									...entry,
-									diffTransaction: entry.diffTransaction ? {
-										...entry.diffTransaction,
-										value: String(entry.diffTransaction.value),
-									} : undefined,
+									diffTransaction: entry.diffTransaction
+										? {
+												...entry.diffTransaction,
+												value: String(entry.diffTransaction.value),
+										  }
+										: undefined,
 									cash: {
 										start: '0',
 										end: '0',
 									},
 								},
 							];
-						}),
+						})
 					),
 				},
 			},
@@ -147,16 +148,16 @@ export const toV2 = (state: V1): V2 => {
 													...Object.fromEntries(
 														Object.entries(entry.transactions).map(([id, value]) => {
 															return [id, String(value)];
-														}),
+														})
 													),
 												},
 											},
 										];
-									}),
+									})
 								),
 							},
 						];
-					}),
+					})
 				),
 			},
 		},

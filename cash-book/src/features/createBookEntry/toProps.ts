@@ -7,7 +7,7 @@ import {
 } from './props';
 import { ApplicationState, dispatch } from '../../applicationState';
 import { DateWithoutTime } from '../../models/domain/date';
-import {compact, subtractDays, toNumber} from '../../models/utils';
+import { compact, subtractDays, toNumber } from '../../models/utils';
 import { IconType } from '../../models/props';
 import { transactionValue } from '../bookEntries/misc';
 import { ROUTES_BOOK_ENTRIES } from '../../variables/routes';
@@ -114,7 +114,7 @@ export const toTemplateConfigProps = (
 			value: config.cash.start,
 			placeholder: '',
 			onFinish: (value) => {
-				const newValue = value === "" ? "0" : parseTextInputOnFinish(value);
+				const newValue = value === '' ? '0' : parseTextInputOnFinish(value);
 				if (newValue === undefined) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
@@ -138,7 +138,7 @@ export const toTemplateConfigProps = (
 			value: config.cash.end,
 			placeholder: '',
 			onFinish: (value) => {
-				const newValue = value === "" ? "0" : parseTextInputOnFinish(value);
+				const newValue = value === '' ? '0' : parseTextInputOnFinish(value);
 				if (newValue === undefined) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
@@ -354,7 +354,7 @@ const validateTransactions = (
 
 const validateTransaction = (value?: string): string | undefined => {
 	if (value === undefined) return undefined;
-	if (value === "") return undefined;
+	if (value === '') return undefined;
 	if ((toNumber(value) || 0) === 0) return 'Transactions can not be 0!';
 	if (!/^\d+([.]\d{2})?$/.test(value)) return 'Value needs 2 decimals(format: 0.00)!';
 	return undefined;

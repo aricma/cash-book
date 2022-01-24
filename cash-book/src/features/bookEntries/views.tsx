@@ -124,7 +124,9 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 													) : (
 														<Icon type={IconType.TRENDING_DOWN_FILL} className="shrink-0 w-5 h-5 text-red-600" />
 													)
-												) : <div />}
+												) : (
+													<div />
+												)}
 												<p className="place-self-center text-sm text-right">{props[1]}</p>
 											</div>
 										</div>

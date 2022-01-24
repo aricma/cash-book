@@ -1,15 +1,14 @@
 import * as SE from 'redux-saga/effects';
-import {makeBackupWorker} from './makeBackupWorker';
-import {makeLoadBackupWorker} from './makeLoadBackupWorker';
-import {makeReset} from './makeReset';
-import {makeSaveAppStateToLocalStorage} from './makeSaveAppStateToLocalStorage';
-import {makeLoadAppStateFromLocalStorage} from './makeLoadAppStateFromLocalStorage';
-import {makeAccountsImport} from './makeAccountsImport';
-import {makeAccountsExport} from './makeAccountsExport';
-import {makeBookEntriesExportDay} from './makeBookEntriesExportDay';
-import {makeBookEntriesExportMonth} from './makeBookEntriesExportMonth';
-import {loadFromLocalStorage, setInLocalStorage} from './utils';
-
+import { makeBackupWorker } from './makeBackupWorker';
+import { makeLoadBackupWorker } from './makeLoadBackupWorker';
+import { makeReset } from './makeReset';
+import { makeSaveAppStateToLocalStorage } from './makeSaveAppStateToLocalStorage';
+import { makeLoadAppStateFromLocalStorage } from './makeLoadAppStateFromLocalStorage';
+import { makeAccountsImport } from './makeAccountsImport';
+import { makeAccountsExport } from './makeAccountsExport';
+import { makeBookEntriesExportDay } from './makeBookEntriesExportDay';
+import { makeBookEntriesExportMonth } from './makeBookEntriesExportMonth';
+import { loadFromLocalStorage, setInLocalStorage } from './utils';
 
 export function* applicationBroker() {
 	yield SE.spawn(makeBackupWorker());

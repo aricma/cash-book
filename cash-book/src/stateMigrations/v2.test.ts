@@ -1,5 +1,5 @@
 import { V1 } from './v1';
-import {V2, toV2} from './v2';
+import { V2, toV2 } from './v2';
 
 describe(toV2.name, () => {
 	test('given a state v1 with create, then returns state v2', () => {

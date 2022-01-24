@@ -1,7 +1,7 @@
 import { Action } from '../models/reducers';
 import { AccountType, AccountsState, Account } from '../features/accounts/state';
 import { TransactionType, TransactionsState } from '../features/transactions/state';
-import {BookEntriesState} from '../features/bookEntries/state';
+import { BookEntriesState } from '../features/bookEntries/state';
 import { SettingsState } from '../features/settings/state';
 
 export enum ApplicationActionType {

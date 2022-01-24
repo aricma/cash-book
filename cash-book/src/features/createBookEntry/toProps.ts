@@ -391,9 +391,11 @@ const parseTextInputOnFinish = (value: string): string | undefined => {
 	if (/^[.,]+.*$/.test(newValue)) newValue = '0.' + newValue.replace(/[,.]+/, '');
 	if (/^[.,]$/.test(newValue)) newValue = '0';
 	if (/^[.,]\d+$/.test(newValue)) newValue = '0' + newValue;
+	if (/^\d+([.,]\d*)+$/.test(newValue)) newValue = newValue.split(/[,.]/).slice(0, 2).join('.');
 	if (/^\d+[.,]$/.test(newValue)) newValue = newValue.slice(0, -1);
 	if (/^\d+[.,]\d$/.test(newValue)) newValue = newValue + '0';
 	if (/^\d+[,]\d{2}$/.test(newValue)) newValue = newValue.replace(',', '.');
+	if (/^0+([,.]0*)?$/.test(newValue)) newValue = '0';
 	if (newValue === value) return undefined;
 	return newValue;
 };

@@ -120,11 +120,11 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 											<div className="flex items-center justify-between space-x-2">
 												{props[2] ? (
 													props[2] === IconType.TRENDING_UP_FILL ? (
-														<Icon type={IconType.TRENDING_UP_FILL} className="w-5 h-5 text-green-600" />
+														<Icon type={IconType.TRENDING_UP_FILL} className="shrink-0 w-5 h-5 text-green-600" />
 													) : (
-														<Icon type={IconType.TRENDING_DOWN_FILL} className="w-5 h-5 text-red-600" />
+														<Icon type={IconType.TRENDING_DOWN_FILL} className="shrink-0 w-5 h-5 text-red-600" />
 													)
-												) : null}
+												) : <div />}
 												<p className="place-self-center text-sm text-right">{props[1]}</p>
 											</div>
 										</div>

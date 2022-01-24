@@ -50,7 +50,7 @@ export const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry
 						return pad(day, 2) + pad(month, 2);
 					}
 					case 4:
-						return transaction.name;
+						return account.name;
 					case 7:
 						return account.number;
 					default:

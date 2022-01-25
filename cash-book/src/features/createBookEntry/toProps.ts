@@ -1,16 +1,18 @@
-import { AccountType } from '../accounts/state';
-import { ApplicationActionType } from '../../applicationState/actions';
+import {AccountType} from '../accounts/state';
+import {ApplicationActionType} from '../../applicationState/actions';
 import {
 	CreateBookEntryViewProps,
 	OverrideDateConfirmationModalViewProps,
 	CreateBookEntryTemplateConfigProps,
 } from './props';
-import { ApplicationState, dispatch } from '../../applicationState';
-import { DateWithoutTime } from '../../models/domain/date';
-import { compact, subtractDays, toNumber } from '../../models/utils';
-import { IconType } from '../../models/props';
-import { transactionValue } from '../bookEntries/misc';
-import { ROUTES_BOOK_ENTRIES } from '../../variables/routes';
+import {ApplicationState, dispatch} from '../../applicationState';
+import {DateWithoutTime} from '../../models/domain/date';
+import {compact, subtractDays, toNumber} from '../../models/utils';
+import {IconType} from '../../models/props';
+import {transactionValue} from '../bookEntries/misc';
+import {ROUTES_BOOK_ENTRIES} from '../../variables/routes';
+import {transactionParser, cashInformationParser} from '../../misc/parser';
+
 
 interface ToCreateBookEntryViewPropsRequest {
 	appState: ApplicationState;
@@ -69,6 +71,11 @@ export const toTemplateConfigProps = (
 		month: 'long',
 		day: 'numeric',
 	});
+	const textInputChangeHandler = (value: string): string | null => {
+		if (!/^[\d.,]*$/.test(value)) return null;
+		if (/^\d+[.,]\d{2}.$/.test(value)) return null;
+		return value;
+	};
 	return {
 		date: {
 			input: {
@@ -114,8 +121,8 @@ export const toTemplateConfigProps = (
 			value: config.cash.start,
 			placeholder: '',
 			onFinish: (value) => {
-				const newValue = value === '' ? '0' : parseTextInputOnFinish(value);
-				if (newValue === undefined) return;
+				const newValue = cashInformationParser(value);
+				if (newValue === value) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
 					templateId: config.templateId,
@@ -123,8 +130,8 @@ export const toTemplateConfigProps = (
 				});
 			},
 			onChange: (value) => {
-				const newValue = parseTextInputOnChange(value);
-				if (newValue === undefined) return;
+				const newValue = textInputChangeHandler(value);
+				if (newValue === null) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
 					templateId: config.templateId,
@@ -138,8 +145,8 @@ export const toTemplateConfigProps = (
 			value: config.cash.end,
 			placeholder: '',
 			onFinish: (value) => {
-				const newValue = value === '' ? '0' : parseTextInputOnFinish(value);
-				if (newValue === undefined) return;
+				const newValue = cashInformationParser(value);
+				if (newValue === value) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
 					templateId: config.templateId,
@@ -147,8 +154,8 @@ export const toTemplateConfigProps = (
 				});
 			},
 			onChange: (value) => {
-				const newValue = parseTextInputOnChange(value);
-				if (newValue === undefined) return;
+				const newValue = transactionParser(value);
+				if (newValue === null) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
 					templateId: config.templateId,
@@ -169,8 +176,8 @@ export const toTemplateConfigProps = (
 						: validationMap?.transactions[transaction.id]
 					: undefined,
 				onFinish: (value) => {
-					const newValue = parseTextInputOnFinish(value);
-					if (newValue === undefined) return;
+					const newValue = cashInformationParser(value);
+					if (newValue === value) return;
 					dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 						templateId: config.templateId,
@@ -179,8 +186,8 @@ export const toTemplateConfigProps = (
 					});
 				},
 				onChange: (value) => {
-					const newValue = parseTextInputOnChange(value);
-					if (newValue === undefined) return;
+					const newValue = textInputChangeHandler(value);
+					if (newValue === null) return;
 					dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 						templateId: config.templateId,
@@ -356,7 +363,7 @@ const validateTransaction = (value?: string): string | undefined => {
 	if (value === undefined) return undefined;
 	if (value === '') return undefined;
 	if ((toNumber(value) || 0) === 0) return 'Transactions can not be 0!';
-	if (!/^\d+([.]\d{2})?$/.test(value)) return 'Value needs 2 decimals(format: 0.00)!';
+	if (!/^\d+[.]\d{2}$/.test(value)) return 'Value needs 2 decimals(format: 0.00)!';
 	return undefined;
 };
 
@@ -378,24 +385,4 @@ const validateTransactionValue = (appState: ApplicationState): string | undefine
 	if (differenceAccount === undefined) return 'Difference account is missing!';
 	const value = transactionValue(appState);
 	return value === 0 ? undefined : 'Transactions result to ' + value + '!';
-};
-
-const parseTextInputOnChange = (value: string): string | undefined => {
-	if (!/^[\d.,]*$/.test(value)) return undefined;
-	if (/^\d+[.,]\d{2}.$/.test(value)) return undefined;
-	return value;
-};
-
-const parseTextInputOnFinish = (value: string): string | undefined => {
-	let newValue = value;
-	if (/^[.,]+.*$/.test(newValue)) newValue = '0.' + newValue.replace(/[,.]+/, '');
-	if (/^[.,]$/.test(newValue)) newValue = '0';
-	if (/^[.,]\d+$/.test(newValue)) newValue = '0' + newValue;
-	if (/^\d+([.,]\d*)+$/.test(newValue)) newValue = newValue.split(/[,.]/).slice(0, 2).join('.');
-	if (/^\d+[.,]$/.test(newValue)) newValue = newValue.slice(0, -1);
-	if (/^\d+[.,]\d$/.test(newValue)) newValue = newValue + '0';
-	if (/^\d+[,]\d{2}$/.test(newValue)) newValue = newValue.replace(',', '.');
-	if (/^0+([,.]0*)?$/.test(newValue)) newValue = '0';
-	if (newValue === value) return undefined;
-	return newValue;
 };

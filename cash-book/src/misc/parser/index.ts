@@ -4,7 +4,7 @@ import * as parsers from './parsers';
 export { makeParser } from './makeParser'
 export * as parsers from './parsers';
 
-export const transactionOnFinishParser = makeParser([
+export const transactionParser = makeParser([
     parsers.replaceCommaWithDot,
     parsers.removeMultipleFloatingPointsAndCommas,
     parsers.removeTrailingDots,
@@ -15,7 +15,7 @@ export const transactionOnFinishParser = makeParser([
     parsers.removeLeadingZeroBeforeOtherDigits,
 ]);
 
-export const cashInformationOnFinishParser = makeParser([
+export const cashInformationParser = makeParser([
     parsers.replaceEmptyStringWithZero,
 
     parsers.replaceCommaWithDot,

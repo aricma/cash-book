@@ -1,4 +1,4 @@
-import {transactionOnFinishParser, cashInformationOnFinishParser} from './index';
+import {transactionParser, cashInformationParser} from './index';
 
 
 type TestCases = Array<[given: string, expected: string]>;
@@ -15,10 +15,10 @@ const transactionsTestCases: TestCases = [
     [',.,6', '0.60'],
 ];
 
-describe(transactionOnFinishParser.name, () => {
+describe(transactionParser.name, () => {
 
     transactionsTestCases.forEach(([given, expected]) => test(`given "${given}", when called, then returns "${expected}"`, () => {
-        expect(transactionOnFinishParser(given)).toBe(expected);
+        expect(transactionParser(given)).toBe(expected);
     }));
 
 });
@@ -28,10 +28,10 @@ const cashInformationTestCases: TestCases = [
     ['', '0.00'],
 ];
 
-describe(cashInformationOnFinishParser.name, () => {
+describe(cashInformationParser.name, () => {
 
     cashInformationTestCases.forEach(([given, expected]) => test(`given "${given}", when called, then returns "${expected}"`, () => {
-        expect(cashInformationOnFinishParser(given)).toBe(expected);
+        expect(cashInformationParser(given)).toBe(expected);
     }));
 
 });

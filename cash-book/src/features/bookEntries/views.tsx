@@ -10,7 +10,7 @@ import { IconType } from '../../models/props';
 import { Icon } from '../../components/icons';
 import { Disclosure } from '@headlessui/react';
 import { Header } from '../menu';
-import {Select, OptionsType} from '../../components/select';
+import { Select, OptionsType } from '../../components/select';
 import { toNumber } from '../../models/utils';
 
 export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (

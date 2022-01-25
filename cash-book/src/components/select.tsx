@@ -4,8 +4,8 @@ import { Listbox } from '@headlessui/react';
 import { Icon } from './icons';
 
 export enum OptionsType {
-	BL = "SELECT_TYPE/BL",
-	BR = "SELECT_TYPE/BR",
+	BL = 'SELECT_TYPE/BL',
+	BR = 'SELECT_TYPE/BR',
 }
 export const Select: React.FC<OptionsInputProps & { optionsType?: OptionsType }> = (props) => {
 	React.useEffect(() => {
@@ -69,4 +69,4 @@ const Options: React.FC<{ type: OptionsType }> = (props) => {
 				</Listbox.Options>
 			);
 	}
-}
+};

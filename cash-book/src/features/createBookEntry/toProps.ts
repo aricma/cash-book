@@ -176,7 +176,7 @@ export const toTemplateConfigProps = (
 						: validationMap?.transactions[transaction.id]
 					: undefined,
 				onFinish: (value) => {
-					const newValue = cashInformationParser(value);
+					const newValue = transactionParser(value);
 					if (newValue === value) return;
 					dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,

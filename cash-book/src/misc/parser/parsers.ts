@@ -8,12 +8,12 @@ export const addLeadingFloatValueZero: Parser = {
 
 export const replaceCommaWithDot: Parser = {
     pattern: /[,]+/,
-    map: (value: string): string => value.replace(/[,]+/, '.'),
+    map: (value: string): string => value.replace(/[,]+/g, '.'),
 };
 
-export const removeMultipleFloatingPointsAndCommas: Parser = {
+export const replaceMultipleFloatingPointsAndCommas: Parser = {
     pattern: /[,.]{2,}/,
-    map: (value: string): string => value.replace(/[,.]+/, '.'),
+    map: (value: string): string => value.replace(/[,.]+/g, '.'),
 };
 
 // export const replaceInvalidWithZero: Parser = {
@@ -26,11 +26,11 @@ export const removeMultipleFloatingPointsAndCommas: Parser = {
 //     map: (): string => '0',
 // };
 //
-// export const removeTrailingDecimalSystems: Parser = {
-//     pattern: /^\d+([.]\d*)+$/,
-//     map: (value: string): string => value.split(/[.]/).slice(0, 2).join('.'),
-// };
-//
+export const removeTrailingDecimalSystems: Parser = {
+    pattern: /^\d+([.]\d*)+$/,
+    map: (value: string): string => value.split(/[.]/).slice(0, 2).join('.'),
+};
+
 export const removeLeadingZeroBeforeOtherDigits: Parser = {
     pattern: /^0+[^0]\./,
     map: (value: string): string => value.replace(/^0+/, ''),

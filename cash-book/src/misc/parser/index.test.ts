@@ -2,7 +2,7 @@ import {transactionParser, cashInformationParser} from './index';
 
 
 type TestCases = Array<[given: string, expected: string]>;
-const transactionsTestCases: TestCases = [
+const sharedTestCases: TestCases = [
     ['0', '0.00'],
     ['0.', '0.00'],
     ['0,', '0.00'],
@@ -13,6 +13,12 @@ const transactionsTestCases: TestCases = [
     ['3,,4', '3.40'],
     ['..45', '0.45'],
     [',.,6', '0.60'],
+    ['6,34,2.11', '6.34'],
+];
+
+const transactionsTestCases: TestCases = [
+    ...sharedTestCases,
+    ['', ''],
 ];
 
 describe(transactionParser.name, () => {
@@ -24,7 +30,7 @@ describe(transactionParser.name, () => {
 });
 
 const cashInformationTestCases: TestCases = [
-    ...transactionsTestCases,
+    ...sharedTestCases,
     ['', '0.00'],
 ];
 

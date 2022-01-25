@@ -123,7 +123,11 @@ export const MenuView: React.FC<MenuViewProps> = (props) => (
 					if (index === 2) {
 						return (
 							<div key={index} className="flex items-center justify-center">
-								<button type="button" onClick={buttonProps.onSelect} className="button-prime button-md p-4 rounded-full">
+								<button
+									type="button"
+									onClick={buttonProps.onSelect}
+									className="button-prime button-md p-4 rounded-full"
+								>
 									{buttonProps.icon && <Icon type={buttonProps.icon} className="w-6 h-6" />}
 									<span className="sr-only">{buttonProps.title}</span>
 								</button>

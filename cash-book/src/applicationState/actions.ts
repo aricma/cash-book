@@ -77,16 +77,7 @@ export type ApplicationAction =
 	| AccountsAction
 	| TransactionsAction;
 
-export type Misc =
-	| Backup
-	| LoadBackup
-	| Load
-	| Set
-	| Save
-	| Reset
-	| DefaultSet
-	| LoadingSet
-	| ErrorSet;
+export type Misc = Backup | LoadBackup | Load | Set | Save | Reset | DefaultSet | LoadingSet | ErrorSet;
 export type DefaultSet = Action<ApplicationActionType.APPLICATION_DEFAULT_SET>;
 export type LoadingSet = Action<ApplicationActionType.APPLICATION_LOADING_SET>;
 export type ErrorSet = Action<ApplicationActionType.APPLICATION_ERROR_SET, { error: Error }>;

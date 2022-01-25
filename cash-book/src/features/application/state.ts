@@ -4,10 +4,7 @@ export enum GlobalStateType {
 	ERROR = 'GLOBAL_STATE_TYPE/ERROR',
 }
 
-export type GlobalState =
-	| DefaultGlobalState
-	| LoadingGlobalState
-	| ErrorGlobalState;
+export type GlobalState = DefaultGlobalState | LoadingGlobalState | ErrorGlobalState;
 
 export interface DefaultGlobalState {
 	type: GlobalStateType.DEFAULT;
@@ -21,7 +18,6 @@ export interface ErrorGlobalState {
 	type: GlobalStateType.ERROR;
 	error: Error;
 }
-
 
 export const initialState: GlobalState = {
 	type: GlobalStateType.DEFAULT,

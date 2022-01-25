@@ -1,18 +1,17 @@
-import {AccountType} from '../accounts/state';
-import {ApplicationActionType} from '../../applicationState/actions';
+import { AccountType } from '../accounts/state';
+import { ApplicationActionType } from '../../applicationState/actions';
 import {
 	CreateBookEntryViewProps,
 	OverrideDateConfirmationModalViewProps,
 	CreateBookEntryTemplateConfigProps,
 } from './props';
-import {ApplicationState, dispatch} from '../../applicationState';
-import {DateWithoutTime} from '../../models/domain/date';
-import {compact, subtractDays, toNumber} from '../../models/utils';
-import {IconType} from '../../models/props';
-import {transactionValue} from '../bookEntries/misc';
-import {ROUTES_BOOK_ENTRIES} from '../../variables/routes';
-import {transactionParser, cashInformationParser} from '../../misc/parser';
-
+import { ApplicationState, dispatch } from '../../applicationState';
+import { DateWithoutTime } from '../../models/domain/date';
+import { compact, subtractDays, toNumber } from '../../models/utils';
+import { IconType } from '../../models/props';
+import { transactionValue } from '../bookEntries/misc';
+import { ROUTES_BOOK_ENTRIES } from '../../variables/routes';
+import { transactionParser, cashInformationParser } from '../../misc/parser';
 
 interface ToCreateBookEntryViewPropsRequest {
 	appState: ApplicationState;

@@ -9,11 +9,34 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 		case ApplicationActionType.BOOK_ENTRIES_SET:
 			return action.state;
 		case ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE:
-			return {
-				...state,
-				selectedTemplateId: action.templateId,
-			};
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE:
+			const config = state.create.templates[action.templateId];
+			if (config === undefined) {
+				return {
+					...state,
+					selectedTemplateId: action.templateId,
+					create: {
+						...state.create,
+						templates: {
+							...state.create.templates,
+							[action.templateId]: {
+								templateId: action.templateId,
+								date: DateWithoutTime.new().toISOString(),
+								cash: {
+									start: '0',
+									end: '0',
+								},
+								transactions: {},
+							},
+						},
+					},
+				};
+			} else {
+				return {
+					...state,
+					selectedTemplateId: action.templateId,
+				};
+			}
 		case ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL:
 			return {
 				...state,

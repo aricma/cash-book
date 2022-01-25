@@ -31,7 +31,7 @@ export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsReques
 				title: template.name,
 				onSelect: () => {
 					dispatch({
-						type: ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE,
+						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
 						templateId: template.id,
 					});
 				},

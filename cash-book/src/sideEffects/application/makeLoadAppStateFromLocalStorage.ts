@@ -11,14 +11,14 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 			try {
 				yield SE.take(ApplicationActionType.APPLICATION_LOAD);
 				yield SE.put({
-					type: ApplicationActionType.APPLICATION_LOADING,
+					type: ApplicationActionType.APPLICATION_LOADING_SET,
 				});
 				const value = loadFromLocalStorage(LOCAL_STORAGE_KEY);
 				if (value === undefined) continue;
 				const appState: ApplicationState = stateMigrations(JSON.parse(value));
 				if (stateValidation(appState) === null)
 					yield SE.put({
-						type: ApplicationActionType.APPLICATION_DEFAULT,
+						type: ApplicationActionType.APPLICATION_DEFAULT_SET,
 					});
 
 				yield SE.put({
@@ -39,11 +39,13 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 				});
 
 				yield SE.put({
-					type: ApplicationActionType.APPLICATION_DEFAULT,
+					type: ApplicationActionType.APPLICATION_DEFAULT_SET,
 				});
-			} catch (e) {
-				// eslint-disable-next-line
-				console.log(e);
+			} catch (error) {
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_ERROR_SET,
+					error: error,
+				});
 			}
 		}
 	};

@@ -5,8 +5,9 @@ import { BookEntriesState } from '../features/bookEntries/state';
 import { SettingsState } from '../features/settings/state';
 
 export enum ApplicationActionType {
-	APPLICATION_DEFAULT = 'APPLICATION_ACTION_TYPE/DEFAULT',
-	APPLICATION_LOADING = 'APPLICATION_ACTION_TYPE/LOADING',
+	APPLICATION_DEFAULT_SET = 'APPLICATION_ACTION_TYPE/DEFAULT/SET',
+	APPLICATION_LOADING_SET = 'APPLICATION_ACTION_TYPE/LOADING/SET',
+	APPLICATION_ERROR_SET = 'APPLICATION_ACTION_TYPE/ERROR/SET',
 	APPLICATION_BACKUP = 'APPLICATION_ACTION_TYPE/BACKUP',
 	APPLICATION_BACKUP_LOAD = 'APPLICATION_ACTION_TYPE/BACKUP/LOAD',
 	APPLICATION_LOAD = 'APPLICATION_ACTION_TYPE/LOAD',
@@ -67,8 +68,8 @@ export enum ApplicationActionType {
 
 export type ApplicationAction =
 	| Misc
-	| Loading
-	| Default
+	| LoadingSet
+	| DefaultSet
 	| BrowserAction
 	| RouterAction
 	| BookingsAction
@@ -76,9 +77,19 @@ export type ApplicationAction =
 	| AccountsAction
 	| TransactionsAction;
 
-export type Misc = Backup | LoadBackup | Load | Set | Save | Reset | Default | Loading;
-export type Default = Action<ApplicationActionType.APPLICATION_DEFAULT>;
-export type Loading = Action<ApplicationActionType.APPLICATION_LOADING>;
+export type Misc =
+	| Backup
+	| LoadBackup
+	| Load
+	| Set
+	| Save
+	| Reset
+	| DefaultSet
+	| LoadingSet
+	| ErrorSet;
+export type DefaultSet = Action<ApplicationActionType.APPLICATION_DEFAULT_SET>;
+export type LoadingSet = Action<ApplicationActionType.APPLICATION_LOADING_SET>;
+export type ErrorSet = Action<ApplicationActionType.APPLICATION_ERROR_SET, { error: Error }>;
 export type Backup = Action<ApplicationActionType.APPLICATION_BACKUP>;
 export type LoadBackup = Action<ApplicationActionType.APPLICATION_BACKUP_LOAD, { file: File }>;
 export type Load = Action<ApplicationActionType.APPLICATION_LOAD>;

@@ -53,6 +53,8 @@ export const bookEntryToRows = (appState: ApplicationState, bookEntry: BookEntry
 						return account.name;
 					case 7:
 						return account.number;
+					case 12:
+						return transaction.name;
 					default:
 						return placeholder;
 				}

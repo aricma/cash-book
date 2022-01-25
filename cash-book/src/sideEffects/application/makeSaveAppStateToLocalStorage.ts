@@ -49,6 +49,7 @@ export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, 
 					setInLocalStorage(LOCAL_STORAGE_KEY, value);
 				}
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

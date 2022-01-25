@@ -13,6 +13,7 @@ export const makeBackupWorker = () => {
 				const fileName = `cash-book-backup-${timestamp}.json`;
 				exportToFile(toJSONContent(appState), fileName);
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

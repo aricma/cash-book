@@ -26,6 +26,7 @@ export const makeBookEntriesExportDay = () => {
 				const fileName = `book-entry-${year}-${month}-${day}_${unique}.csv`;
 				exportToFile(toCSVContent([headline, ...rows]), fileName);
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

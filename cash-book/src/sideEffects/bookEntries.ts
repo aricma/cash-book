@@ -30,7 +30,6 @@ export const makeEditBookEntryWorker = () => {
 									...Object.fromEntries(
 										Object.entries(bookEntry.transactions).filter(([transactionId, _]) => {
 											const transaction = appState.transactions.transactions[transactionId];
-											console.log(transaction);
 											switch (transaction.type) {
 												case TransactionType.SYS_OUT:
 												case TransactionType.SYS_IN:
@@ -50,6 +49,7 @@ export const makeEditBookEntryWorker = () => {
 					state: newState,
 				});
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

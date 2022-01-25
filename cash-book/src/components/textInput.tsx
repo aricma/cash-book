@@ -28,8 +28,6 @@ export const TextInput: React.FC<Props> = (props) => {
 								case 'Enter': {
 									return focusNext(ref.current);
 								}
-								case 'Tab':
-									return console.log('CALLED');
 							}
 						}}
 						onBlur={(e) => props.onBlur && props.onBlur(e.target.value)}

@@ -18,6 +18,7 @@ export const makeAccountsExport = () => {
 				const fileName = `accounts-${unique}.csv`;
 				exportToFile(toCSVContent([headline, ...rows]), fileName);
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

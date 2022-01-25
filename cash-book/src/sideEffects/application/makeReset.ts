@@ -26,6 +26,7 @@ export const makeReset = (setInLocalStorage: (key: string, value: string) => voi
 					type: ApplicationActionType.APPLICATION_LOAD,
 				});
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

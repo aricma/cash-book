@@ -17,6 +17,7 @@ export const makeLoadBackupWorker = (setInLocalStorage: (key: string, value: str
 					type: ApplicationActionType.APPLICATION_LOAD,
 				});
 			} catch (e) {
+				// eslint-disable-next-line
 				console.log(e);
 			}
 		}

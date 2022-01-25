@@ -1,10 +1,11 @@
 import React from 'react';
-import { CreateBookEntryViewProps, CreateBookEntryTemplateConfigProps, ToggleDiffViewProps } from './props';
-import { DatePickerInput } from '../../components/datePickerInput';
-import { TextInput } from '../../components/textInput';
-import { Header } from '../menu';
-import { Select } from '../../components/select';
-import { Icon } from '../../components/icons';
+import {CreateBookEntryViewProps, CreateBookEntryTemplateConfigProps, ToggleDiffViewProps} from './props';
+import {DatePickerInput} from '../../components/datePickerInput';
+import {TextInput} from '../../components/textInput';
+import {Header} from '../menu';
+import {Select, OptionsType} from '../../components/select';
+import {Icon} from '../../components/icons';
+
 
 export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) => {
 	return (
@@ -13,7 +14,7 @@ export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) =
 				title={props.title}
 				left={() => (
 					<div className="flex items-center justify-start">
-						<Select {...props.template} />
+						<Select {...props.template} optionsType={OptionsType.BL} />
 					</div>
 				)}
 			/>

@@ -1,9 +1,10 @@
 import * as Solid from '@heroicons/react/solid';
 import * as Outline from '@heroicons/react/outline';
 import React from 'react';
-import { WithClasses, WithIconType, IconType } from '../../models/props';
-import { Cashier } from './cashier';
-import { Spinner } from './spinner';
+import {WithClasses, WithIconType, IconType} from '../../models/props';
+import {Cashier} from './cashier';
+import {Spinner} from './spinner';
+
 
 export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 	switch (props.type) {
@@ -51,6 +52,10 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Solid.CogIcon {...props} />;
 		case IconType.REFRESH_FILL:
 			return <Solid.RefreshIcon {...props} />;
+		case IconType.AT_SYMBOL_FILL:
+			return <Solid.AtSymbolIcon {...props} />;
+		case IconType.CHART_BAR_FILL:
+			return <Solid.ChartBarIcon {...props} />;
 		case IconType.SPINNER:
 			return <Spinner {...props} />;
 		default:

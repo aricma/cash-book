@@ -3,7 +3,11 @@ import { OptionsInputProps, IconType } from '../models/props';
 import { Listbox } from '@headlessui/react';
 import { Icon } from './icons';
 
-export const Select: React.FC<OptionsInputProps> = (props) => {
+export enum OptionsType {
+	BL = "SELECT_TYPE/BL",
+	BR = "SELECT_TYPE/BR",
+}
+export const Select: React.FC<OptionsInputProps & { optionsType?: OptionsType }> = (props) => {
 	React.useEffect(() => {
 		if (props.options.length === 1) {
 			props.options.forEach((buttonProps) => {
@@ -24,15 +28,15 @@ export const Select: React.FC<OptionsInputProps> = (props) => {
 	return (
 		<Listbox as="div" value={props.value} onChange={changeHandler} className="relative w-full">
 			<Listbox.Button className="button button-md">{props.value || props.placeholder}</Listbox.Button>
-			<Listbox.Options className="origin-top-right absolute z-10 right-0 mt-2 w-full shadow-lg button button-md p-0">
+			<Options type={props.optionsType || OptionsType.BR}>
 				<div className="rounded-md bg-level divide-y-2 divide-gray-300 dark:divide-gray-900">
 					{props.options.map((buttonProps, index) => (
-						<Listbox.Option key={index} value={buttonProps.title}>
+						<Listbox.Option key={index} value={buttonProps.title} className="min-w-min">
 							{({ active, selected }) => {
 								if (active) {
 									return (
 										<div className="cursor-pointer py-2 px-4 text-blue-500 flex items-center space-x-2">
-											<Icon type={IconType.CHEVRON_RIGHT_FILL} className="w-3 h-3" />
+											<Icon type={IconType.CHEVRON_RIGHT_FILL} className="shrink-0 w-3 h-3" />
 											<div className="">{buttonProps.title}</div>
 										</div>
 									);
@@ -45,7 +49,24 @@ export const Select: React.FC<OptionsInputProps> = (props) => {
 						</Listbox.Option>
 					))}
 				</div>
-			</Listbox.Options>
+			</Options>
 		</Listbox>
 	);
 };
+
+const Options: React.FC<{ type: OptionsType }> = (props) => {
+	switch (props.type) {
+		case OptionsType.BL:
+			return (
+				<Listbox.Options className="origin-top-left absolute z-10 left-0 mt-2 min-w-full shadow-lg button button-md p-0">
+					{props.children}
+				</Listbox.Options>
+			);
+		case OptionsType.BR:
+			return (
+				<Listbox.Options className="origin-top-right absolute z-10 right-0 mt-2 min-w-full shadow-lg button button-md p-0">
+					{props.children}
+				</Listbox.Options>
+			);
+	}
+}

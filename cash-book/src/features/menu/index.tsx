@@ -48,7 +48,7 @@ export const Menu: React.FC = () => {
 		pages: [
 			{
 				type: 'BUTTON_PROPS_TYPE',
-				icon: IconType.COLLECTION_FILL,
+				icon: IconType.AT_SYMBOL_FILL,
 				title: 'Accounts',
 				isSelected: matchAccountsRoute !== null,
 				onSelect: () => {
@@ -84,7 +84,7 @@ export const Menu: React.FC = () => {
 			},
 			{
 				type: 'BUTTON_PROPS_TYPE',
-				icon: IconType.BOOK_OPEN_FILL,
+				icon: IconType.CHART_BAR_FILL,
 				title: 'Entries',
 				isSelected: matchBookEntriesRoute !== null,
 				onSelect: () => {

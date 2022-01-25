@@ -9,7 +9,7 @@ export const toSettingsViewProps = (): SettingsViewProps => {
 		backup: {
 			type: 'BUTTON_PROPS_TYPE',
 			icon: IconType.DOWNLOAD_FILL,
-			title: 'Backup',
+			title: 'Download Backup',
 			onSelect: () => {
 				dispatch({
 					type: ApplicationActionType.APPLICATION_BACKUP,
@@ -30,7 +30,7 @@ export const toSettingsViewProps = (): SettingsViewProps => {
 			button: {
 				type: 'BUTTON_PROPS_TYPE',
 				icon: IconType.UPLOAD_FILL,
-				title: 'Load From Backup',
+				title: 'Load Backup',
 				onSelect: () => {},
 			},
 			input: {

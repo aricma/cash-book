@@ -38,14 +38,14 @@ const ImportAccountsModalView: React.FC<ImportAccountsModalViewProps> = (props) 
 	<div className="p-4 space-y-8">
 		<Header
 			title={props.title}
-			right={() => (
+			right={
 				<div className="flex items-center justify-end">
 					<button type="button" onClick={props.close.onSelect} className="link link-sm">
 						{props.close.icon && <Icon type={props.close.icon} className="w-5 h-5" />}
 						<span className="sr-only">{props.close.title}</span>
 					</button>
 				</div>
-			)}
+			}
 		/>
 		<AccountsTableView accounts={props.accounts} />
 		<div className="flex items-center justify-end space-x-2">

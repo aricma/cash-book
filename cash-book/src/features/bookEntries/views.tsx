@@ -16,20 +16,20 @@ import { toNumber } from '../../models/utils';
 export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
 	<div className="space-y-12 pb-[100px]">
 		<Header
-			left={() => (
+			left={
 				<div className="flex items-center justify-start">
 					<Select {...props.template} optionsType={OptionsType.BL} />
 				</div>
-			)}
+			}
 			title={props.title}
-			right={() => (
+			right={
 				<div className="flex items-center justify-end">
 					<button type="button" onClick={props.create.onSelect} className="button-prime button-xs">
 						{props.create.icon && <Icon type={props.create.icon} className="w-5 h-5" />}
 						<span className="sr-only">{props.create.title}</span>
 					</button>
 				</div>
-			)}
+			}
 		/>
 		<div className="flex items-center space-x-2">
 			{props.accounts.map((accountProps, index) => (

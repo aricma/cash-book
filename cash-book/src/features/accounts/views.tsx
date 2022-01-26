@@ -12,7 +12,7 @@ export const AccountsView: React.FC<AccountsViewProps> = (props) => (
 	<div className="space-y-12">
 		<Header
 			title={props.title}
-			right={() => (
+			right={
 				<div className="flex items-center justify-end space-x-2">
 					<button type="button" onClick={props.create.onSelect} className="button-prime button-xs">
 						{props.create.icon && <Icon type={props.create.icon} className="w-5 h-5" />}
@@ -24,7 +24,7 @@ export const AccountsView: React.FC<AccountsViewProps> = (props) => (
 						<span className="sr-only">{props.export.title}</span>
 					</button>
 				</div>
-			)}
+			}
 		/>
 		<AccountsTableView accounts={props.accounts} />
 	</div>

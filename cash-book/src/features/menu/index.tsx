@@ -13,16 +13,16 @@ import {
 } from '../../variables/routes';
 
 export interface Props {
-	left?: React.FC;
+	left?: React.ReactNode;
 	title: string;
-	right?: React.FC;
+	right?: React.ReactNode;
 }
 export const Header: React.FC<Props> = (props) => {
 	return (
 		<div className="grid grid-cols-[1fr_max-content_1fr] gap-2">
 			{props.left ? (
 				<div>
-					<props.left />
+					{props.left}
 				</div>
 			) : (
 				<div />
@@ -30,7 +30,7 @@ export const Header: React.FC<Props> = (props) => {
 			<h2 className="text-lg font-medium text-2 place-self-center">{props.title}</h2>
 			{props.right ? (
 				<div>
-					<props.right />
+					{props.right}
 				</div>
 			) : (
 				<div />

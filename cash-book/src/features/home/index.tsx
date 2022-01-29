@@ -1,9 +1,8 @@
 import React from 'react';
-import {dispatch} from '../../applicationState';
-import {ApplicationActionType} from '../../applicationState/actions';
-import {ROUTES_CREATE_BOOK_ENTRY} from '../../variables/routes';
-import {Icon} from '../../components/icons';
 import {IconType} from '../../models/props';
+import {ApplicationActionType} from '../../applicationState/actions';
+import {dispatch} from '../../applicationState';
+import {Icon} from '../../components/icons';
 
 const timeouts = [100, 200, 300, 50, 200, 1000, 50];
 
@@ -13,8 +12,7 @@ export const Home: React.FC = () => {
         const sleep = setTimeout(() => {
             if (timeouts.length === loading) {
                 dispatch({
-                    type: ApplicationActionType.ROUTER_GO_TO,
-                    path: ROUTES_CREATE_BOOK_ENTRY,
+                    type: ApplicationActionType.ROUTER_FALLBACK,
                 });
             } else {
                 setLoading(prev => prev + 1);

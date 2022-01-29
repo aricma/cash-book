@@ -20,6 +20,7 @@ export enum ApplicationActionType {
 	BROWSER_LOCAL_STORAGE_REMOVE = 'APPLICATION_ACTION_TYPE/BROWSER/LOCAL_STORAGE/REMOVE',
 
 	ROUTER_GO_TO = 'APPLICATION_ACTION_TYPE/ROUTER/GO_TO',
+	ROUTER_FALLBACK = 'APPLICATION_ACTION_TYPE/ROUTER/FALLBACK',
 
 	SETTINGS_SET = 'APPLICATION_ACTION_TYPE/SETTINGS/SET',
 
@@ -121,8 +122,9 @@ export type BrowserAction = BrowserLocalStorageSet | BrowserLocalStorageRemove;
 export type BrowserLocalStorageSet = Action<ApplicationActionType.BROWSER_LOCAL_STORAGE_SET, { id: string; value: string }>;
 export type BrowserLocalStorageRemove = Action<ApplicationActionType.BROWSER_LOCAL_STORAGE_REMOVE, { id: string }>;
 
-export type RouterAction = RouterGoTo;
+export type RouterAction = RouterGoTo | RouterFallback;
 export type RouterGoTo = Action<ApplicationActionType.ROUTER_GO_TO, { path: string }>;
+export type RouterFallback = Action<ApplicationActionType.ROUTER_FALLBACK>;
 
 export type SettingsAction = SettingsSet;
 export type SettingsSet = Action<ApplicationActionType.SETTINGS_SET, { state: SettingsState }>;

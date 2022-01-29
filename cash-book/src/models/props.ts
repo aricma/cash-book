@@ -25,6 +25,7 @@ export enum IconType {
 	REFRESH_FILL = 'ICON_TYPE/REFRESH/FILL',
 	AT_SYMBOL_FILL = 'ICON_TYPE/AT_SYMBOL/FILL',
 	CHART_BAR_FILL = 'ICON_TYPE/CHART_BAR/FILL',
+	CASH_BOOK = 'ICON_TYPE/CASH_BOOK',
 }
 
 export interface WithIconType {
@@ -81,6 +82,14 @@ export interface DisabledButtonProps {
 	type: 'DISABLED_BUTTON_PROPS_TYPE';
 	icon?: IconType;
 	title: string;
+}
+
+export interface LinkProps {
+	type: 'LINK_PROPS_TYPE';
+	icon?: IconType;
+	isSelected?: boolean;
+	title: string;
+	link: string;
 }
 
 export interface HeaderCellProps {

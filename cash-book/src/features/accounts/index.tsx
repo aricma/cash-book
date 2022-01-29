@@ -1,8 +1,10 @@
 import React from 'react';
 import { useAppState, selectAppState } from '../../applicationState';
 import { SlideInModal, OverlayContainer } from '../../components/modal';
-import { toAccountsViewProps, toCreateAccountViewProps } from './toProps';
-import { CreateAccountView, AccountsView } from './views';
+import {CreateAccountView} from './views/createAccountView';
+import {AccountsView} from './views/accountsView';
+import {toCreateAccountViewProps} from './toProps/toCreateAccountViewProps';
+import {toAccountsViewProps} from './toProps/toAccountsViewProps';
 
 export const Accounts: React.FC = () => {
 	const appState = useAppState(selectAppState);

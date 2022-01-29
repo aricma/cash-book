@@ -16,7 +16,7 @@ export const TextInput: React.FC<Props> = (props) => {
 					<input
 						ref={ref}
 						type="text"
-						className={'peer w-full text-1 pt-4 placeholder:text-transparent focus:placeholder:text-3'}
+						className="peer w-full text-1 pt-4 placeholder:text-transparent focus:placeholder:text-3"
 						autoFocus={props.autoFocus}
 						pattern={props.pattern}
 						value={props.value}
@@ -29,6 +29,10 @@ export const TextInput: React.FC<Props> = (props) => {
 									return focusNext(ref.current);
 								}
 							}
+						}}
+						onFocus={() => {
+							if (ref.current === null) return;
+							ref.current.select();
 						}}
 						onBlur={(e) => props.onBlur && props.onBlur(e.target.value)}
 					/>

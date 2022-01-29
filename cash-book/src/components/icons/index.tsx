@@ -4,6 +4,7 @@ import React from 'react';
 import { WithClasses, WithIconType, IconType } from '../../models/props';
 import { Cashier } from './cashier';
 import { Spinner } from './spinner';
+import {CashBook} from './cashBook';
 
 export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 	switch (props.type) {
@@ -57,6 +58,8 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Solid.ChartBarIcon {...props} />;
 		case IconType.SPINNER:
 			return <Spinner {...props} />;
+		case IconType.CASH_BOOK:
+			return <CashBook {...props} />;
 		default:
 			return (
 				<svg {...props} viewBox="0 0 1 1" fill="currentColor" stroke="none">

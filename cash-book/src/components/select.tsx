@@ -7,7 +7,11 @@ export enum OptionsType {
 	BL = 'SELECT_TYPE/BL',
 	BR = 'SELECT_TYPE/BR',
 }
-export const Select: React.FC<OptionsInputProps & { optionsType?: OptionsType }> = (props) => {
+type Props = OptionsInputProps & {
+	autoFocus?: boolean;
+	optionsType?: OptionsType;
+}
+export const Select: React.FC<Props> = (props) => {
 	React.useEffect(() => {
 		if (props.options.length === 1) {
 			props.options.forEach((buttonProps) => {
@@ -27,7 +31,7 @@ export const Select: React.FC<OptionsInputProps & { optionsType?: OptionsType }>
 	};
 	return (
 		<Listbox as="div" value={props.value} onChange={changeHandler} className="relative w-full">
-			<Listbox.Button className="button button-md">{props.value || props.placeholder}</Listbox.Button>
+			<Listbox.Button autoFocus={props.autoFocus} className="button button-md">{props.value || props.placeholder}</Listbox.Button>
 			<Options type={props.optionsType || OptionsType.BR}>
 				<div className="rounded-md bg-level divide-y-2 divide-gray-300 dark:divide-gray-900">
 					{props.options.map((buttonProps, index) => (

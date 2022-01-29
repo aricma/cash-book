@@ -1,7 +1,7 @@
 import React from 'react';
 import {CreateAccountViewProps} from '../props/createAccountViewProps';
 import {Icon} from '../../../components/icons';
-import {Select} from '../../../components/select';
+import {Select, OptionsType} from '../../../components/select';
 import {TextInput} from '../../../components/textInput';
 import {Header} from '../../../components/header';
 
@@ -21,7 +21,7 @@ export const CreateAccountView: React.FC<CreateAccountViewProps> = (props) => (
         />
         <div className="flex items-start space-x-2">
             <div>
-                <Select {...props.type} />
+                <Select {...props.type} autoFocus optionsType={OptionsType.BL} />
                 {props.type.validation && <span className="ml-2 text-sm text-danger">{props.type.validation}</span>}
             </div>
             <div>

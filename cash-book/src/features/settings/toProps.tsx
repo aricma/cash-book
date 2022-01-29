@@ -2,10 +2,22 @@ import { IconType } from '../../models/props';
 import { ApplicationActionType } from '../../applicationState/actions';
 import { SettingsViewProps } from './props';
 import { dispatch } from '../../applicationState';
+import {ROUTES_SUPPORT} from '../../variables/routes';
 
 export const toSettingsViewProps = (): SettingsViewProps => {
 	return {
 		title: 'Settings',
+		support: {
+			type: 'BUTTON_PROPS_TYPE',
+			icon: IconType.SUPPORT_STROKE,
+			title: 'Support',
+			onSelect: () => {
+				dispatch({
+					type: ApplicationActionType.ROUTER_GO_TO,
+					path: ROUTES_SUPPORT,
+				});
+			},
+		},
 		backup: {
 			type: 'BUTTON_PROPS_TYPE',
 			icon: IconType.DOWNLOAD_FILL,

@@ -23,8 +23,8 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 								templateId: action.templateId,
 								date: DateWithoutTime.new().toISOString(),
 								cash: {
-									start: '0',
-									end: '0',
+									start: "0.00",
+									end: "0.00",
 								},
 								transactions: {},
 							},
@@ -49,8 +49,8 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 							templateId: action.templateId,
 							date: DateWithoutTime.new().toISOString(),
 							cash: {
-								start: '0',
-								end: '0',
+								start: "0.00",
+								end: "0.00",
 							},
 							transactions: {},
 						},
@@ -157,8 +157,8 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 							...state.create.templates[action.templateId],
 							diffTransaction: undefined,
 							cash: {
-								start: '0',
-								end: '0',
+								start: "0.00",
+								end: "0.00",
 							},
 							transactions: {},
 						},

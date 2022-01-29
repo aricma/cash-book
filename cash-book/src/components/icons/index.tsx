@@ -60,6 +60,10 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Solid.SupportIcon {...props} />;
 		case IconType.SUPPORT_STROKE:
 			return <Outline.SupportIcon {...props} />;
+		case IconType.EXCLAMATION_FILL:
+			return <Solid.ExclamationIcon {...props} />;
+		case IconType.EXCLAMATION_STROKE:
+			return <Outline.ExclamationIcon {...props} />;
 		case IconType.SPINNER:
 			return <Spinner {...props} />;
 		case IconType.CASH_BOOK:

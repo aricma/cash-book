@@ -1,4 +1,4 @@
-interface VariablesMap<T> {
+export interface VariablesMap<T> {
     default: (value: string) => T;
 
     [key: string]: (value: string) => T;

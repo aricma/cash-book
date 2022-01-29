@@ -5,13 +5,44 @@ import {
 	DatePickerInputProps,
 	OptionsInputProps,
 	BooleanInputProps,
-	IconType,
+	IconType, SpanProps, LinkProps,
 } from '../../models/props';
 
-export interface CreateBookEntryViewProps {
+export enum CreateBookEntryViewType {
+	NO_TEMPLATES = 'CREATE_BOOK_ENTRY_VIEW_TYPE/NO_TEMPLATES',
+	FORM_NO_TEMPLATE = 'CREATE_BOOK_ENTRY_VIEW_TYPE/FORM/NO_TEMPLATE',
+	FORM_DEFAULT = 'CREATE_BOOK_ENTRY_VIEW_TYPE/FORM',
+}
+
+export type CreateBookEntryViewProps =
+	| NoTemplatesCreateBookEntryViewProps
+	| FormNoTemplateCreateBookEntryViewProps
+	| FormDefaultCreateBookEntryViewProps;
+
+export interface NoTemplatesCreateBookEntryViewProps {
+	type: CreateBookEntryViewType.NO_TEMPLATES,
+	title: string;
+	warningBox: {
+		title: string;
+		message: Array<SpanProps | ButtonProps | LinkProps | OptionsInputProps>;
+	}
+}
+
+export interface FormNoTemplateCreateBookEntryViewProps {
+	type: CreateBookEntryViewType.FORM_NO_TEMPLATE,
 	title: string;
 	template: OptionsInputProps;
-	templateConfig?: CreateBookEntryTemplateConfigProps;
+	infoBox: {
+		title: string;
+		message: Array<SpanProps | ButtonProps | LinkProps | OptionsInputProps>;
+	}
+}
+
+export interface FormDefaultCreateBookEntryViewProps {
+	type: CreateBookEntryViewType.FORM_DEFAULT,
+	title: string;
+	template: OptionsInputProps;
+	templateConfig: CreateBookEntryTemplateConfigProps;
 }
 
 export interface CreateBookEntryTemplateConfigProps {

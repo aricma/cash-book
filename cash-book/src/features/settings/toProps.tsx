@@ -1,7 +1,7 @@
 import { IconType } from '../../models/props';
-import { dispatch } from '../../applicationState';
 import { ApplicationActionType } from '../../applicationState/actions';
 import { SettingsViewProps } from './props';
+import { dispatch } from '../../applicationState';
 
 export const toSettingsViewProps = (): SettingsViewProps => {
 	return {
@@ -12,7 +12,10 @@ export const toSettingsViewProps = (): SettingsViewProps => {
 			title: 'Download Backup',
 			onSelect: () => {
 				dispatch({
-					type: ApplicationActionType.APPLICATION_BACKUP,
+					type: ApplicationActionType.APPLICATION_EXPORT,
+					exportPayloadType: "EXPORT_PAYLOAD_TYPE/ALL",
+					dataType: "all",
+					fileType: "json",
 				});
 			},
 		},

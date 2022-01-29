@@ -136,7 +136,11 @@ const toBookEntryMonthViewProps = (appState: ApplicationState, bookEntry: BookEn
 			title: 'Export',
 			onSelect: () => {
 				dispatch({
-					type: ApplicationActionType.BOOK_ENTRIES_EXPORT_MONTH,
+					type: ApplicationActionType.APPLICATION_EXPORT,
+					exportPayloadType: "EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES",
+					dataType: "book-entries",
+					fileType: "datev",
+					range: "month",
 					date: bookEntry.date,
 				});
 			},
@@ -207,7 +211,11 @@ const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntr
 			title: 'Export',
 			onSelect: () => {
 				dispatch({
-					type: ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY,
+					type: ApplicationActionType.APPLICATION_EXPORT,
+					exportPayloadType: "EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES",
+					dataType: "book-entries",
+					fileType: "datev",
+					range: "day",
 					date: bookEntry.date,
 				});
 			},

@@ -56,6 +56,10 @@ export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 			return <Solid.AtSymbolIcon {...props} />;
 		case IconType.CHART_BAR_FILL:
 			return <Solid.ChartBarIcon {...props} />;
+		case IconType.SUPPORT_FILL:
+			return <Solid.SupportIcon {...props} />;
+		case IconType.SUPPORT_STROKE:
+			return <Outline.SupportIcon {...props} />;
 		case IconType.SPINNER:
 			return <Spinner {...props} />;
 		case IconType.CASH_BOOK:

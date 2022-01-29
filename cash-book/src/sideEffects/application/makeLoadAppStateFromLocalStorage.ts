@@ -13,13 +13,21 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 				yield SE.put({
 					type: ApplicationActionType.APPLICATION_LOADING_SET,
 				});
+
 				const value = loadFromLocalStorage(LOCAL_STORAGE_KEY);
-				if (value === undefined) continue;
-				const appState: ApplicationState = stateMigrations(JSON.parse(value));
-				if (stateValidation(appState) === null)
+				if (value === undefined) {
 					yield SE.put({
 						type: ApplicationActionType.APPLICATION_DEFAULT_SET,
 					});
+					continue;
+				}
+				const appState: ApplicationState = stateMigrations(JSON.parse(value));
+				if (stateValidation(appState) === null) {
+					yield SE.put({
+						type: ApplicationActionType.APPLICATION_DEFAULT_SET,
+					});
+					continue;
+				}
 
 				yield SE.put({
 					type: ApplicationActionType.ACCOUNTS_SET,

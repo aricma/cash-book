@@ -24,7 +24,15 @@ const validateNumber = (appState: ApplicationState): string | undefined => {
     const number = appState.accounts.create.number;
     if (number === undefined) return 'Number is missing!';
     if (!/^\d{4}$/.test(number)) return 'Account number is not a 4 digit number!';
-    const match = Object.values(appState.accounts.accounts).find((account) => account.number === number) || undefined;
+    const match = Object.values(appState.accounts.accounts)
+        .filter((account) => {
+            if (appState.accounts.create.id) {
+                return account.id !== appState.accounts.create.id;
+            } else {
+                return true;
+            }
+        })
+        .find((account) => account.number === number) || undefined;
     if (match !== undefined) return `Account is already taken by "${match.name}"!`;
     return undefined;
 };

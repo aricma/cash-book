@@ -10,7 +10,7 @@ import {
 	DropTarget,
 } from 'react-dnd';
 import React from 'react';
-import { TransactionViewProps } from './props';
+import { TransactionViewProps } from './props/transactionsViewProps';
 
 interface TargetProps {
 	index: number;

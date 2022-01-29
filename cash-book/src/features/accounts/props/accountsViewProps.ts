@@ -1,4 +1,4 @@
-import {ButtonProps, DisabledButtonProps, LinkProps} from '../../../models/props';
+import {ButtonProps, DisabledButtonProps, LinkProps, SpanProps} from '../../../models/props';
 
 
 export enum AccountsViewType {
@@ -16,11 +16,6 @@ export interface SkeletonAccountsViewProps {
         message: Array<SpanProps | ButtonProps | DisabledButtonProps | LinkProps>;
     };
     create: ButtonProps;
-}
-
-export interface SpanProps {
-    type: "SPAN_PROPS_TYPE",
-    title: string;
 }
 
 export interface DataAccountsViewProps {

@@ -112,3 +112,8 @@ export interface DatePickerInputProps {
 	value: string;
 	onChange: (date: string) => void;
 }
+
+export interface SpanProps {
+    type: 'SPAN_PROPS_TYPE',
+    title: string;
+}

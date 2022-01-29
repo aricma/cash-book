@@ -1,8 +1,9 @@
 import {ApplicationActionType} from '../../../applicationState/actions';
 import {ApplicationState, dispatch} from '../../../applicationState';
-import {IconType, ButtonProps, DisabledButtonProps, LinkProps} from '../../../models/props';
-import {AccountsViewProps, AccountsViewType, SpanProps} from '../props/accountsViewProps';
+import {IconType, ButtonProps, LinkProps, SpanProps} from '../../../models/props';
+import {AccountsViewProps, AccountsViewType} from '../props/accountsViewProps';
 import {toAccountsTableViewProps} from './toAccountsTableViewProps';
+import {makeRichTextProps} from '../../../components/richText/makeRichTextProps';
 import {DOCS_ACCOUNTS, DOCS_QUICK_START} from '../../../variables/externalLinks';
 import {ROUTES_SETTINGS} from '../../../variables/routes';
 
@@ -25,66 +26,34 @@ export const toAccountsViewProps = (appState: ApplicationState, showCreateModel:
             create: createButton,
             infoBox: {
                 title: INFOBOX_TITLE,
-                message: [INFOBOX_MESSAGE, BACKUP_MESSAGE].join(' ').split(/(\$[A-Z_]+)/g).reduce((message: Array<SpanProps | ButtonProps | DisabledButtonProps | LinkProps>, part) => {
-                    const isVar = /^\$[A-Z_]+$/.test(part);
-                    if (isVar) {
-                        switch (part) {
-                            case "$DOCS_ACCOUNTS": {
-                                const next: LinkProps = {
-                                    type: 'LINK_PROPS_TYPE',
-                                    title: "Accounts",
-                                    link: DOCS_ACCOUNTS,
-                                }
-                                return [
-                                    ...message,
-                                    next
-                                ];
-                            }
-                            case "$DOCS_QUICK_START": {
-                                const next: LinkProps = {
-                                    type: "LINK_PROPS_TYPE",
-                                    title: "Quickstart Guide",
-                                    link: DOCS_QUICK_START,
-                                }
-                                return [
-                                    ...message,
-                                    next
-                                ];
-                            }
-                            case "$SETTINGS": {
-                                const next: ButtonProps = {
-                                    type: 'BUTTON_PROPS_TYPE',
-                                    icon: IconType.COG_FILL,
-                                    title: 'Settings',
-                                    onSelect: () => {
-                                        dispatch({
-                                            type: ApplicationActionType.ROUTER_GO_TO,
-                                            path: ROUTES_SETTINGS,
-                                        })
-                                    },
-                                }
-                                return [
-                                    ...message,
-                                    next
-                                ];
-                            }
-                            case "$CREATE": {
-                                return [...message, createButton]
-                            }
-                            default:
-                                return message
-                        }
-                    } else {
-                        const span: SpanProps = {
-                            type: 'SPAN_PROPS_TYPE',
-                            title: part,
-                        }
-                        return [
-                            ...message,
-                            span
-                        ];
-                    }
-                }, []),
+                message: makeRichTextProps<SpanProps | ButtonProps | LinkProps>({
+                    default: (value) => ({
+                        type: 'SPAN_PROPS_TYPE',
+                        title: value,
+                    }),
+                    DOCS_ACCOUNTS: () => ({
+                        type: 'LINK_PROPS_TYPE',
+                        title: 'Accounts',
+                        link: DOCS_ACCOUNTS,
+                    }),
+                    DOCS_QUICK_START: () => ({
+                        type: "LINK_PROPS_TYPE",
+                        title: "Quickstart Guide",
+                        link: DOCS_QUICK_START,
+                    }),
+                    SETTINGS: () => ({
+                        type: 'BUTTON_PROPS_TYPE',
+                        icon: IconType.COG_FILL,
+                        title: 'Settings',
+                        onSelect: () => {
+                            dispatch({
+                                type: ApplicationActionType.ROUTER_GO_TO,
+                                path: ROUTES_SETTINGS,
+                            })
+                        },
+                    }),
+                    CREATE: () => createButton,
+                })([INFOBOX_MESSAGE, BACKUP_MESSAGE].join(' '))
             },
         };
     } else {

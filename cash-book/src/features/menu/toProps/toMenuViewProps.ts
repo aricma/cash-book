@@ -114,6 +114,7 @@ export const toMenuViewProps = (matchesRoute: (route: string) => boolean, appSta
                     transactionsButton,
                     createBookEntry,
                     settingsButton,
+                    supportButton,
                 ],
             };
         default:

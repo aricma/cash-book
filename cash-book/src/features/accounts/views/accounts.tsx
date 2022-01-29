@@ -45,12 +45,12 @@ export const AccountsSkeleton: React.FC = () => (
         {Array(3).fill(null).map((_, index) => {
             return (
                 <React.Fragment key={index}>
-                    <div className="bg-blue-100 dark:bg-blue-900 rounded-md py-2 pl-4 pr-2 cursor-not-allowed">
+                    <div className="bg-blue-100 dark:bg-blue-900 rounded-md py-2 pl-4 pr-2">
                         <div className="grid grid-cols-[2fr_1fr_max-content] grid-rows-[max-content_max-content] gap-y-2 gap-x-4">
                             <div className="min-w-[3rem] bg-blue-200 rounded-md" />
                             <div className="min-w-[3rem] bg-blue-200 rounded-md" />
                             <div className="place-self-center">
-                                <button type="button" disabled className="button-disabled bg-blue-200 text-white button-xs pt-[.35rem] pr-[.35rem]">
+                                <button type="button" disabled className="bg-blue-200 text-white button-xs pt-[.35rem] pr-[.35rem]">
                                     <Icon type={IconType.PENCIL_ALT_FILL} className="w-5" />
                                 </button>
                             </div>

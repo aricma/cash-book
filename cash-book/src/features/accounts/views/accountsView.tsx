@@ -3,6 +3,7 @@ import {AccountsViewProps, AccountsViewType} from '../props/accountsViewProps';
 import {Header} from '../../menu';
 import {Icon} from '../../../components/icons';
 import {Accounts, AccountsSkeleton} from './accounts';
+import {ExternalLink} from '../../../components/externalLink';
 
 
 export const AccountsView: React.FC<AccountsViewProps> = (props) => {
@@ -41,7 +42,9 @@ export const AccountsView: React.FC<AccountsViewProps> = (props) => {
                                         case 'LINK_PROPS_TYPE':
                                             return (
                                                 <React.Fragment key={index}>
-                                                    <a href={props.link} className="button-prime button-xs py-1 inline leading-5">{props.title}</a>
+                                                    <ExternalLink {...props} className="button-prime button-xs py-1 inline leading-5">
+                                                        {props.title}
+                                                    </ExternalLink>
                                                 </React.Fragment>
                                             );
                                         case 'SPAN_PROPS_TYPE':

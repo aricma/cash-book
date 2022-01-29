@@ -1,10 +1,10 @@
+import {ApplicationActionType} from '../../../applicationState/actions';
 import {ApplicationState, dispatch} from '../../../applicationState';
 import {IconType, ButtonProps, DisabledButtonProps, LinkProps} from '../../../models/props';
 import {AccountsViewProps, AccountsViewType, SpanProps} from '../props/accountsViewProps';
 import {toAccountsTableViewProps} from './toAccountsTableViewProps';
 import {DOCS_ACCOUNTS, DOCS_QUICK_START} from '../../../variables/externalLinks';
 import {ROUTES_SETTINGS} from '../../../variables/routes';
-import {ApplicationActionType} from '../../../applicationState/actions';
 
 
 export const toAccountsViewProps = (appState: ApplicationState, showCreateModel: () => void): AccountsViewProps => {

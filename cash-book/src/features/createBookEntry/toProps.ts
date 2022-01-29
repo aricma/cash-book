@@ -153,7 +153,7 @@ export const toTemplateConfigProps = (
 				});
 			},
 			onChange: (value) => {
-				const newValue = transactionParser(value);
+				const newValue = textInputChangeHandler(value);
 				if (newValue === null) return;
 				dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,

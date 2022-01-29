@@ -24,6 +24,7 @@ import { Settings } from './features/settings';
 import { DndProvider } from 'react-dnd';
 import { dndBackend } from './misc/dnd';
 import { GlobalStateWrapper } from './features/application';
+import {Home} from './features/home';
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -45,10 +46,15 @@ ReactDOM.render(
 											</Routes>
 										</div>
 									</div>
-									<div className="fixed z-20 bottom-0 w-full h-[70px]">
+									<div id="modals" className="fixed top-0" />
+									<div className="fixed bottom-0 w-full h-[70px]">
 										<Menu />
 									</div>
-									<div id="modals" className="fixed z-10 top-0" />
+									<div className="fixed top-0">
+										<Routes>
+											<Route path="/" element={<Home />} />
+										</Routes>
+									</div>
 								</div>
 							</Router>
 						</DndProvider>

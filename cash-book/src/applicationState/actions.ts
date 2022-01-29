@@ -14,6 +14,7 @@ export enum ApplicationActionType {
 	APPLICATION_SET = 'APPLICATION_ACTION_TYPE/SET',
 	APPLICATION_SAVE = 'APPLICATION_ACTION_TYPE/SAVE',
 	APPLICATION_RESET = 'APPLICATION_ACTION_TYPE/RESET',
+	APPLICATION_EXPORT = 'APPLICATION_ACTION_TYPE/EXPORT',
 
 	BROWSER_LOCAL_STORAGE_SET = 'APPLICATION_ACTION_TYPE/BROWSER/LOCAL_STORAGE/SET',
 	BROWSER_LOCAL_STORAGE_REMOVE = 'APPLICATION_ACTION_TYPE/BROWSER/LOCAL_STORAGE/REMOVE',
@@ -77,7 +78,7 @@ export type ApplicationAction =
 	| AccountsAction
 	| TransactionsAction;
 
-export type Misc = Backup | LoadBackup | Load | Set | Save | Reset | DefaultSet | LoadingSet | ErrorSet;
+export type Misc = Backup | LoadBackup | Load | Set | Save | Reset | DefaultSet | LoadingSet | ErrorSet | Export;
 export type DefaultSet = Action<ApplicationActionType.APPLICATION_DEFAULT_SET>;
 export type LoadingSet = Action<ApplicationActionType.APPLICATION_LOADING_SET>;
 export type ErrorSet = Action<ApplicationActionType.APPLICATION_ERROR_SET, { error: Error }>;
@@ -87,12 +88,37 @@ export type Load = Action<ApplicationActionType.APPLICATION_LOAD>;
 export type Set = Action<ApplicationActionType.APPLICATION_SET, { state: any }>;
 export type Save = Action<ApplicationActionType.APPLICATION_SAVE>;
 export type Reset = Action<ApplicationActionType.APPLICATION_RESET>;
+export type Export = Action<ApplicationActionType.APPLICATION_EXPORT, ExportPayload>;
+export type ExportPayload =
+	| ExportAll
+	| ExportBookEntries
+	| ExportAccounts
+	| ExportTransactions;
+export interface ExportAccounts {
+	exportPayloadType: "EXPORT_PAYLOAD_TYPE/ACCOUNTS"
+	fileType: "csv" | "json";
+	dataType: "accounts";
+}
+export interface ExportTransactions {
+	exportPayloadType: "EXPORT_PAYLOAD_TYPE/TRANSACTIONS"
+	fileType: /*"csv" | */"json";
+	dataType: "transactions";
+}
+export interface ExportBookEntries {
+	exportPayloadType: "EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES"
+	fileType: "datev";
+	dataType: "book-entries";
+	range: "day" | "month",
+	date: string;
+}
+export interface ExportAll {
+	exportPayloadType: "EXPORT_PAYLOAD_TYPE/ALL"
+	fileType: "json";
+	dataType: "all";
+}
 
 export type BrowserAction = BrowserLocalStorageSet | BrowserLocalStorageRemove;
-export type BrowserLocalStorageSet = Action<
-	ApplicationActionType.BROWSER_LOCAL_STORAGE_SET,
-	{ id: string; value: string }
->;
+export type BrowserLocalStorageSet = Action<ApplicationActionType.BROWSER_LOCAL_STORAGE_SET, { id: string; value: string }>;
 export type BrowserLocalStorageRemove = Action<ApplicationActionType.BROWSER_LOCAL_STORAGE_REMOVE, { id: string }>;
 
 export type RouterAction = RouterGoTo;
@@ -104,7 +130,6 @@ export type SettingsSet = Action<ApplicationActionType.SETTINGS_SET, { state: Se
 export type AccountsAction =
 	| AccountsSet
 	| AccountsImport
-	| AccountsExport
 	| AccountsEdit
 	| AccountsRemove
 	| AccountsCreateSetType
@@ -113,11 +138,7 @@ export type AccountsAction =
 	| AccountsCreateSubmit
 	| AccountsCreateCancel;
 export type AccountsSet = Action<ApplicationActionType.ACCOUNTS_SET, { state: AccountsState }>;
-export type AccountsImport = Action<
-	ApplicationActionType.ACCOUNTS_IMPORT,
-	{ accounts: { [accountId: string]: Account } }
->;
-export type AccountsExport = Action<ApplicationActionType.ACCOUNTS_EXPORT>;
+export type AccountsImport = Action<ApplicationActionType.ACCOUNTS_IMPORT, { accounts: { [accountId: string]: Account } }>;
 export type AccountsEdit = Action<ApplicationActionType.ACCOUNTS_EDIT, { accountId: string }>;
 export type AccountsRemove = Action<ApplicationActionType.ACCOUNTS_REMOVE, { accountId: string }>;
 export type AccountsCreateSetType = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_TYPE, { value: AccountType }>;
@@ -205,8 +226,6 @@ export type TransactionsCreateCancel = Action<ApplicationActionType.TRANSACTIONS
 export type BookingsAction =
 	| BookingsSet
 	| BookingsEdit
-	| BookEntriesExportDay
-	| BookEntriesExportMonth
 	| BookEntriesSetTemplate
 	| BookEntriesCreateSetTemplate
 	| BookEntriesCreateSetCashStart
@@ -218,8 +237,6 @@ export type BookingsAction =
 	| BookEntriesCreateSubmit;
 export type BookingsSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { state: BookEntriesState }>;
 export type BookingsEdit = Action<ApplicationActionType.BOOK_ENTRIES_EDIT, { templateId: string; date: string }>;
-export type BookEntriesExportDay = Action<ApplicationActionType.BOOK_ENTRIES_EXPORT_DAY, { date: string }>;
-export type BookEntriesExportMonth = Action<ApplicationActionType.BOOK_ENTRIES_EXPORT_MONTH, { date: string }>;
 export type BookEntriesSetTemplate = Action<ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE, { templateId: string }>;
 export type BookEntriesCreateSetTemplate = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,

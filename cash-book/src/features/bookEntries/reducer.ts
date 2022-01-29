@@ -179,7 +179,7 @@ export const reducer: Reducer<BookEntriesState, BookingsAction> = (state, action
 								...Object.fromEntries(
 									Object.entries(config.transactions).map(([key, value]) => [key, value === '' ? undefined : value])
 								),
-								[config.diffTransaction?.transactionId || '']: String(config.diffTransaction?.value),
+								[config.diffTransaction?.transactionId || 'will-be-removed']: config.diffTransaction?.value.toString(),
 							}),
 						},
 					},

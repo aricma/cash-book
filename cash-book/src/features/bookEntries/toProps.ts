@@ -192,7 +192,7 @@ export const toDiffInfo = (appState: ApplicationState, bookEntry: BookEntry): st
 				return diffInfo;
 		}
 	}, toNumberOrZero(bookEntry.cash.start));
-	return String((aggregatedEnd - toNumberOrZero(bookEntry.cash.end)) / 100);
+	return String(-1 * (aggregatedEnd - toNumberOrZero(bookEntry.cash.end)) / 100);
 };
 
 export const toNumberOrZero = (value: string) => toCurrencyInt(value) || 0;

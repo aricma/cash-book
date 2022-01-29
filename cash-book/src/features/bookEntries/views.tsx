@@ -9,9 +9,9 @@ import {
 import { IconType } from '../../models/props';
 import { Icon } from '../../components/icons';
 import { Disclosure } from '@headlessui/react';
-import { Header } from '../menu';
 import { Select, OptionsType } from '../../components/select';
 import { toNumber } from '../../models/utils';
+import {Header} from '../../components/header';
 
 export const BookEntriesView: React.FC<BookEntriesViewProps> = (props) => (
 	<div className="space-y-12 pb-[100px]">

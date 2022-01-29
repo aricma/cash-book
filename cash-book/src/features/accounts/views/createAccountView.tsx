@@ -1,9 +1,9 @@
 import React from 'react';
 import {CreateAccountViewProps} from '../props/createAccountViewProps';
-import {Header} from '../../menu';
 import {Icon} from '../../../components/icons';
 import {Select} from '../../../components/select';
 import {TextInput} from '../../../components/textInput';
+import {Header} from '../../../components/header';
 
 
 export const CreateAccountView: React.FC<CreateAccountViewProps> = (props) => (

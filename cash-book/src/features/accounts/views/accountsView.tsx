@@ -1,8 +1,8 @@
 import React from 'react';
 import {AccountsViewProps, AccountsViewType} from '../props/accountsViewProps';
-import {Header} from '../../menu';
 import {Icon} from '../../../components/icons';
 import {Accounts, AccountsSkeleton} from './accounts';
+import {Header} from '../../../components/header';
 import {ExternalLink} from '../../../components/externalLink';
 
 

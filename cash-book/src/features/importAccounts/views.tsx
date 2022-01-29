@@ -3,9 +3,9 @@ import { ImportAccountsViewProps, ImportAccountsModalViewProps } from './props';
 import { FileInput } from '../../components/fileInput';
 import { Icon } from '../../components/icons';
 import { SlideInModal, OverlayContainer } from '../../components/modal';
-import { Header } from '../menu';
 import { IconType, HeaderCellProps, BodyCellProps } from '../../models/props';
 import { TableCell } from '../../components/tableCell';
+import {Header} from '../../components/header';
 
 export const ImportAccountsView: React.FC<ImportAccountsViewProps> = (props) => (
 	<>

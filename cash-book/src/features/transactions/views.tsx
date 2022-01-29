@@ -10,8 +10,8 @@ import { ButtonProps } from '../../models/props';
 import { TextInput } from '../../components/textInput';
 import { Select } from '../../components/select';
 import { Icon } from '../../components/icons';
-import { Header } from '../menu';
 import { Target } from './dndDraggable';
+import {Header} from '../../components/header';
 
 export const TransactionsView: React.FC<TransactionsViewProps> = (props) => {
 	return (

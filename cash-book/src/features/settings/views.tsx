@@ -2,8 +2,8 @@ import React from 'react';
 import { ButtonProps } from '../../models/props';
 import { SettingsViewProps } from './props';
 import { Icon } from '../../components/icons';
-import { Header } from '../menu';
 import { FileInput } from '../../components/fileInput';
+import {Header} from '../../components/header';
 
 export const SettingsView: React.FC<SettingsViewProps> = (props) => (
 	<div className="space-y-4">

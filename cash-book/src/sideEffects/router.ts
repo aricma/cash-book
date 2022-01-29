@@ -2,7 +2,8 @@ import * as SE from 'redux-saga/effects';
 import {ApplicationActionType, RouterGoTo} from '../applicationState/actions';
 import {ApplicationState, selectAppState} from '../applicationState';
 import {history} from '../router';
-import {ROUTES_ACCOUNTS, ROUTES_TRANSACTIONS, ROUTES_CREATE_BOOK_ENTRY} from '../variables/routes';
+import {ROUTES_ACCOUNTS, ROUTES_TRANSACTIONS, ROUTES_CREATE_BOOK_ENTRY, ROUTES_SUPPORT} from '../variables/routes';
+import {DOCS_SUPPORT} from '../variables/externalLinks';
 
 
 export function* routerBroker() {
@@ -14,7 +15,11 @@ export const makeGoToWorker = (goTo: (path: string) => void) => {
     return function* worker() {
         while (true) {
             const action: RouterGoTo = yield SE.take(ApplicationActionType.ROUTER_GO_TO);
-            goTo(action.path);
+            if (action.path === ROUTES_SUPPORT) {
+                window.open(DOCS_SUPPORT, '_blank');
+            } else {
+                goTo(action.path);
+            }
         }
     };
 };

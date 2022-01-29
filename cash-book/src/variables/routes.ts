@@ -3,3 +3,4 @@ export const ROUTES_ACCOUNTS = '/accounts';
 export const ROUTES_TRANSACTIONS = '/transactions';
 export const ROUTES_BOOK_ENTRIES = '/book-entries';
 export const ROUTES_SETTINGS = '/settings';
+export const ROUTES_SUPPORT = '/support';

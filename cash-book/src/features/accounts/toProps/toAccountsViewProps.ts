@@ -34,11 +34,13 @@ export const toAccountsViewProps = (appState: ApplicationState, showCreateModel:
                     DOCS_ACCOUNTS: () => ({
                         type: 'LINK_PROPS_TYPE',
                         title: 'Accounts',
+                        icon: IconType.BOOK_OPEN_FILL,
                         link: DOCS_ACCOUNTS,
                     }),
                     DOCS_QUICK_START: () => ({
                         type: "LINK_PROPS_TYPE",
                         title: "Quickstart Guide",
+                        icon: IconType.BOOK_OPEN_FILL,
                         link: DOCS_QUICK_START,
                     }),
                     SETTINGS: () => ({

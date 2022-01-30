@@ -35,8 +35,7 @@ export const toTemplateConfigProps = (
         day: 'numeric',
     });
     const textInputChangeHandler = (value: string): string | null => {
-        if (!/^[\d.,]*$/.test(value)) return null;
-        if (/^\d+[.,]\d{2}.$/.test(value)) return null;
+        if (/^$ | ^[^\d.,\b]*$/.test(value)) return null;
         return value;
     };
     return {

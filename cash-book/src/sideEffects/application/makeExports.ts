@@ -8,7 +8,7 @@ import { ExportFileConfig } from './makeExportToFile';
 import { compactObject, getFirstDateOfTheMonth, getLastDateOfTheMonth, pad } from '../../models/utils';
 import { bookEntryToDatevRows, headline } from './datev';
 import { DateWithoutTime } from '../../models/domain/date';
-import {latestVersion} from '../../backupMigrations';
+import { latestVersion } from '../../backupMigrations';
 
 export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 	return function* worker() {

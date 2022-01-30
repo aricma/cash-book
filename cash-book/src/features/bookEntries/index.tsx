@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAppState, selectAppState } from '../../applicationState';
-import { BookEntriesView } from './views';
-import { toBookingsViewProps } from './toProps';
+import { BookEntriesView } from './views/bookEntriesView';
+import {toBookEntriesViewProps} from './toProps/toBookingsViewProps';
 
 export const Bookings: React.FC = () => {
 	const appState = useAppState(selectAppState);
-	const viewProps = toBookingsViewProps(appState);
+	const viewProps = toBookEntriesViewProps(appState);
 	return <BookEntriesView {...viewProps} />;
 };

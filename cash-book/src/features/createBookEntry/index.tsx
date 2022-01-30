@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppState, selectAppState} from '../../applicationState';
 import {toCreateBookEntryViewProps} from './toProps/toCreateBookEntryViewProps';
-import {CreateBookEntryView} from './views';
+import {CreateBookEntryView} from './views/createBookEntryView';
 import {AppearModal, DialogContainer} from '../../components/modal';
 import {Dialog} from './views/dialog';
 import {toOverrideDateConfirmationModalViewProps} from './toProps/toOverrideDateConfirmationModalViewProps';

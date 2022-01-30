@@ -1,11 +1,11 @@
 import React from 'react';
-import {CreateBookEntryViewProps, CreateBookEntryViewType} from './props';
-import {Select, OptionsType} from '../../components/select';
-import {Header} from '../../components/header';
-import {TemplateConfigView} from './views/templateConfigView';
-import {Icon} from '../../components/icons';
-import {IconType} from '../../models/props';
-import {ExternalLink} from '../../components/externalLink';
+import {CreateBookEntryViewProps, CreateBookEntryViewType} from '../props';
+import {Select, OptionsType} from '../../../components/select';
+import {Header} from '../../../components/header';
+import {TemplateConfigView} from './templateConfigView';
+import {Icon} from '../../../components/icons';
+import {IconType} from '../../../models/props';
+import {ExternalLink} from '../../../components/externalLink';
 
 
 export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) => {

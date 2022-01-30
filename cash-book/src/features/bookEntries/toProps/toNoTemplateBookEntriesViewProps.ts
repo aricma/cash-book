@@ -1,10 +1,10 @@
 import { NoTemplateBookEntriesViewProps, BookEntriesViewType } from '../props';
-import {dispatch, ApplicationState} from '../../../applicationState';
-import {ApplicationActionType} from '../../../applicationState/actions';
-import {makeRichTextProps} from '../../../components/richText/makeRichTextProps';
-import {IconType, ButtonProps, LinkProps, SpanProps} from '../../../models/props';
-import {ROUTES_TRANSACTIONS, ROUTES_SETTINGS} from '../../../variables/routes';
-import {DOCS_QUICK_START, DOCS_CREATE_BOOK_ENTRY} from '../../../variables/externalLinks';
+import { dispatch, ApplicationState } from '../../../applicationState';
+import { ApplicationActionType } from '../../../applicationState/actions';
+import { makeRichTextProps } from '../../../components/richText/makeRichTextProps';
+import { IconType, ButtonProps, LinkProps, SpanProps } from '../../../models/props';
+import { ROUTES_TRANSACTIONS, ROUTES_SETTINGS } from '../../../variables/routes';
+import { DOCS_QUICK_START, DOCS_CREATE_BOOK_ENTRY } from '../../../variables/externalLinks';
 
 export const toNoTemplateBookEntriesViewProps = (appState: ApplicationState): NoTemplateBookEntriesViewProps => ({
 	type: BookEntriesViewType.NO_TEMPLATE,

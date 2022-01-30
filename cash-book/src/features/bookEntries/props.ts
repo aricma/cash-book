@@ -27,6 +27,11 @@ export interface SkeletonBookEntriesViewProps {
 export interface NoTemplateBookEntriesViewProps {
 	type: BookEntriesViewType.NO_TEMPLATE;
 	title: string;
+	template: OptionsInputProps;
+	infoBox: {
+		title: string;
+		message: Array<SpanProps | ButtonProps | LinkProps>;
+	};
 }
 
 export interface NoTemplatesBookEntriesViewProps {

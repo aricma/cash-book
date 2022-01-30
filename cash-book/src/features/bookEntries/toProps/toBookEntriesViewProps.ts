@@ -14,7 +14,7 @@ export const toBookEntriesViewProps = (appState: ApplicationState): BookEntriesV
 		case hasNoTemplates:
 			return toNoTemplatesBookEntriesViewProps();
 		case hasNoSelectedTemplate:
-			return toNoTemplateBookEntriesViewProps();
+			return toNoTemplateBookEntriesViewProps(appState);
 		case hasNoEntries:
 			return toSkeletonBookEntriesViewProps(appState);
 		default:

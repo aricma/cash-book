@@ -40,7 +40,7 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 						<div className="grid grid-cols-5 gap-2">
 							{cashInformation.map((props, index) => (
 								<React.Fragment key={index}>
-									<div className="bg-blue-200 dark:bg-blue-900 rounded-md text-blue-600 dark:text-blue-300 py-1 px-4">
+									<div className="bg-blue-200 dark:bg-blue-900 rounded-md text-blue-600 dark:text-blue-300 p-2">
 										<div className="space-y-2">
 											<p className="font-medium text-left">{props[0]}</p>
 											<div className="flex items-center justify-between space-x-2">

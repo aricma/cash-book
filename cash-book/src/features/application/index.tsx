@@ -34,7 +34,10 @@ export const GlobalStateWrapper: React.FC = (props) => {
 						title: 'Download Backup',
 						onSelect: () => {
 							dispatch({
-								type: ApplicationActionType.APPLICATION_BACKUP,
+								type: ApplicationActionType.APPLICATION_EXPORT,
+								exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ALL',
+								fileType: 'json',
+								dataType: 'all',
 							});
 						},
 					}}

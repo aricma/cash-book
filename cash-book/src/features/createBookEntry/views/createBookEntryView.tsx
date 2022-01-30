@@ -14,7 +14,7 @@ export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) =
 			return (
 				<form className="w-full pb-[100px] space-y-4">
 					<Header title={props.title} />
-					<div className="bg-orange-100 text-orange-600 rounded-md p-4 space-y-2">
+					<div className="bg-orange-100 dark:bg-orange-600 text-orange-600 dark:text-orange-200 rounded-md p-4 space-y-2">
 						<h3 className="text-lg font-medium flex space-x-2">
 							<Icon type={IconType.EXCLAMATION_STROKE} className="w-6"/>
 							<span>{props.warningBox.title}</span>
@@ -27,7 +27,7 @@ export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) =
 											return (
 												<React.Fragment key={index}>
 													<button type="button" onClick={props.onSelect}
-															className="button-prime bg-orange-600 hover:bg-orange-500 focus:ring-orange-600 button-xs py-1 inline-flex items-center justify-center space-x-2">
+															className="button-prime bg-orange-600 dark:bg-orange-500 hover:bg-orange-500 dark:hover:bg-orange-400 focus:ring-orange-600 dark:focus:ring-orange-500 text-orange-100 dark:text-orange-200 button-xs py-1 inline-flex items-center justify-center space-x-2">
 														{props.icon && (<Icon type={props.icon} className="w-4 h-4"/>)}
 														<span className="leading-5">{props.title}</span>
 													</button>
@@ -38,7 +38,7 @@ export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) =
 											return (
 												<React.Fragment key={index}>
 													<ExternalLink {...props}
-																  className="button-prime bg-orange-600 hover:bg-orange-500 focus:ring-orange-600 button-xs py-1 inline-flex items-center justify-center space-x-2">
+																  className="button-prime bg-orange-600 dark:bg-orange-500 hover:bg-orange-500 dark:hover:bg-orange-400 focus:ring-orange-600 dark:focus:ring-orange-500 text-orange-100 dark:text-orange-200 button-xs py-1 inline-flex items-center justify-center space-x-2">
 														{props.icon && (<Icon type={props.icon} className="w-4 h-4"/>)}
 														<span className="leading-5">{props.title}</span>
 													</ExternalLink>
@@ -70,8 +70,8 @@ export const CreateBookEntryView: React.FC<CreateBookEntryViewProps> = (props) =
 							</div>
 						}
 					/>
-					<div className="bg-blue-100 text-blue-600 rounded-md p-4 space-y-2">
-						<h3 className="text-lg font-medium">{props.infoBox.title}</h3>
+					<div className="bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-md p-4 space-y-2">
+						<h3 className="text-lg font-medium dark:text-blue-300">{props.infoBox.title}</h3>
 						<p className="">
 							{
 								props.infoBox.message.map((props, index) => {

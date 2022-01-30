@@ -23,8 +23,8 @@ export const AccountsView: React.FC<AccountsViewProps> = (props) => {
                             </div>
                         }
                     />
-                    <div className="bg-blue-100 text-blue-600 rounded-md p-4 space-y-2">
-                        <h3 className="text-lg font-medium">{props.infoBox.title}</h3>
+                    <div className="bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-md p-4 space-y-2">
+                        <h3 className="text-lg font-medium dark:text-blue-300">{props.infoBox.title}</h3>
                         <p className="">
                             {
                                 props.infoBox.message.map((props, index) => {

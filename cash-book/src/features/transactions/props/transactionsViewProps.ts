@@ -1,9 +1,9 @@
-import {ButtonProps, IconType, DisabledButtonProps, LinkProps, SpanProps} from '../../../models/props';
+import { ButtonProps, IconType, LinkProps, SpanProps } from '../../../models/props';
 
 export enum TransactionsViewType {
-	SKELETON = "TRANSACTIONS_VIEW_TYPE/SKELETON",
-	MISSING_ACCOUNTS = "TRANSACTIONS_VIEW_TYPE/MISSING_ACCOUNTS",
-	DATA = "TRANSACTIONS_VIEW_TYPE/DATA",
+	SKELETON = 'TRANSACTIONS_VIEW_TYPE/SKELETON',
+	MISSING_ACCOUNTS = 'TRANSACTIONS_VIEW_TYPE/MISSING_ACCOUNTS',
+	DATA = 'TRANSACTIONS_VIEW_TYPE/DATA',
 }
 
 export type TransactionsViewProps =
@@ -18,7 +18,7 @@ export interface SkeletonTransactionsViewProps {
 	infoBox: {
 		title: string;
 		message: Array<ButtonProps | LinkProps | SpanProps>;
-	}
+	};
 }
 
 export interface MissingAccountsTransactionsViewProps {
@@ -27,7 +27,7 @@ export interface MissingAccountsTransactionsViewProps {
 	warningBox: {
 		title: string;
 		message: Array<ButtonProps | LinkProps | SpanProps>;
-	}
+	};
 }
 
 export interface DataTransactionsViewProps {

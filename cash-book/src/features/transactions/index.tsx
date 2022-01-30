@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAppState, selectAppState } from '../../applicationState';
-import { toTransactionsViewProps} from './toProps/toTransactionsViewProps';
-import { TransactionsView} from './views/transactionsView';
+import { toTransactionsViewProps } from './toProps/toTransactionsViewProps';
+import { TransactionsView } from './views/transactionsView';
 import { SlideInModal, OverlayContainer } from '../../components/modal';
-import {toCreateTemplateViewProps} from './toProps/toCreateTemplateViewProps';
-import {CreateTemplateView} from './views/createTemplateView';
+import { toCreateTemplateViewProps } from './toProps/toCreateTemplateViewProps';
+import { CreateTemplateView } from './views/createTemplateView';
 
 export const Transactions: React.FC = () => {
 	const appState = useAppState(selectAppState);

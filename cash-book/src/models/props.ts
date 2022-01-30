@@ -114,6 +114,6 @@ export interface DatePickerInputProps {
 }
 
 export interface SpanProps {
-    type: 'SPAN_PROPS_TYPE',
-    title: string;
+	type: 'SPAN_PROPS_TYPE';
+	title: string;
 }

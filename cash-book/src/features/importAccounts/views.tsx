@@ -5,7 +5,7 @@ import { Icon } from '../../components/icons';
 import { SlideInModal, OverlayContainer } from '../../components/modal';
 import { IconType, HeaderCellProps, BodyCellProps } from '../../models/props';
 import { TableCell } from '../../components/tableCell';
-import {Header} from '../../components/header';
+import { Header } from '../../components/header';
 
 export const ImportAccountsView: React.FC<ImportAccountsViewProps> = (props) => (
 	<>

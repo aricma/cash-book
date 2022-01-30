@@ -1,7 +1,6 @@
-import {NoTemplatesBookEntriesViewProps, BookEntriesViewType} from '../props';
-
+import { NoTemplatesBookEntriesViewProps, BookEntriesViewType } from '../props';
 
 export const toNoTemplatesBookEntriesViewProps = (): NoTemplatesBookEntriesViewProps => ({
-    type: BookEntriesViewType.NO_TEMPLATES,
-    title: 'Book Entries',
+	type: BookEntriesViewType.NO_TEMPLATES,
+	title: 'Book Entries',
 });

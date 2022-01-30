@@ -10,7 +10,7 @@ export enum OptionsType {
 type Props = OptionsInputProps & {
 	autoFocus?: boolean;
 	optionsType?: OptionsType;
-}
+};
 export const Select: React.FC<Props> = (props) => {
 	React.useEffect(() => {
 		if (props.options.length === 1) {
@@ -31,7 +31,9 @@ export const Select: React.FC<Props> = (props) => {
 	};
 	return (
 		<Listbox as="div" value={props.value} onChange={changeHandler} className="relative w-full">
-			<Listbox.Button autoFocus={props.autoFocus} className="button button-sm">{props.value || props.placeholder}</Listbox.Button>
+			<Listbox.Button autoFocus={props.autoFocus} className="button button-sm">
+				{props.value || props.placeholder}
+			</Listbox.Button>
 			<Options type={props.optionsType || OptionsType.BR}>
 				<div className="rounded-md bg-level divide-y-2 divide-gray-300 dark:divide-gray-900">
 					{props.options.map((buttonProps, index) => (

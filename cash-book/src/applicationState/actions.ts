@@ -90,36 +90,35 @@ export type Set = Action<ApplicationActionType.APPLICATION_SET, { state: any }>;
 export type Save = Action<ApplicationActionType.APPLICATION_SAVE>;
 export type Reset = Action<ApplicationActionType.APPLICATION_RESET>;
 export type Export = Action<ApplicationActionType.APPLICATION_EXPORT, ExportPayload>;
-export type ExportPayload =
-	| ExportAll
-	| ExportBookEntries
-	| ExportAccounts
-	| ExportTransactions;
+export type ExportPayload = ExportAll | ExportBookEntries | ExportAccounts | ExportTransactions;
 export interface ExportAccounts {
-	exportPayloadType: "EXPORT_PAYLOAD_TYPE/ACCOUNTS"
-	fileType: "csv" | "json";
-	dataType: "accounts";
+	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ACCOUNTS';
+	fileType: 'csv' | 'json';
+	dataType: 'accounts';
 }
 export interface ExportTransactions {
-	exportPayloadType: "EXPORT_PAYLOAD_TYPE/TRANSACTIONS"
-	fileType: /*"csv" | */"json";
-	dataType: "transactions";
+	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/TRANSACTIONS';
+	fileType: /*"csv" | */ 'json';
+	dataType: 'transactions';
 }
 export interface ExportBookEntries {
-	exportPayloadType: "EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES"
-	fileType: "datev";
-	dataType: "book-entries";
-	range: "day" | "month",
+	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES';
+	fileType: 'datev';
+	dataType: 'book-entries';
+	range: 'day' | 'month';
 	date: string;
 }
 export interface ExportAll {
-	exportPayloadType: "EXPORT_PAYLOAD_TYPE/ALL"
-	fileType: "json";
-	dataType: "all";
+	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ALL';
+	fileType: 'json';
+	dataType: 'all';
 }
 
 export type BrowserAction = BrowserLocalStorageSet | BrowserLocalStorageRemove;
-export type BrowserLocalStorageSet = Action<ApplicationActionType.BROWSER_LOCAL_STORAGE_SET, { id: string; value: string }>;
+export type BrowserLocalStorageSet = Action<
+	ApplicationActionType.BROWSER_LOCAL_STORAGE_SET,
+	{ id: string; value: string }
+>;
 export type BrowserLocalStorageRemove = Action<ApplicationActionType.BROWSER_LOCAL_STORAGE_REMOVE, { id: string }>;
 
 export type RouterAction = RouterGoTo | RouterFallback;
@@ -140,7 +139,10 @@ export type AccountsAction =
 	| AccountsCreateSubmit
 	| AccountsCreateCancel;
 export type AccountsSet = Action<ApplicationActionType.ACCOUNTS_SET, { state: AccountsState }>;
-export type AccountsImport = Action<ApplicationActionType.ACCOUNTS_IMPORT, { accounts: { [accountId: string]: Account } }>;
+export type AccountsImport = Action<
+	ApplicationActionType.ACCOUNTS_IMPORT,
+	{ accounts: { [accountId: string]: Account } }
+>;
 export type AccountsEdit = Action<ApplicationActionType.ACCOUNTS_EDIT, { accountId: string }>;
 export type AccountsRemove = Action<ApplicationActionType.ACCOUNTS_REMOVE, { accountId: string }>;
 export type AccountsCreateSetType = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_TYPE, { value: AccountType }>;

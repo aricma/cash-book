@@ -1,8 +1,7 @@
 // https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
 // https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
-import {DateWithoutTime} from '../../models/domain/date';
-import {pad} from '../../models/utils';
-
+import { DateWithoutTime } from '../../models/domain/date';
+import { pad } from '../../models/utils';
 
 export const exportToFile = (content: string, name: string) => {
 	const link = document.createElement('a');
@@ -15,10 +14,7 @@ export const exportToFile = (content: string, name: string) => {
 };
 
 export const toCSVContent = (rows: Array<Array<string>>): string => {
-	return (
-		'data:text/csv;charset=utf-8,' +
-		rows.map((row) => row.map((cell) => `"${cell}"`).join(';')).join('\n')
-	);
+	return 'data:text/csv;charset=utf-8,' + rows.map((row) => row.map((cell) => `"${cell}"`).join(';')).join('\n');
 };
 
 export const toJSONContent = (object: any) => {
@@ -39,4 +35,4 @@ export const toDateString = (date: string): string => {
 	const month = pad(parsed.getMonth() + 1, 2);
 	const day = pad(parsed.getDate(), 2);
 	return `${year}-${month}-${day}`;
-}
+};

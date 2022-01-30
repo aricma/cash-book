@@ -2,7 +2,7 @@ import { IconType } from '../../models/props';
 import { ApplicationActionType } from '../../applicationState/actions';
 import { SettingsViewProps } from './props';
 import { dispatch } from '../../applicationState';
-import {ROUTES_SUPPORT} from '../../variables/routes';
+import { ROUTES_SUPPORT } from '../../variables/routes';
 
 export const toSettingsViewProps = (): SettingsViewProps => {
 	return {
@@ -25,9 +25,9 @@ export const toSettingsViewProps = (): SettingsViewProps => {
 			onSelect: () => {
 				dispatch({
 					type: ApplicationActionType.APPLICATION_EXPORT,
-					exportPayloadType: "EXPORT_PAYLOAD_TYPE/ALL",
-					dataType: "all",
-					fileType: "json",
+					exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ALL',
+					dataType: 'all',
+					fileType: 'json',
 				});
 			},
 		},

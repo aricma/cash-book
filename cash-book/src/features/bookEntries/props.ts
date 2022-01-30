@@ -1,4 +1,4 @@
-import {ButtonProps, OptionsInputProps, IconType, SpanProps, LinkProps} from '../../models/props';
+import { ButtonProps, OptionsInputProps, IconType, SpanProps, LinkProps } from '../../models/props';
 
 export enum BookEntriesViewType {
 	SKELETON = 'BOOK_ENTRIES_VIEW_TYPE/SKELETON',
@@ -14,28 +14,28 @@ export type BookEntriesViewProps =
 	| EntriesBookEntriesViewProps;
 
 export interface SkeletonBookEntriesViewProps {
-	type: BookEntriesViewType.SKELETON,
+	type: BookEntriesViewType.SKELETON;
 	title: string;
 	template: OptionsInputProps;
 	create: ButtonProps;
 	infoBox: {
 		title: string;
 		message: Array<SpanProps | ButtonProps | LinkProps>;
-	}
+	};
 }
 
 export interface NoTemplateBookEntriesViewProps {
-	type: BookEntriesViewType.NO_TEMPLATE,
+	type: BookEntriesViewType.NO_TEMPLATE;
 	title: string;
 }
 
 export interface NoTemplatesBookEntriesViewProps {
-	type: BookEntriesViewType.NO_TEMPLATES,
+	type: BookEntriesViewType.NO_TEMPLATES;
 	title: string;
 }
 
 export interface EntriesBookEntriesViewProps {
-	type: BookEntriesViewType.ENTRIES,
+	type: BookEntriesViewType.ENTRIES;
 	title: string;
 	template: OptionsInputProps;
 	create: ButtonProps;

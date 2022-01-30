@@ -4,7 +4,7 @@ import React from 'react';
 import { WithClasses, WithIconType, IconType } from '../../models/props';
 import { Cashier } from './cashier';
 import { Spinner } from './spinner';
-import {CashBook} from './cashBook';
+import { CashBook } from './cashBook';
 
 export const Icon: React.FC<WithIconType & WithClasses> = (props) => {
 	switch (props.type) {

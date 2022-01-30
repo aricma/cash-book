@@ -1,10 +1,9 @@
-import {ApplicationState} from '../../../applicationState';
-import {TransactionsViewProps} from '../props/transactionsViewProps';
-import {toDataTransactionsViewProps} from './toDataTransactionsViewProps';
-import {toSkeletonTransactionsViewProps} from './toSkeletonTransactionsViewProps';
-import {AccountType} from '../../accounts/state';
-import {toMissingAccountsTransactionsViewProps} from './toMissingAccountsTransactionsViewProps';
-
+import { ApplicationState } from '../../../applicationState';
+import { TransactionsViewProps } from '../props/transactionsViewProps';
+import { toDataTransactionsViewProps } from './toDataTransactionsViewProps';
+import { toSkeletonTransactionsViewProps } from './toSkeletonTransactionsViewProps';
+import { AccountType } from '../../accounts/state';
+import { toMissingAccountsTransactionsViewProps } from './toMissingAccountsTransactionsViewProps';
 
 export const toTransactionsViewProps = (appState: ApplicationState, openModal: () => void): TransactionsViewProps => {
 	const hasNoTemplates = Object.keys(appState.transactions.templates).length === 0;

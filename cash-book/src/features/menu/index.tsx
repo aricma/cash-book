@@ -1,8 +1,8 @@
 import React from 'react';
-import {useMatch} from 'react-router-dom';
-import {useAppState, selectAppState} from '../../applicationState';
-import {MenuView} from './views/menuView';
-import {toMenuViewProps} from './toProps/toMenuViewProps';
+import { useMatch } from 'react-router-dom';
+import { useAppState, selectAppState } from '../../applicationState';
+import { MenuView } from './views/menuView';
+import { toMenuViewProps } from './toProps/toMenuViewProps';
 import {
 	ROUTES_ACCOUNTS,
 	ROUTES_CREATE_BOOK_ENTRY,
@@ -10,7 +10,6 @@ import {
 	ROUTES_BOOK_ENTRIES,
 	ROUTES_SETTINGS,
 } from '../../variables/routes';
-
 
 export const Menu: React.FC = () => {
 	const matchAccountsRoute = useMatch(ROUTES_ACCOUNTS);
@@ -30,9 +29,10 @@ export const Menu: React.FC = () => {
 				return matchBookEntriesRoute !== null;
 			case ROUTES_SETTINGS:
 				return matchSettingsRoute !== null;
-			default: return false;
+			default:
+				return false;
 		}
-	}
+	};
 	const appState = useAppState(selectAppState);
 	const viewProps = toMenuViewProps(match, appState);
 	return <MenuView {...viewProps} />;

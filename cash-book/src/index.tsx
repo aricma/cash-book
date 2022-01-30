@@ -24,7 +24,7 @@ import { Settings } from './features/settings';
 import { DndProvider } from 'react-dnd';
 import { dndBackend } from './misc/dnd';
 import { GlobalStateWrapper } from './features/application';
-import {Home} from './features/home';
+import { Home } from './features/home';
 
 ReactDOM.render(
 	<React.StrictMode>

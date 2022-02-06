@@ -58,7 +58,8 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 								const bookEntry = appState.bookEntries.templates[selectedTemplatesId][action.date];
 								if (bookEntry === undefined) break;
 								const rows = bookEntryToDatevRows(appState, bookEntry);
-								const fileName = `book-entry-${toDateString(action.date)}-${unique}.csv`;
+								const cashierName = appState.transactions.templates[selectedTemplatesId].name
+								const fileName = `book-entry-${cashierName}-${toDateString(action.date)}-${unique}.csv`;
 								exportFilesQueue.put({
 									name: fileName,
 									content: toCSVContent([headline, ...rows]),
@@ -80,9 +81,10 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 								const rows = bookEntries.reduce((rows: Array<Array<string>>, bookEntry) => {
 									return [...rows, ...bookEntryToDatevRows(appState, bookEntry)];
 								}, []);
+								const cashierName = appState.transactions.templates[selectedTemplatesId].name.toLowerCase();
 								const year = date.getFullYear();
 								const month = pad(date.getMonth() + 1, 2);
-								const fileName = `book-entry-${year}-${month}_${unique}.csv`;
+								const fileName = `book-entries-${cashierName}-${year}-${month}_${unique}.csv`;
 								exportFilesQueue.put({
 									name: fileName,
 									content: toCSVContent([headline, ...rows]),

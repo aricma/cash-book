@@ -51,8 +51,8 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 						});
 						break;
 					case 'EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES':
-						switch ([action.fileType, action.dataType]) {
-							case ['datev', 'day']: {
+						switch (action.fileType + '-' + action.range) {
+							case 'datev-day': {
 								const selectedTemplatesId = appState.bookEntries.selectedTemplateId;
 								if (selectedTemplatesId === undefined) break;
 								const bookEntry = appState.bookEntries.templates[selectedTemplatesId][action.date];
@@ -65,7 +65,7 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 								});
 								break;
 							}
-							case ['datev', 'month']: {
+							case 'datev-month': {
 								const date = DateWithoutTime.fromString(action.date);
 								const fromDate = getFirstDateOfTheMonth(date).getTime();
 								const toDate = getLastDateOfTheMonth(date).getTime();
@@ -89,7 +89,7 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 								});
 								break;
 							}
-							case ['json', 'day']: {
+							case 'json-day': {
 								const selectedTemplatesId = appState.bookEntries.selectedTemplateId;
 								if (selectedTemplatesId === undefined) break;
 								const bookEntry = appState.bookEntries.templates[selectedTemplatesId][action.date];
@@ -101,7 +101,7 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 								});
 								break;
 							}
-							case ['json', 'month']: {
+							case 'json-month': {
 								const date = DateWithoutTime.fromString(action.date);
 								const fromDate = getFirstDateOfTheMonth(date).getTime();
 								const toDate = getLastDateOfTheMonth(date).getTime();

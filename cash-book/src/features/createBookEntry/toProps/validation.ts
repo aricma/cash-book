@@ -60,21 +60,9 @@ const validateTransaction = (value?: string): string | undefined => {
 };
 
 const validateTransactionValue = (appState: ApplicationState): string | undefined => {
-	const selectedTemplateId = appState.bookEntries.selectedTemplateId;
-	if (selectedTemplateId === undefined) return 'No Template selected!';
+	const selectedTemplateId = appState.bookEntries.selectedTemplateId!;
 	const config = appState.bookEntries.create.templates[selectedTemplateId];
-	if (config === undefined) return 'Found no config!';
 	if (config.diffTransaction) return undefined;
-	const cashierAccount =
-		Object.values(appState.accounts.accounts).find(({ type }) => {
-			return type === AccountType.CASH_STATION;
-		}) || undefined;
-	if (cashierAccount === undefined) return 'Cashier account is missing!';
-	const differenceAccount =
-		Object.values(appState.accounts.accounts).find(({ type }) => {
-			return type === AccountType.DIFFERENCE;
-		}) || undefined;
-	if (differenceAccount === undefined) return 'Difference account is missing!';
 	const value = transactionValue(appState);
 	return value === 0 ? undefined : 'Transactions result to ' + value + '!';
 };

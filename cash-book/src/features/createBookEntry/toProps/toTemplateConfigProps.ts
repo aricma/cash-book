@@ -163,7 +163,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 						cashierAccount: cashierAccount.name,
 						direction: diffValue < 0 ? IconType.ARROW_NARROW_LEFT_STROKE : IconType.ARROW_NARROW_RIGHT_STROKE,
 						diffAccount: diffAccount.name,
-						value: '' + Math.abs(diffValue),
+						value: transactionParser(String(Math.abs(diffValue))),
 						description:
 							'If you enable this transaction we automatically move the remainder of the aggregated transactions into the difference account',
 						input: {
@@ -176,7 +176,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 									const transactionId = diffValue < 0 ? template.autoDiffInId : template.autoDiffOutId;
 									dispatch({
 										type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION,
-										transaction: { transactionId, value: String(Math.abs(diffValue)) },
+										transaction: { transactionId, value: transactionParser(String(Math.abs(diffValue))) },
 									});
 								} else {
 									dispatch({ type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION });

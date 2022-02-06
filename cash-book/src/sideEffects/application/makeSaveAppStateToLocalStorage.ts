@@ -3,7 +3,7 @@ import { ApplicationActionType } from '../../applicationState/actions';
 import { ApplicationState, selectAppState } from '../../applicationState';
 import { SettingsSaveType } from '../../features/settings/state';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
-import {V3} from '../../backupMigrations/v3';
+import { V3 } from '../../backupMigrations/v3';
 
 export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, value: string) => void) => {
 	return function* worker() {
@@ -52,7 +52,7 @@ export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, 
 						templates: appState.transactions.templates,
 						transactions: appState.transactions.transactions,
 						bookEntries: appState.bookEntries.templates,
-					}
+					};
 					const value = JSON.stringify(backup);
 					setInLocalStorage(LOCAL_STORAGE_KEY, value);
 				}

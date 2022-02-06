@@ -58,7 +58,7 @@ export const makeExports = (exportFilesQueue: Channel<ExportFileConfig>) => {
 								const bookEntry = appState.bookEntries.templates[selectedTemplatesId][action.date];
 								if (bookEntry === undefined) break;
 								const rows = bookEntryToDatevRows(appState, bookEntry);
-								const cashierName = appState.transactions.templates[selectedTemplatesId].name
+								const cashierName = appState.transactions.templates[selectedTemplatesId].name;
 								const fileName = `book-entry-${cashierName}-${toDateString(action.date)}-${unique}.csv`;
 								exportFilesQueue.put({
 									name: fileName,

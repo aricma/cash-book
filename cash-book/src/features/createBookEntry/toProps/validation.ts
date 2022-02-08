@@ -1,5 +1,4 @@
 import { ApplicationState } from '../../../applicationState';
-import { AccountType } from '../../accounts/state';
 import { transactionValue } from '../../bookEntries/misc';
 import { compact, toNumber } from '../../../models/utils';
 

@@ -61,3 +61,11 @@ export const bookEntryToDatevRows = (appState: ApplicationState, bookEntry: Book
 			});
 	});
 };
+
+export const validateDatevRows = (rows: Array<Array<string>>): null | string => {
+	const result = rows.reduce((result: number, row: Array<string>) => {
+		const value = Number(row[1].replace('+', '').replace(',', '.')) * 100;
+		return result + value;
+	}, 0);
+	return result === 0 ? null : `The Rows add up to: ${result / 100}!`;
+};

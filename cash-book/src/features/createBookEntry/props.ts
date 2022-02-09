@@ -61,7 +61,14 @@ export interface CreateBookEntryTemplateConfigProps {
 	submit: DisabledButtonProps | ButtonProps;
 }
 
+export enum ToggleDiffViewType {
+	DEFAULT = "TOGGLE_DIFF_VIEW_TYPE/DEFAULT",
+	WARNING = "TOGGLE_DIFF_VIEW_TYPE/WARNING",
+	DANGER = "TOGGLE_DIFF_VIEW_TYPE/DANGER",
+}
+
 export interface ToggleDiffViewProps {
+	type: ToggleDiffViewType;
 	input: BooleanInputProps;
 	title: string;
 	cashierAccount: string;

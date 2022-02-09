@@ -1,5 +1,5 @@
 import React from 'react';
-import {ToggleDiffViewProps, ToggleDiffViewType} from '../props';
+import { ToggleDiffViewProps, ToggleDiffViewType } from '../props';
 import { Icon } from '../../../components/icons';
 
 export const DifferenceAccount: React.FC<ToggleDiffViewProps> = (props) => {
@@ -62,4 +62,4 @@ export const DifferenceAccount: React.FC<ToggleDiffViewProps> = (props) => {
 				</div>
 			);
 	}
-}
+};

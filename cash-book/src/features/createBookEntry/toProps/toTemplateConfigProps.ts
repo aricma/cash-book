@@ -1,5 +1,5 @@
 import { ApplicationState, dispatch } from '../../../applicationState';
-import {CreateBookEntryTemplateConfigProps, ToggleDiffViewType} from '../props';
+import { CreateBookEntryTemplateConfigProps, ToggleDiffViewType } from '../props';
 import { validateCreateBookEntry, validateIfDateExists } from './validation';
 import { transactionValue } from '../../bookEntries/misc';
 import { DateWithoutTime } from '../../../models/domain/date';
@@ -162,10 +162,14 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 						type: (() => {
 							const absoluteDiffValue = Math.abs(diffValue);
 							switch (true) {
-								case absoluteDiffValue <= 10: return ToggleDiffViewType.DEFAULT;
-								case absoluteDiffValue <= 50: return ToggleDiffViewType.WARNING;
-								case absoluteDiffValue > 50: return ToggleDiffViewType.DANGER;
-								default: return ToggleDiffViewType.DEFAULT;
+								case absoluteDiffValue <= 10:
+									return ToggleDiffViewType.DEFAULT;
+								case absoluteDiffValue <= 50:
+									return ToggleDiffViewType.WARNING;
+								case absoluteDiffValue > 50:
+									return ToggleDiffViewType.DANGER;
+								default:
+									return ToggleDiffViewType.DEFAULT;
 							}
 						})(),
 						title: 'Difference Transaction',

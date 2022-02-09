@@ -6,9 +6,12 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
+		"coverage": "react-scripts test --coverage --watchAll=false",
 		"compile": "yarn tsc",
-		"lint": "eslint --fix src",
-		"ci": "CI=true && yarn compile && yarn lint && yarn test --watchAll=false && yarn build"
+		"lint": "eslint src",
+		"update-browser-list": "echo y | npx browserslist@latest --update-db",
+		"preci": "yarn update-browser-list && yarn prettier src && yarn lint --fix",
+		"ci": "CI=true && yarn compile && yarn lint && yarn test --watchAll=false && yarn build",
 		"preanalyze": "yarn build",
 		"analyze": "source-map-explorer 'build/static/js/*.js'"
 	},
@@ -54,6 +57,28 @@
 			"jest/valid-title": "off",
 			"no-console": "error"
 		}
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"src/**/*.{js,jsx,ts,tsx}",
+			"!<rootDir>/node_modules",
+			"!src/applicationState/",
+			"!src/models/",
+			"!src/misc/",
+			"!src/router/",
+			"!src/variables/"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 100,
+				"functions": 100,
+				"lines": 0,
+				"statements": 50
+			}
+		},
+		"coverageReporters": [
+			"text"
+		]
 	},
 	"browserslist": {
 		"production": [

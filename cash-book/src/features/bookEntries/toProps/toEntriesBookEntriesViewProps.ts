@@ -1,4 +1,4 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { EntriesBookEntriesViewProps, BookEntriesViewType, BookEntryMonthViewProps } from '../props';
 import { ButtonProps, IconType, OptionsInputProps } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
@@ -8,6 +8,7 @@ import { TransactionWithValue, accountWithValue } from '../misc';
 import { DateWithoutTime } from '../../../models/domain/date';
 import { toBookEntryDayViewProps } from './toBookEntryDayViewProps';
 import { toBookEntryMonthViewProps } from './toBookEntryMonthViewProps';
+import { dispatch } from '../../../applicationState/store';
 
 export const toEntriesBookEntriesViewProps = (appState: ApplicationState): EntriesBookEntriesViewProps => {
 	const title = 'Book Entries';

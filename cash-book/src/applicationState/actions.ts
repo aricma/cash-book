@@ -1,7 +1,7 @@
 import { Action } from '../models/reducers';
-import { AccountType, AccountsState, Account } from '../features/accounts/state';
+import { AccountType, Account } from '../features/accounts/state';
 import { TransactionType, TransactionsState } from '../features/transactions/state';
-import { BookEntriesState } from '../features/bookEntries/state';
+import { Templates, Create } from '../features/bookEntries/state';
 import { SettingsState } from '../features/settings/state';
 
 export enum ApplicationActionType {
@@ -24,7 +24,6 @@ export enum ApplicationActionType {
 	SETTINGS_SET = 'APPLICATION_ACTION_TYPE/SETTINGS/SET',
 
 	ACCOUNTS_SET = 'APPLICATION_ACTION_TYPE/ACCOUNTS/SET',
-	ACCOUNTS_IMPORT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/IMPORT',
 	ACCOUNTS_EDIT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/EDIT',
 	ACCOUNTS_REMOVE = 'APPLICATION_ACTION_TYPE/ACCOUNTS/REMOVE',
 	ACCOUNTS_CREATE_SET_TYPE = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/TYPE/SET',
@@ -53,13 +52,15 @@ export enum ApplicationActionType {
 
 	BOOK_ENTRIES_SET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/SET',
 	BOOK_ENTRIES_EDIT = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EDIT',
+	BOOK_ENTRIES_EDIT_SET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EDIT/SET',
 	BOOK_ENTRIES_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/TEMPLATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TEMPLATE/SET',
 	BOOK_ENTRIES_CREATE_SET_CASH_START = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/CASH/START',
 	BOOK_ENTRIES_CREATE_SET_CASH_END = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/CASH/END',
 	BOOK_ENTRIES_CREATE_SET_DATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DATE/SET',
 	BOOK_ENTRIES_CREATE_SET_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/TRANSACTION/SET',
-	BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DIFFERENCE/SET',
+	BOOK_ENTRIES_CREATE_ADD_DIFF_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DIFFERENCE/ADD',
+	BOOK_ENTRIES_CREATE_REMOVE_DIFF_TRANSACTION = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/DIFFERENCE/REMOVE',
 	BOOK_ENTRIES_CREATE_CANCEL = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/CANCEL',
 	BOOK_ENTRIES_CREATE_SUBMIT = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/CREATE/SUBMIT',
 }
@@ -70,7 +71,7 @@ export type ApplicationAction =
 	| DefaultSet
 	| BrowserAction
 	| RouterAction
-	| BookingsAction
+	| BookEntriesAction
 	| SettingsAction
 	| AccountsAction
 	| TransactionsAction;
@@ -84,29 +85,42 @@ export type Load = Action<ApplicationActionType.APPLICATION_LOAD>;
 export type Set = Action<ApplicationActionType.APPLICATION_SET, { state: any }>;
 export type Save = Action<ApplicationActionType.APPLICATION_SAVE>;
 export type Reset = Action<ApplicationActionType.APPLICATION_RESET>;
-export type Export = Action<ApplicationActionType.APPLICATION_EXPORT, ExportPayload>;
+export type Export = Action<ApplicationActionType.APPLICATION_EXPORT, { payload: ExportPayload }>;
 export type ExportPayload = ExportAll | ExportBookEntries | ExportAccounts | ExportTransactions;
+
+export enum ExportPayloadType {
+	ACCOUNTS = 'EXPORT_PAYLOAD_TYPE/ACCOUNTS',
+	TRANSACTIONS = 'EXPORT_PAYLOAD_TYPE/TRANSACTIONS',
+	BOOK_ENTRIES = 'EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES',
+	ALL = 'EXPORT_PAYLOAD_TYPE/ALL',
+}
+
+export enum ExportFileType {
+	CSV = 'EXPORT_FILE_TYPE/CSV',
+	JSON = 'EXPORT_FILE_TYPE/JSON',
+	DATEV_CSV = 'EXPORT_FILE_TYPE/DATEV_CSV',
+}
+
 export interface ExportAccounts {
-	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ACCOUNTS';
-	fileType: 'csv' | 'json';
-	dataType: 'accounts';
+	type: ExportPayloadType.ACCOUNTS;
+	fileType: ExportFileType;
 }
+
 export interface ExportTransactions {
-	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/TRANSACTIONS';
-	fileType: /*"csv" | */ 'json';
-	dataType: 'transactions';
+	type: ExportPayloadType.TRANSACTIONS;
+	fileType: ExportFileType.JSON;
 }
+
 export interface ExportBookEntries {
-	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES';
-	fileType: 'datev';
-	dataType: 'book-entries';
+	type: ExportPayloadType.BOOK_ENTRIES;
+	fileType: ExportFileType;
 	range: 'day' | 'month';
 	date: string;
 }
+
 export interface ExportAll {
-	exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ALL';
-	fileType: 'json';
-	dataType: 'all';
+	type: ExportPayloadType.ALL;
+	fileType: ExportFileType;
 }
 
 export type BrowserAction = BrowserLocalStorageSet | BrowserLocalStorageRemove;
@@ -125,24 +139,19 @@ export type SettingsSet = Action<ApplicationActionType.SETTINGS_SET, { state: Se
 
 export type AccountsAction =
 	| AccountsSet
-	| AccountsImport
 	| AccountsEdit
 	| AccountsRemove
 	| AccountsCreateSetType
 	| AccountsCreateSetName
-	| AccountsCreteSetNumber
+	| AccountsCreateSetNumber
 	| AccountsCreateSubmit
 	| AccountsCreateCancel;
-export type AccountsSet = Action<ApplicationActionType.ACCOUNTS_SET, { state: AccountsState }>;
-export type AccountsImport = Action<
-	ApplicationActionType.ACCOUNTS_IMPORT,
-	{ accounts: { [accountId: string]: Account } }
->;
+export type AccountsSet = Action<ApplicationActionType.ACCOUNTS_SET, { accounts: { [accountId: string]: Account } }>;
 export type AccountsEdit = Action<ApplicationActionType.ACCOUNTS_EDIT, { accountId: string }>;
 export type AccountsRemove = Action<ApplicationActionType.ACCOUNTS_REMOVE, { accountId: string }>;
 export type AccountsCreateSetType = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_TYPE, { value: AccountType }>;
 export type AccountsCreateSetName = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_NAME, { value: string }>;
-export type AccountsCreteSetNumber = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_NUMBER, { value: string }>;
+export type AccountsCreateSetNumber = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_NUMBER, { value: string }>;
 export type AccountsCreateSubmit = Action<ApplicationActionType.ACCOUNTS_CREATE_SUBMIT>;
 export type AccountsCreateCancel = Action<ApplicationActionType.ACCOUNTS_CREATE_CANCEL>;
 
@@ -154,16 +163,16 @@ export type TransactionsAction =
 	| TransactionsOrderDec
 	| TransactionsCreateOrderInc
 	| TransactionsCreateOrderDec
-	| TransactionsCreateSetName
+	| TransactionsCreateTransactionSetName
 	| TransactionsCreateSetCashierAccount
 	| TransactionsCreateTemplateSetDiffAccount
 	| TransactionsCreateTransactionAdd
 	| TransactionsCreateTransactionRemove
 	| TransactionsCreateTemplateSetName
 	| TransactionsCreateTransactionSetType
-	| TransactionsCreateSetAccount
+	| TransactionsCreateTransactionSetAccount
 	| TransactionsCreateSubmit
-	| TransactionsCreateCancel;
+	| TransactionsCreateTemplateCancel;
 export type TransactionsSet = Action<ApplicationActionType.TRANSACTIONS_SET, { state: TransactionsState }>;
 export type TransactionsEdit = Action<ApplicationActionType.TRANSACTIONS_EDIT, { templateId: string }>;
 export type TransactionsMove = Action<
@@ -211,31 +220,34 @@ export type TransactionsCreateTransactionSetType = Action<
 	ApplicationActionType.TRANSACTIONS_CREATE_TRANSACTION_SET_TYPE,
 	{ transactionId: string; transactionType: TransactionType }
 >;
-export type TransactionsCreateSetName = Action<
+export type TransactionsCreateTransactionSetName = Action<
 	ApplicationActionType.TRANSACTIONS_CREATE_TRANSACTION_SET_NAME,
 	{ transactionId: string; name: string }
 >;
-export type TransactionsCreateSetAccount = Action<
+export type TransactionsCreateTransactionSetAccount = Action<
 	ApplicationActionType.TRANSACTIONS_CREATE_TRANSACTION_SET_ACCOUNT,
 	{ transactionId: string; accountId: string }
 >;
 export type TransactionsCreateSubmit = Action<ApplicationActionType.TRANSACTIONS_CREATE_TEMPLATE_SUBMIT>;
-export type TransactionsCreateCancel = Action<ApplicationActionType.TRANSACTIONS_CREATE_TEMPLATE_CANCEL>;
+export type TransactionsCreateTemplateCancel = Action<ApplicationActionType.TRANSACTIONS_CREATE_TEMPLATE_CANCEL>;
 
-export type BookingsAction =
-	| BookingsSet
-	| BookingsEdit
+export type BookEntriesAction =
+	| BookEntriesSet
+	| BookEntriesEdit
+	| BookEntriesEditSet
 	| BookEntriesSetTemplate
 	| BookEntriesCreateSetTemplate
 	| BookEntriesCreateSetCashStart
 	| BookEntriesCreateSetCashEnd
 	| BookEntriesCreateSetDate
 	| BookEntriesCreateSetTransaction
-	| BookEntriesCreateSetDiffTransaction
+	| BookEntriesCreateAddDiffTransaction
+	| BookEntriesCreateRemoveDiffTransaction
 	| BookEntriesCreateCancel
 	| BookEntriesCreateSubmit;
-export type BookingsSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { state: BookEntriesState }>;
-export type BookingsEdit = Action<ApplicationActionType.BOOK_ENTRIES_EDIT, { templateId: string; date: string }>;
+export type BookEntriesSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { bookEntries: Templates }>;
+export type BookEntriesEdit = Action<ApplicationActionType.BOOK_ENTRIES_EDIT, { templateId: string; date: string }>;
+export type BookEntriesEditSet = Action<ApplicationActionType.BOOK_ENTRIES_EDIT_SET, { state: Create }>;
 export type BookEntriesSetTemplate = Action<ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE, { templateId: string }>;
 export type BookEntriesCreateSetTemplate = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
@@ -265,11 +277,17 @@ export type BookEntriesCreateSetTransaction = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 	{ templateId: string; transactionId: string; value: string }
 >;
-export type BookEntriesCreateSetDiffTransaction = Action<
-	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION,
+export type BookEntriesCreateAddDiffTransaction = Action<
+	ApplicationActionType.BOOK_ENTRIES_CREATE_ADD_DIFF_TRANSACTION,
 	{
-		transaction?: { transactionId: string; value: string };
+		templateId: string;
+		transactionId: string;
+		value: string;
 	}
+>;
+export type BookEntriesCreateRemoveDiffTransaction = Action<
+	ApplicationActionType.BOOK_ENTRIES_CREATE_REMOVE_DIFF_TRANSACTION,
+	{ templateId: string }
 >;
 export type BookEntriesCreateCancel = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL, { templateId: string }>;
 export type BookEntriesCreateSubmit = Action<ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT, { templateId: string }>;

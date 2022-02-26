@@ -1,10 +1,10 @@
 import { MissingAccountsTransactionsViewProps, TransactionsViewType } from '../props/transactionsViewProps';
 import { SpanProps, ButtonProps, LinkProps, IconType } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
-import { dispatch } from '../../../applicationState';
 import { makeRichTextProps } from '../../../components/richText/makeRichTextProps';
 import { DOCS_QUICK_START } from '../../../variables/externalLinks';
 import { ROUTES_SETTINGS, ROUTES_ACCOUNTS } from '../../../variables/routes';
+import { dispatch } from '../../../applicationState/store';
 
 export const toMissingAccountsTransactionsViewProps = (): MissingAccountsTransactionsViewProps => {
 	return {

@@ -1,6 +1,6 @@
 import * as SE from 'redux-saga/effects';
 import { Channel } from 'redux-saga';
-import { exportToFile } from './utils';
+import { ApplicationActionType } from '../../applicationState/actions';
 
 export enum FileType {
 	DATEV = 'FILE_TYPE/DATEV',
@@ -13,15 +13,22 @@ export interface ExportFileConfig {
 	content: string;
 }
 
-export const makeExportToFile = (exportFilesQueue: Channel<ExportFileConfig>) => {
+interface Request {
+	exportFilesQueue: Channel<ExportFileConfig>;
+	exportToFile: (content: string, name: string) => void;
+}
+
+export const makeExportToFile = (req: Request) => {
 	return function* worker() {
 		while (true) {
 			try {
-				const action: ExportFileConfig = yield SE.take(exportFilesQueue);
-				exportToFile(action.content, action.name);
-			} catch (e) {
-				// eslint-disable-next-line
-				console.log(e);
+				const action: ExportFileConfig = yield SE.take(req.exportFilesQueue);
+				req.exportToFile(action.content, action.name);
+			} catch (error) {
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_ERROR_SET,
+					error: error,
+				});
 			}
 		}
 	};

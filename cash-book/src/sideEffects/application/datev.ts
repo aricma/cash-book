@@ -1,6 +1,6 @@
-import { ApplicationState } from '../../applicationState';
+import { Account } from '../../features/accounts/state';
 import { BookEntry } from '../../features/bookEntries/state';
-import { TransactionType } from '../../features/transactions/state';
+import { TransactionType, Transaction } from '../../features/transactions/state';
 import { DateWithoutTime } from '../../models/domain/date';
 import { pad } from '../../models/utils';
 
@@ -20,10 +20,16 @@ export const headline = [
 	'Nachricht',
 ];
 
-export const bookEntryToDatevRows = (appState: ApplicationState, bookEntry: BookEntry): Array<Array<string>> => {
-	return Object.entries(bookEntry.transactions).map(([transactionId, value]) => {
-		const transaction = appState.transactions.transactions[transactionId];
-		const account = appState.accounts.accounts[transaction.accountId];
+interface BookEntryToDatevRowsRequest {
+	bookEntry: BookEntry;
+	transactions: { [key: string]: Transaction };
+	accounts: { [key: string]: Account };
+}
+
+export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Array<string>> => {
+	return Object.entries(req.bookEntry.transactions).map(([transactionId, value]) => {
+		const transaction = req.transactions[transactionId];
+		const account = req.accounts[transaction.accountId];
 		return Array(headline.length)
 			.fill('')
 			.map((placeholder, index) => {
@@ -40,11 +46,13 @@ export const bookEntryToDatevRows = (appState: ApplicationState, bookEntry: Book
 							case TransactionType.SYS_OUT:
 								return '-' + parsedValue;
 							default:
-								return '';
+								throw Error('Unknown TransactionType: ' + transaction.type);
 						}
 					}
+					case 2:
+						return transaction.name;
 					case 3: {
-						const date = DateWithoutTime.fromString(bookEntry.date);
+						const date = DateWithoutTime.fromString(req.bookEntry.date);
 						const day = date.getDate();
 						const month = date.getMonth() + 1;
 						return pad(day, 2) + pad(month, 2);
@@ -53,8 +61,6 @@ export const bookEntryToDatevRows = (appState: ApplicationState, bookEntry: Book
 						return account.name;
 					case 7:
 						return account.number;
-					case 12:
-						return transaction.name;
 					default:
 						return placeholder;
 				}

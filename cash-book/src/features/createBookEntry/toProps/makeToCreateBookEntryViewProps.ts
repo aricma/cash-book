@@ -1,6 +1,6 @@
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { CreateBookEntryViewProps, CreateBookEntryViewType } from '../props';
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState, Dispatch } from '../../../applicationState';
 import { toTemplateConfigProps } from './toTemplateConfigProps';
 import { makeRichTextProps, VariablesMap } from '../../../components/richText/makeRichTextProps';
 import { SpanProps, ButtonProps, LinkProps, IconType, OptionsInputProps } from '../../../models/props';
@@ -8,24 +8,24 @@ import { ROUTES_SETTINGS, ROUTES_TRANSACTIONS } from '../../../variables/routes'
 import { DOCS_QUICK_START, DOCS_CREATE_BOOK_ENTRY } from '../../../variables/externalLinks';
 
 interface ToCreateBookEntryViewPropsRequest {
+	dispatch: Dispatch;
 	appState: ApplicationState;
 	showValidation: boolean;
 	setShowValidation: () => void;
 	openDateOverrideConfirmationModal: () => void;
 }
-
-export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsRequest): CreateBookEntryViewProps => {
-	const hasNoTemplates = Object.keys(req.appState.transactions.templates).length === 0;
-	const hasNoSelectedTemplate = req.appState.bookEntries.selectedTemplateId === undefined;
+export const makeToCreateBookEntryViewProps = (
+	request: ToCreateBookEntryViewPropsRequest
+): CreateBookEntryViewProps => {
 	const selectTemplate: OptionsInputProps = {
 		type: 'OPTIONS_INPUT_PROPS_TYPE',
-		value: req.appState.transactions.templates[req.appState.bookEntries.selectedTemplateId || '']?.name || '',
+		value: request.appState.transactions.templates[request.appState.bookEntries.selectedTemplateId || '']?.name || '',
 		placeholder: 'Set Template',
-		options: Object.values(req.appState.transactions.templates).map((template) => ({
+		options: Object.values(request.appState.transactions.templates).map((template) => ({
 			type: 'BUTTON_PROPS_TYPE',
 			title: template.name,
 			onSelect: () => {
-				dispatch({
+				request.dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
 					templateId: template.id,
 				});
@@ -48,7 +48,7 @@ export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsReques
 			icon: IconType.CLIPBOARD_CHECK_FILL,
 			title: 'Transactions',
 			onSelect: () => {
-				dispatch({
+				request.dispatch({
 					type: ApplicationActionType.ROUTER_GO_TO,
 					path: ROUTES_TRANSACTIONS,
 				});
@@ -71,27 +71,30 @@ export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsReques
 			icon: IconType.COG_FILL,
 			title: 'Settings',
 			onSelect: () => {
-				dispatch({
+				request.dispatch({
 					type: ApplicationActionType.ROUTER_GO_TO,
 					path: ROUTES_SETTINGS,
 				});
 			},
 		}),
 	};
+	const hasTemplates = Object.keys(request.appState.transactions.templates).length > 0;
+	const hasNoSelectedTemplate = request.appState.bookEntries.selectedTemplateId === undefined;
 	switch (true) {
-		case !hasNoTemplates && hasNoSelectedTemplate:
+		case hasTemplates && hasNoSelectedTemplate:
 			return {
 				type: CreateBookEntryViewType.FORM_NO_TEMPLATE,
 				title: 'New Book Entry',
 				template: {
 					type: 'OPTIONS_INPUT_PROPS_TYPE',
-					value: req.appState.transactions.templates[req.appState.bookEntries.selectedTemplateId || '']?.name || '',
+					value:
+						request.appState.transactions.templates[request.appState.bookEntries.selectedTemplateId || '']?.name || '',
 					placeholder: 'Set Template',
-					options: Object.values(req.appState.transactions.templates).map((template) => ({
+					options: Object.values(request.appState.transactions.templates).map((template) => ({
 						type: 'BUTTON_PROPS_TYPE',
 						title: template.name,
 						onSelect: () => {
-							dispatch({
+							request.dispatch({
 								type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
 								templateId: template.id,
 							});
@@ -103,7 +106,29 @@ export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsReques
 					message: makeRichTextProps(richTextVariablesMap)(NO_TEMPLATES_INFO_BOX_MESSAGE + ' ' + BACKUP_MESSAGE),
 				},
 			};
-		case hasNoTemplates:
+		case hasTemplates:
+			return {
+				type: CreateBookEntryViewType.FORM_DEFAULT,
+				title: 'New Book Entry',
+				template: {
+					type: 'OPTIONS_INPUT_PROPS_TYPE',
+					value:
+						request.appState.transactions.templates[request.appState.bookEntries.selectedTemplateId || '']?.name || '',
+					placeholder: 'Set transaction template',
+					options: Object.values(request.appState.transactions.templates).map((template) => ({
+						type: 'BUTTON_PROPS_TYPE',
+						title: template.name,
+						onSelect: () => {
+							request.dispatch({
+								type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
+								templateId: template.id,
+							});
+						},
+					})),
+				},
+				templateConfig: toTemplateConfigProps(request),
+			};
+		default:
 			return {
 				type: CreateBookEntryViewType.NO_TEMPLATES,
 				title: 'New Book Entry',
@@ -111,27 +136,6 @@ export const toCreateBookEntryViewProps = (req: ToCreateBookEntryViewPropsReques
 					title: NO_TEMPLATES_WARNING_BOX_TITLE,
 					message: makeRichTextProps(richTextVariablesMap)(NO_TEMPLATES_WARNING_BOX_MESSAGE + ' ' + BACKUP_MESSAGE),
 				},
-			};
-		default:
-			return {
-				type: CreateBookEntryViewType.FORM_DEFAULT,
-				title: 'New Book Entry',
-				template: {
-					type: 'OPTIONS_INPUT_PROPS_TYPE',
-					value: req.appState.transactions.templates[req.appState.bookEntries.selectedTemplateId || '']?.name || '',
-					placeholder: 'Set transaction template',
-					options: Object.values(req.appState.transactions.templates).map((template) => ({
-						type: 'BUTTON_PROPS_TYPE',
-						title: template.name,
-						onSelect: () => {
-							dispatch({
-								type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,
-								templateId: template.id,
-							});
-						},
-					})),
-				},
-				templateConfig: toTemplateConfigProps(req),
 			};
 	}
 };

@@ -1,4 +1,4 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { MenuViewProps } from '../props/menuViewProps';
 import { ButtonProps, IconType } from '../../../models/props';
 import {
@@ -10,6 +10,7 @@ import {
 	ROUTES_SUPPORT,
 } from '../../../variables/routes';
 import { ApplicationActionType } from '../../../applicationState/actions';
+import { dispatch } from '../../../applicationState/store';
 
 export const toMenuViewProps = (
 	matchesRoute: (route: string) => boolean,

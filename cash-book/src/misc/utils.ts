@@ -1,7 +1,8 @@
 // https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
 // https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
-import { DateWithoutTime } from '../../models/domain/date';
-import { pad } from '../../models/utils';
+import { BookEntries } from '../features/bookEntries/state';
+import { pad, getFirstDateOfTheMonth, getLastDateOfTheMonth } from '../models/utils';
+import { DateWithoutTime } from '../models/domain/date';
 
 export const exportToFile = (content: string, name: string) => {
 	const link = document.createElement('a');
@@ -35,4 +36,19 @@ export const toDateString = (date: string): string => {
 	const month = pad(parsed.getMonth() + 1, 2);
 	const day = pad(parsed.getDate(), 2);
 	return `${year}-${month}-${day}`;
+};
+
+export const bookEntriesForMonth = (date: Date, bookEntries: BookEntries): BookEntries => {
+	const fromDate = getFirstDateOfTheMonth(date).getTime();
+	const toDate = getLastDateOfTheMonth(date).getTime();
+	return Object.fromEntries(
+		Object.entries(bookEntries).filter(([date, _]) => {
+			const currentDate = DateWithoutTime.fromString(date).getTime();
+			return fromDate <= currentDate && currentDate < toDate;
+		})
+	);
+};
+
+export const toLowerCaseWithDashes = (value: string): string => {
+	return value.replace(/[\s_]+/, '-').toLowerCase();
 };

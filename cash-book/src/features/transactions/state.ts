@@ -40,7 +40,7 @@ export interface Template {
 	name: string;
 	cashierAccountId: string;
 	diffAccountId: string;
-	transactions: Array<string>;
+	transactionIds: Array<string>;
 	autoDiffInId: string;
 	autoDiffOutId: string;
 }

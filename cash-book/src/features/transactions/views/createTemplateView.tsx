@@ -21,7 +21,7 @@ export const CreateTemplateView: React.FC<CreateTemplateViewProps> = (props) => 
 				)}
 			/>
 		</div>
-		<div className="flex-grow pb-[250px] space-y-8 overflow-auto p-4">
+		<div id="create-template-modal-content" className="flex-grow pb-[250px] space-y-8 overflow-auto p-4">
 			<div className="space-y-2">
 				<TextInput autoFocus {...props.name} />
 				<Select {...props.cashierAccount} />

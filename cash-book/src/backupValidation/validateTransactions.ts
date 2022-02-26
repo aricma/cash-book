@@ -1,9 +1,10 @@
 import { Validation } from './makeBackupValidation';
+import { MISSING_ACCOUNT_ID_MESSAGE, MISSING_TRANSACTION_ID_MESSAGE } from './messages';
 
 export const validateTransactions: Validation = (state) => {
 	const hasTransactionsForTransactionIds = Object.values(state.templates)
 		.reduce((allTransactions: Array<string>, template: any) => {
-			return [...allTransactions, ...template.transactions];
+			return [...allTransactions, ...template.transactionIds];
 		}, [])
 		.reduce((isTrue, transactionId) => {
 			return isTrue && !!state.transactions[transactionId];
@@ -19,7 +20,7 @@ export const validateTransactions: Validation = (state) => {
 	}, true);
 	if (hasTransactionsForTransactionIds && hasAccountsForAccountIds) return null;
 	return {
-		transactions: hasTransactionsForTransactionIds ? null : 'Missing transaction for id!',
-		accounts: hasAccountsForAccountIds ? null : 'Missing account for id!',
+		transactions: hasTransactionsForTransactionIds ? null : MISSING_TRANSACTION_ID_MESSAGE,
+		accounts: hasAccountsForAccountIds ? null : MISSING_ACCOUNT_ID_MESSAGE,
 	};
 };

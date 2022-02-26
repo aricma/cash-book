@@ -1,9 +1,10 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { Template, Transaction, TransactionType } from '../state';
 import { TransactionViewProps } from '../props/transactionsViewProps';
 import { AccountType } from '../../accounts/state';
 import { IconType } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
+import { dispatch } from '../../../applicationState/store';
 
 export const toTransactionViewProps = (
 	appState: ApplicationState,
@@ -25,7 +26,7 @@ export const toTransactionViewProps = (
 			? IconType.ARROW_NARROW_RIGHT_STROKE
 			: IconType.ARROW_NARROW_LEFT_STROKE;
 	const otherAccount = fromAccount.type === AccountType.CASH_STATION ? toAccount : fromAccount;
-	const order = template.transactions.findIndex((id) => id === transaction.id) + 1;
+	const order = template.transactionIds.findIndex((id) => id === transaction.id) + 1;
 	return {
 		order: order + '.',
 		title: transaction.name,

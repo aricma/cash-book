@@ -1,11 +1,13 @@
 import * as SE from 'redux-saga/effects';
 import { ApplicationActionType } from '../../applicationState/actions';
-import { ApplicationState, selectAppState } from '../../applicationState';
 import { SettingsSaveType } from '../../features/settings/state';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
-import { V3 } from '../../backupMigrations/v3';
+import { ApplicationState, selectAppState } from '../../applicationState';
 
-export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, value: string) => void) => {
+export const makeSaveBackupToLocalStorage = (
+	setInLocalStorage: (key: string, value: string) => void,
+	toBackup: (appState: any) => any
+) => {
 	return function* worker() {
 		while (true) {
 			try {
@@ -43,22 +45,17 @@ export const makeSaveAppStateToLocalStorage = (setInLocalStorage: (key: string, 
 					ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL,
 					ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT,
 				]);
-
 				const appState: ApplicationState = yield SE.select(selectAppState);
 				if (appState.settings.save === SettingsSaveType.AUTO) {
-					const backup: V3 = {
-						__version__: 'v3',
-						accounts: appState.accounts.accounts,
-						templates: appState.transactions.templates,
-						transactions: appState.transactions.transactions,
-						bookEntries: appState.bookEntries.templates,
-					};
+					const backup = toBackup(appState);
 					const value = JSON.stringify(backup);
 					setInLocalStorage(LOCAL_STORAGE_KEY, value);
 				}
-			} catch (e) {
-				// eslint-disable-next-line
-				console.log(e);
+			} catch (error) {
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_ERROR_SET,
+					error: error,
+				});
 			}
 		}
 	};

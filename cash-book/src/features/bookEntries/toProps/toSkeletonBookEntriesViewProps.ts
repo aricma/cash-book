@@ -1,4 +1,4 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { SkeletonBookEntriesViewProps, BookEntriesViewType } from '../props';
 import { ButtonProps, IconType, OptionsInputProps, SpanProps, LinkProps } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
@@ -6,6 +6,7 @@ import { ROUTES_CREATE_BOOK_ENTRY, ROUTES_SETTINGS } from '../../../variables/ro
 import { compact } from '../../../models/utils';
 import { makeRichTextProps } from '../../../components/richText/makeRichTextProps';
 import { DOCS_CREATE_BOOK_ENTRY } from '../../../variables/externalLinks';
+import { dispatch } from '../../../applicationState/store';
 
 export const toSkeletonBookEntriesViewProps = (appState: ApplicationState): SkeletonBookEntriesViewProps => {
 	const createButton: ButtonProps = {

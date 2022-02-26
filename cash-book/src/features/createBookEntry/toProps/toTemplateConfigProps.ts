@@ -1,4 +1,4 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState, Dispatch } from '../../../applicationState';
 import { CreateBookEntryTemplateConfigProps, ToggleDiffViewType } from '../props';
 import { validateCreateBookEntry, validateIfDateExists } from './validation';
 import { transactionValue } from '../../bookEntries/misc';
@@ -10,6 +10,7 @@ import { IconType } from '../../../models/props';
 import { ROUTES_BOOK_ENTRIES } from '../../../variables/routes';
 
 interface ToTemplateConfigPropsRequest {
+	dispatch: Dispatch;
 	appState: ApplicationState;
 	showValidation: boolean;
 	setShowValidation: () => void;
@@ -24,7 +25,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 	const diffValue = transactionValue(req.appState);
 	const cashierAccount = req.appState.accounts.accounts[template.cashierAccountId];
 	const diffAccount = req.appState.accounts.accounts[template.diffAccountId];
-	const needsDateOverrideConfirmation = validateIfDateExists(req.appState) !== undefined;
+	const needsDateOverrideConfirmation = validateIfDateExists(req.appState.bookEntries) !== null;
 	const dateDisplay = DateWithoutTime.fromString(config.date).toLocaleDateString('de-DE', {
 		weekday: 'long',
 		year: 'numeric',
@@ -42,7 +43,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 				label: dateDisplay,
 				value: config.date,
 				onChange: (date) => {
-					dispatch({
+					req.dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DATE,
 						templateId: config.templateId,
 						date: date,
@@ -53,7 +54,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 				type: 'BUTTON_PROPS_TYPE',
 				title: 'Today',
 				onSelect: () => {
-					dispatch({
+					req.dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DATE,
 						templateId: config.templateId,
 						date: DateWithoutTime.new().toISOString(),
@@ -66,7 +67,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 				onSelect: () => {
 					const today = DateWithoutTime.new();
 					const yesterday = subtractDays(today, 1);
-					dispatch({
+					req.dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DATE,
 						templateId: config.templateId,
 						date: yesterday.toISOString(),
@@ -82,7 +83,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 			onFinish: (value) => {
 				const newValue = cashInformationParser(value);
 				if (newValue === value) return;
-				dispatch({
+				req.dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
 					templateId: config.templateId,
 					value: newValue,
@@ -91,7 +92,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 			onChange: (value) => {
 				const newValue = textInputChangeHandler(value);
 				if (newValue === null) return;
-				dispatch({
+				req.dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_START,
 					templateId: config.templateId,
 					value: newValue,
@@ -106,7 +107,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 			onFinish: (value) => {
 				const newValue = cashInformationParser(value);
 				if (newValue === value) return;
-				dispatch({
+				req.dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
 					templateId: config.templateId,
 					value: newValue,
@@ -115,14 +116,14 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 			onChange: (value) => {
 				const newValue = textInputChangeHandler(value);
 				if (newValue === null) return;
-				dispatch({
+				req.dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_CASH_END,
 					templateId: config.templateId,
 					value: newValue,
 				});
 			},
 		},
-		transactions: template.transactions.map((transactionsId) => {
+		transactions: template.transactionIds.map((transactionsId) => {
 			const transaction = req.appState.transactions.transactions[transactionsId];
 			return {
 				type: 'TEXT_INPUT_PROPS_TYPE',
@@ -137,7 +138,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 				onFinish: (value) => {
 					const newValue = transactionParser(value);
 					if (newValue === value) return;
-					dispatch({
+					req.dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 						templateId: config.templateId,
 						transactionId: transaction.id,
@@ -147,7 +148,7 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 				onChange: (value) => {
 					const newValue = textInputChangeHandler(value);
 					if (newValue === null) return;
-					dispatch({
+					req.dispatch({
 						type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TRANSACTION,
 						templateId: config.templateId,
 						transactionId: transaction.id,
@@ -187,12 +188,17 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 							onChange: () => {
 								if (config.diffTransaction === undefined) {
 									const transactionId = diffValue < 0 ? template.autoDiffInId : template.autoDiffOutId;
-									dispatch({
-										type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION,
-										transaction: { transactionId, value: transactionParser(String(Math.abs(diffValue))) },
+									req.dispatch({
+										type: ApplicationActionType.BOOK_ENTRIES_CREATE_ADD_DIFF_TRANSACTION,
+										templateId: template.id,
+										transactionId: transactionId,
+										value: transactionParser(String(Math.abs(diffValue))),
 									});
 								} else {
-									dispatch({ type: ApplicationActionType.BOOK_ENTRIES_CREATE_SET_DIFF_TRANSACTION });
+									req.dispatch({
+										type: ApplicationActionType.BOOK_ENTRIES_CREATE_REMOVE_DIFF_TRANSACTION,
+										templateId: template.id,
+									});
 								}
 							},
 						},
@@ -202,14 +208,14 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 			type: 'BUTTON_PROPS_TYPE',
 			title: 'Cancel',
 			onSelect: () => {
-				dispatch({
+				req.dispatch({
 					type: ApplicationActionType.BOOK_ENTRIES_CREATE_CANCEL,
 					templateId: config.templateId,
 				});
 			},
 		},
 		submit:
-			validationMap === undefined
+			validationMap === null
 				? needsDateOverrideConfirmation
 					? {
 							type: 'BUTTON_PROPS_TYPE',
@@ -222,11 +228,11 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 							type: 'BUTTON_PROPS_TYPE',
 							title: 'Submit',
 							onSelect: () => {
-								dispatch({
+								req.dispatch({
 									type: ApplicationActionType.BOOK_ENTRIES_CREATE_SUBMIT,
 									templateId: config.templateId,
 								});
-								dispatch({
+								req.dispatch({
 									type: ApplicationActionType.ROUTER_GO_TO,
 									path: ROUTES_BOOK_ENTRIES,
 								});

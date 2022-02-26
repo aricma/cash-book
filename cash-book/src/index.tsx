@@ -11,7 +11,7 @@ import { CreateBookEntry } from './features/createBookEntry';
 import { Accounts } from './features/accounts';
 import { Transactions } from './features/transactions';
 import { Bookings } from './features/bookEntries';
-import { store } from './applicationState';
+import { store } from './applicationState/store';
 import {
 	ROUTES_CREATE_BOOK_ENTRY,
 	ROUTES_ACCOUNTS,

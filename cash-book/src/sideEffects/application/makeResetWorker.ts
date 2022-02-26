@@ -6,28 +6,31 @@ import * as AccountsState from '../../features/accounts/state';
 import * as TransactionsState from '../../features/transactions/state';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 
-export const makeReset = (setInLocalStorage: (key: string, value: string) => void) => {
+export const initialAppState = {
+	settings: SettingsState.initialState,
+	bookEntries: BookingsState.initialState,
+	accounts: AccountsState.initialState,
+	transactions: TransactionsState.initialState,
+};
+
+export const makeResetWorker = (
+	setInLocalStorage: (key: string, value: string) => void,
+	getUserConfirm: () => boolean
+) => {
 	return function* worker() {
 		while (true) {
 			try {
 				yield SE.take(ApplicationActionType.APPLICATION_RESET);
-				const noUserConsent = !window.confirm(
-					'Do you really want to reset your app? Everything will be deleted! This action can not be undone!'
-				);
-				if (noUserConsent) continue;
-				const value = JSON.stringify({
-					settings: SettingsState.initialState,
-					bookEntries: BookingsState.initialState,
-					accounts: AccountsState.initialState,
-					transactions: TransactionsState.initialState,
-				});
-				setInLocalStorage(LOCAL_STORAGE_KEY, value);
+				if (!getUserConfirm()) continue;
+				setInLocalStorage(LOCAL_STORAGE_KEY, JSON.stringify(initialAppState));
 				yield SE.put({
 					type: ApplicationActionType.APPLICATION_LOAD,
 				});
-			} catch (e) {
-				// eslint-disable-next-line
-				console.log(e);
+			} catch (error) {
+				yield SE.put({
+					type: ApplicationActionType.APPLICATION_ERROR_SET,
+					error: error,
+				});
 			}
 		}
 	};

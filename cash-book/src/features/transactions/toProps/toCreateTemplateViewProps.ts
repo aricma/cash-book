@@ -1,16 +1,17 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { CreateTemplateViewProps } from '../props/createTemplateViewProps';
 import { validateCreateTemplate } from './validation';
 import { IconType } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { AccountType } from '../../accounts/state';
 import { toCreateTransactionViewProps } from './toCreateTransactionViewProps';
+import { dispatch } from '../../../applicationState/store';
 
 export const toCreateTemplateViewProps = (
 	appState: ApplicationState,
 	closeCreateTransactionView: () => void
 ): CreateTemplateViewProps => {
-	const validationMap = validateCreateTemplate(appState);
+	const validationMap = validateCreateTemplate(appState.transactions.create);
 	return {
 		title: 'Create Transaction Template',
 		close: {
@@ -102,7 +103,7 @@ export const toCreateTemplateViewProps = (
 			},
 		},
 		submit:
-			validationMap === undefined
+			validationMap === null
 				? {
 						type: 'BUTTON_PROPS_TYPE',
 						title: 'Submit',

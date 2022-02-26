@@ -1,12 +1,13 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { BookEntry } from '../state';
 import { TransactionType, Transaction } from '../../transactions/state';
 import { BookEntryDayViewProps, DataBookEntryViewProps, ErrorBookEnrtyViewProps } from '../props';
 import { DateWithoutTime } from '../../../models/domain/date';
 import { IconType } from '../../../models/props';
-import { ApplicationActionType } from '../../../applicationState/actions';
+import { ApplicationActionType, ExportPayloadType, ExportFileType } from '../../../applicationState/actions';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../../variables/routes';
 import { toCurrencyInt } from '../../../models/currencyInt';
+import { dispatch } from '../../../applicationState/store';
 
 export const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntry): BookEntryDayViewProps => {
 	return {
@@ -23,11 +24,12 @@ export const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: B
 			onSelect: () => {
 				dispatch({
 					type: ApplicationActionType.APPLICATION_EXPORT,
-					exportPayloadType: 'EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES',
-					dataType: 'book-entries',
-					fileType: 'datev',
-					range: 'day',
-					date: bookEntry.date,
+					payload: {
+						type: ExportPayloadType.BOOK_ENTRIES,
+						fileType: ExportFileType.DATEV_CSV,
+						range: 'day',
+						date: bookEntry.date,
+					},
 				});
 			},
 		},
@@ -66,7 +68,7 @@ const toBookEntryViewProps = (appState: ApplicationState, bookEntry: BookEntry) 
 	return Object.entries(bookEntry.transactions)
 		.map(([transactionId, value]): Transaction & { order: number; value: string } => ({
 			...(appState.transactions.transactions[transactionId] || {}),
-			order: template.transactions.indexOf(transactionId) || 0,
+			order: template.transactionIds.indexOf(transactionId) || 0,
 			value: value,
 		}))
 		.sort((a, b) => {

@@ -14,7 +14,7 @@ export const transactionValue = (appState: ApplicationState): number => {
 	if (cashierAccount === undefined) return 0;
 	if (differenceAccount === undefined) return 0;
 
-	const transactionsWithValues: TransactionsWithValues = template.transactions.map(
+	const transactionsWithValues: TransactionsWithValues = template.transactionIds.map(
 		(transactionId): TransactionWithValue => {
 			const transaction = appState.transactions.transactions[transactionId];
 			const value = config.transactions[transactionId] || '0';

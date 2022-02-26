@@ -3,17 +3,18 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"preci": "yarn refactor",
+		"ci": "yarn compile && yarn lint && yarn coverage && yarn build",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"coverage": "react-scripts test --coverage --watchAll=false",
 		"compile": "yarn tsc",
 		"lint": "eslint src",
-		"update-browser-list": "echo y | npx browserslist@latest --update-db",
-		"preci": "yarn update-browser-list && yarn prettier src && yarn lint --fix",
-		"ci": "CI=true && yarn compile && yarn lint && yarn test --watchAll=false && yarn build",
+		"refactor": "yarn update-browser-list && yarn lint --fix",
 		"preanalyze": "yarn build",
-		"analyze": "source-map-explorer 'build/static/js/*.js'"
+		"analyze": "source-map-explorer 'build/static/js/*.js'",
+		"update-browser-list": "echo y | npx browserslist@latest --update-db"
 	},
 	"dependencies": {
 		"@headlessui/react": "^1.4.2",
@@ -45,6 +46,7 @@
 		"autoprefixer": "^10.4.1",
 		"postcss": "^8.4.5",
 		"redux-devtools-extension": "^2.13.9",
+		"redux-saga-test-plan": "^4.0.4",
 		"tailwindcss": "^3.0.10",
 		"typescript": "^4.4.2"
 	},
@@ -61,30 +63,19 @@
 	"jest": {
 		"collectCoverageFrom": [
 			"!<rootDir>",
+			"src/backupMigrations/**/*.{ts,tsx}",
+			"src/backupValidation/**/*.{ts,tsx}",
 			"src/sideEffects/**/*.{ts,tsx}",
 			"src/features/**/reducer/**/*.{ts,tsx}",
-			"src/features/**/*reducer*.{ts,tsx}"
+			"src/features/**/*reducer*.ts",
+			"src/features/**/validation.ts",
+			"src/misc/makeUniqueID.ts",
+			"src/misc/toBackup.ts",
+			"!src/**/index.{ts,tsx}",
+			"!src/backupMigrations/(v1|v2).ts"
 		],
 		"coverageThreshold": {
 			"global": {
-				"branches": 80,
-				"functions": 80,
-				"lines": -10,
-				"statements": -10
-			},
-			"src/sideEffects/**/*.{ts,tsx}": {
-				"branches": 100,
-				"functions": 100,
-				"lines": 100,
-				"statements": 100
-			},
-			"src/features/**/reducer/**/*.{ts,tsx}": {
-				"branches": 100,
-				"functions": 100,
-				"lines": 100,
-				"statements": 100
-			},
-			"src/features/**/*reducer*.{ts,tsx}": {
 				"branches": 100,
 				"functions": 100,
 				"lines": 100,

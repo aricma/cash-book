@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApplicationActionType } from '../applicationState/actions';
-import { dispatch } from '../applicationState';
+import { dispatch } from '../applicationState/store';
 
 export const ResolveStateFromLocalStorage: React.FC = (props) => {
 	React.useEffect(() => {

@@ -1,40 +1,45 @@
 import * as SE from 'redux-saga/effects';
-import * as AccountsState from '../../features/accounts/state';
 import * as TransactionsState from '../../features/transactions/state';
 import * as BookEntriesState from '../../features/bookEntries/state';
-import { ApplicationActionType } from '../../applicationState/actions';
-import { backupValidation } from '../../backupValidation';
-import { migrateBackup } from '../../backupMigrations';
+import { ApplicationActionType, AccountsSet, BookEntriesSet, TransactionsSet } from '../../applicationState/actions';
+import { Validation } from '../../backupValidation/makeBackupValidation';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 
-export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: string) => string | undefined) => {
+export const INVALID_BACKUP_ERROR = 'Load Backup: given backup in local storage is in ';
+
+interface Request {
+	getFromLocalStorage: (key: string) => string | undefined;
+	parseJSON: <T>(value: string) => T;
+	migrateBackup: <T, U = any>(value: T) => U;
+	backupValidation: Validation;
+}
+export const makeLoadBackupFromLocalStorageWorker = (request: Request) => {
 	return function* worker() {
 		while (true) {
 			try {
 				yield SE.take(ApplicationActionType.APPLICATION_LOAD);
 				yield SE.put({ type: ApplicationActionType.APPLICATION_LOADING_SET });
-
-				const value = loadFromLocalStorage(LOCAL_STORAGE_KEY);
+				const value = request.getFromLocalStorage(LOCAL_STORAGE_KEY);
 				if (value === undefined) {
 					yield SE.put({ type: ApplicationActionType.APPLICATION_DEFAULT_SET });
 					continue;
 				}
-				const backup = JSON.parse(value);
-				const migratedBackup = migrateBackup(backup);
-				const backupIsNotValid = backupValidation(migratedBackup) !== null;
+
+				const backup = request.parseJSON(value);
+				const migratedBackup = request.migrateBackup(backup);
+				const backupIsNotValid = request.backupValidation(migratedBackup) !== null;
 				if (backupIsNotValid) {
-					yield SE.put({ type: ApplicationActionType.APPLICATION_DEFAULT_SET });
-					continue;
+					yield SE.put({
+						type: ApplicationActionType.APPLICATION_ERROR_SET,
+						error: Error(INVALID_BACKUP_ERROR),
+					});
 				}
 
-				yield SE.put({
+				yield SE.put<AccountsSet>({
 					type: ApplicationActionType.ACCOUNTS_SET,
-					state: {
-						...AccountsState.initialState,
-						accounts: migratedBackup.accounts,
-					},
+					accounts: migratedBackup.accounts,
 				});
-				yield SE.put({
+				yield SE.put<TransactionsSet>({
 					type: ApplicationActionType.TRANSACTIONS_SET,
 					state: {
 						...TransactionsState.initialState,
@@ -42,14 +47,10 @@ export const makeLoadAppStateFromLocalStorage = (loadFromLocalStorage: (key: str
 						transactions: migratedBackup.transactions,
 					},
 				});
-				yield SE.put({
+				yield SE.put<BookEntriesSet>({
 					type: ApplicationActionType.BOOK_ENTRIES_SET,
-					state: {
-						...BookEntriesState.initialState,
-						templates: migratedBackup.bookEntries,
-					},
+					bookEntries: migratedBackup.bookEntries,
 				});
-
 				yield SE.put({ type: ApplicationActionType.APPLICATION_DEFAULT_SET });
 			} catch (error) {
 				yield SE.put({

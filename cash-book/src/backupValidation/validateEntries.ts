@@ -1,4 +1,5 @@
 import { Validation } from './makeBackupValidation';
+import { MISSING_TRANSACTION_MESSAGE, MISSING_TEMPLATE_MESSAGE } from './messages';
 
 export const validateEntries: Validation = (state) => {
 	const hasTemplatesForIds = Object.keys(state.bookEntries).reduce((isTrue, templateId) => {
@@ -18,7 +19,7 @@ export const validateEntries: Validation = (state) => {
 		}, true);
 	if (hasTemplatesForIds && hasTransactionsForIds) return null;
 	return {
-		templates: hasTemplatesForIds ? null : 'Missing template for id!',
-		transactions: hasTransactionsForIds ? null : 'Missing transaction for id!',
+		templates: hasTemplatesForIds ? null : MISSING_TEMPLATE_MESSAGE,
+		transactions: hasTransactionsForIds ? null : MISSING_TRANSACTION_MESSAGE,
 	};
 };

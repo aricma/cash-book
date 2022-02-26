@@ -1,60 +1,8 @@
-import { V2 } from './v2';
-import { V2_1, toV2_1 } from './v2_1';
+import { V3, toV3 } from './v3';
+import { V2_1 } from './v2_1';
 
-describe(toV2_1.name, () => {
+describe(toV3.name, () => {
 	test('given a state v2 empty transactions, then returns state v2_1', () => {
-		const v2: V2 = {
-			__version__: 'v2',
-			global: {
-				type: '',
-			},
-			settings: {
-				save: '',
-			},
-			accounts: {
-				create: {
-					type: '',
-				},
-				accounts: {},
-			},
-			transactions: {
-				create: {
-					transactionIds: [],
-					transactions: {},
-				},
-				templates: {},
-				transactions: {},
-			},
-			bookEntries: {
-				create: {
-					templates: {},
-				},
-				templates: {
-					'1': {
-						'0-0-1': {
-							templateId: 'A',
-							date: '0-0-1',
-							cash: {
-								start: '0',
-								end: '0',
-							},
-							transactions: {
-								'T-1': '10',
-								'T-2': '15',
-								'T-3': '0',
-								'T-4': '0.0',
-								'T-5': '0.00',
-								'T-6': '00.00',
-								'T-7': '00.0',
-								'T-8': '00.',
-								'T-9': '00',
-							},
-						},
-					},
-				},
-			},
-		};
-
 		const v2_1: V2_1 = {
 			__version__: 'v2.1',
 			global: {
@@ -67,15 +15,45 @@ describe(toV2_1.name, () => {
 				create: {
 					type: '',
 				},
-				accounts: {},
+				accounts: {
+					'1': {
+						id: '1',
+						name: 'Bank',
+						type: 'SOME',
+						number: '1000',
+					},
+				},
 			},
 			transactions: {
 				create: {
 					transactionIds: [],
 					transactions: {},
 				},
-				templates: {},
-				transactions: {},
+				templates: {
+					'1': {
+						id: '1',
+						name: 'T-1',
+						autoDiffInId: '2',
+						autoDiffOutId: '3',
+						cashierAccountId: '4',
+						diffAccountId: '5',
+						transactions: ['1', '2'],
+					},
+				},
+				transactions: {
+					'1': {
+						id: '1',
+						name: 'in',
+						type: 'IN',
+						accountId: '7',
+					},
+					'2': {
+						id: '2',
+						name: 'out',
+						type: 'OUT',
+						accountId: '8',
+					},
+				},
 			},
 			bookEntries: {
 				create: {
@@ -87,8 +65,8 @@ describe(toV2_1.name, () => {
 							templateId: 'A',
 							date: '0-0-1',
 							cash: {
-								start: '0',
-								end: '0',
+								start: '10',
+								end: '10',
 							},
 							transactions: {
 								'T-1': '10',
@@ -100,6 +78,60 @@ describe(toV2_1.name, () => {
 			},
 		};
 
-		expect(toV2_1(v2)).toEqual(v2_1);
+		const v3: V3 = {
+			__version__: 'v3',
+			accounts: {
+				'1': {
+					id: '1',
+					name: 'Bank',
+					type: 'SOME',
+					number: '1000',
+				},
+			},
+
+			templates: {
+				'1': {
+					id: '1',
+					name: 'T-1',
+					autoDiffInId: '2',
+					autoDiffOutId: '3',
+					cashierAccountId: '4',
+					diffAccountId: '5',
+					transactions: ['1', '2'],
+				},
+			},
+			transactions: {
+				'1': {
+					id: '1',
+					name: 'in',
+					type: 'IN',
+					accountId: '7',
+				},
+				'2': {
+					id: '2',
+					name: 'out',
+					type: 'OUT',
+					accountId: '8',
+				},
+			},
+			bookEntries: {
+				'1': {
+					'0-0-1': {
+						templateId: 'A',
+						date: '0-0-1',
+						cash: {
+							start: '10',
+							end: '10',
+						},
+						transactions: {
+							'T-1': '10',
+							'T-2': '15',
+						},
+					},
+				},
+			},
+		};
+
+		expect(toV3(v2_1)).toEqual(v3);
 	});
 });

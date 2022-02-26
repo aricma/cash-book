@@ -1,10 +1,11 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { BookEntry } from '../state';
 import { BookEntryMonthViewProps } from '../props';
-import { DateWithoutTime } from '../../../models/domain/date';
 import { IconType } from '../../../models/props';
-import { ApplicationActionType } from '../../../applicationState/actions';
+import { ApplicationActionType, ExportFileType, ExportPayloadType } from '../../../applicationState/actions';
+import { dispatch } from '../../../applicationState/store';
 import { toBookEntryDayViewProps } from './toBookEntryDayViewProps';
+import { DateWithoutTime } from '../../../models/domain/date';
 
 export const toBookEntryMonthViewProps = (
 	appState: ApplicationState,
@@ -22,11 +23,12 @@ export const toBookEntryMonthViewProps = (
 			onSelect: () => {
 				dispatch({
 					type: ApplicationActionType.APPLICATION_EXPORT,
-					exportPayloadType: 'EXPORT_PAYLOAD_TYPE/BOOK_ENTRIES',
-					dataType: 'book-entries',
-					fileType: 'datev',
-					range: 'month',
-					date: bookEntry.date,
+					payload: {
+						type: ExportPayloadType.BOOK_ENTRIES,
+						fileType: ExportFileType.DATEV_CSV,
+						range: 'month',
+						date: bookEntry.date,
+					},
 				});
 			},
 		},

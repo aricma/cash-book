@@ -1,10 +1,10 @@
 import * as SE from 'redux-saga/effects';
-import { routerBroker } from './router';
 import { applicationBroker } from './application';
-import { makeEditBookEntryWorker } from './bookEntries';
+import { makeEditBookEntryWorker, editBookEntryReducer } from './bookEntries/makeEditBookEntryWorker';
+import { routerBroker } from './router';
 
 export function* rootSaga() {
 	yield SE.spawn(routerBroker);
 	yield SE.spawn(applicationBroker);
-	yield SE.spawn(makeEditBookEntryWorker());
+	yield SE.spawn(makeEditBookEntryWorker(editBookEntryReducer));
 }

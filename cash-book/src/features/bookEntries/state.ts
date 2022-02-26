@@ -1,12 +1,16 @@
 export interface BookEntriesState {
 	create: Create;
 	selectedTemplateId?: string;
-	templates: {
-		[templateId: string]: {
-			[date: string]: BookEntry;
-		};
-	};
+	templates: Templates;
 }
+
+export type Templates = {
+	[templateId: string]: BookEntries;
+};
+
+export type BookEntries = {
+	[date: string]: BookEntry;
+};
 
 export interface Create {
 	templates: {

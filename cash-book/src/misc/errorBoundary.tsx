@@ -1,4 +1,7 @@
 import React, { ErrorInfo } from 'react';
+import { ApplicationActionType } from '../applicationState/actions';
+import { dispatch } from '../applicationState/store';
+import { IS_DEVELOPMENT_ENVIRONMENT } from '../variables/environments';
 
 export class ErrorBoundary extends React.Component {
 	state: {
@@ -18,11 +21,15 @@ export class ErrorBoundary extends React.Component {
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 		// eslint-disable-next-line
-		console.log(error, errorInfo);
+		if (IS_DEVELOPMENT_ENVIRONMENT) console.log(error, errorInfo);
+		dispatch({
+			type: ApplicationActionType.APPLICATION_ERROR_SET,
+			error: error,
+		});
 	}
 
 	render() {
-		if (this.state.hasError) {
+		if (IS_DEVELOPMENT_ENVIRONMENT && this.state.hasError) {
 			return <h1>Something went wrong.</h1>;
 		}
 		return this.props.children;

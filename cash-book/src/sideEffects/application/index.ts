@@ -1,22 +1,53 @@
 import * as SE from 'redux-saga/effects';
+import { ExportFileConfig, makeExportToFile } from './makeExportToFile';
 import { makeLoadBackupWorker } from './makeLoadBackupWorker';
-import { makeReset } from './makeReset';
-import { makeSaveAppStateToLocalStorage } from './makeSaveAppStateToLocalStorage';
-import { makeLoadAppStateFromLocalStorage } from './makeLoadAppStateFromLocalStorage';
-import { makeAccountsImport } from './makeAccountsImport';
+import { makeResetWorker } from './makeResetWorker';
+import { makeSaveBackupToLocalStorage } from './makeSaveBackupToLocalStorage';
+import { makeLoadBackupFromLocalStorageWorker } from './makeLoadBackupFromLocalStorageWorker';
 import { makeExports } from './makeExports';
-import { loadFromLocalStorage, setInLocalStorage } from './utils';
+import { exportToFile, loadFromLocalStorage, setInLocalStorage } from '../../misc/utils';
 import { channel } from 'redux-saga';
-import { makeExportToFile, ExportFileConfig } from './makeExportToFile';
+import { toExportFileConfig } from './toExportFileConfig';
+import { backupValidation } from '../../backupValidation';
+import { migrateBackup } from '../../backupMigrations';
+import { makeUniqueID } from '../../misc/makeUniqueID';
+import { toBackup } from '../../misc/toBackup';
 
 const exportFilesQueue = channel<ExportFileConfig>();
 
 export function* applicationBroker() {
-	yield SE.spawn(makeExports(exportFilesQueue));
-	yield SE.spawn(makeExportToFile(exportFilesQueue));
-	yield SE.spawn(makeLoadBackupWorker(setInLocalStorage));
-	yield SE.spawn(makeReset(setInLocalStorage));
-	yield SE.spawn(makeSaveAppStateToLocalStorage(setInLocalStorage));
-	yield SE.spawn(makeLoadAppStateFromLocalStorage(loadFromLocalStorage));
-	yield SE.spawn(makeAccountsImport());
+	yield SE.spawn(
+		makeExports({
+			exportFilesQueue: exportFilesQueue,
+			makeUniqueID: makeUniqueID,
+			toExportFileConfig: toExportFileConfig,
+		})
+	);
+	yield SE.spawn(
+		makeExportToFile({
+			exportFilesQueue: exportFilesQueue,
+			exportToFile: exportToFile,
+		})
+	);
+	yield SE.spawn(
+		makeLoadBackupWorker(setInLocalStorage, () =>
+			window.confirm(
+				'Do you really want to load this backup? This action will overwrite your current state of the app! This action can not be undone!'
+			)
+		)
+	);
+	yield SE.spawn(
+		makeResetWorker(setInLocalStorage, () =>
+			window.confirm('Do you really want to reset your app? Everything will be deleted! This action can not be undone!')
+		)
+	);
+	yield SE.spawn(makeSaveBackupToLocalStorage(setInLocalStorage, toBackup));
+	yield SE.spawn(
+		makeLoadBackupFromLocalStorageWorker({
+			getFromLocalStorage: loadFromLocalStorage,
+			parseJSON: JSON.parse,
+			migrateBackup: migrateBackup,
+			backupValidation: backupValidation,
+		})
+	);
 }

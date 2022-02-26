@@ -1,10 +1,10 @@
 export interface VariablesMap<T> {
 	default: (value: string) => T;
-
 	[key: string]: (value: string) => T;
 }
 
-export const makeRichTextProps =
+export type MakeRichTextProps = <T = any>(variablesMap: VariablesMap<T>) => (message: string) => Array<T>;
+export const makeRichTextProps: MakeRichTextProps =
 	<T = any>(variablesMap: VariablesMap<T>) =>
 	(message: string): Array<T> => {
 		return message.split(/(\$[a-zA-Z_]+)/g).reduce((richText: Array<T>, value) => {

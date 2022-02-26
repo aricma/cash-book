@@ -1,9 +1,10 @@
 import React from 'react';
-import { useAppState, selectAppState, dispatch } from '../../applicationState';
 import { GlobalStateType } from './state';
 import { ButtonProps, IconType } from '../../models/props';
+import { ApplicationActionType, ExportFileType, ExportPayloadType } from '../../applicationState/actions';
+import { useAppState, selectAppState } from '../../applicationState';
 import { Icon } from '../../components/icons';
-import { ApplicationActionType } from '../../applicationState/actions';
+import { dispatch } from '../../applicationState/store';
 
 export const GlobalStateWrapper: React.FC = (props) => {
 	const appState = useAppState(selectAppState);
@@ -35,9 +36,10 @@ export const GlobalStateWrapper: React.FC = (props) => {
 						onSelect: () => {
 							dispatch({
 								type: ApplicationActionType.APPLICATION_EXPORT,
-								exportPayloadType: 'EXPORT_PAYLOAD_TYPE/ALL',
-								fileType: 'json',
-								dataType: 'all',
+								payload: {
+									type: ExportPayloadType.ALL,
+									fileType: ExportFileType.JSON,
+								},
 							});
 						},
 					}}

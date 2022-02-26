@@ -1,10 +1,11 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { SkeletonTransactionsViewProps, TransactionsViewType } from '../props/transactionsViewProps';
 import { IconType, SpanProps, ButtonProps, LinkProps } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { DOCS_QUICK_START, DOCS_TRANSACTIONS } from '../../../variables/externalLinks';
 import { ROUTES_SETTINGS } from '../../../variables/routes';
 import { makeRichTextProps } from '../../../components/richText/makeRichTextProps';
+import { dispatch } from '../../../applicationState/store';
 
 export const toSkeletonTransactionsViewProps = (
 	appState: ApplicationState,

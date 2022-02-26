@@ -1,16 +1,18 @@
 import React from 'react';
 import { useAppState, selectAppState } from '../../applicationState';
-import { toCreateBookEntryViewProps } from './toProps/toCreateBookEntryViewProps';
+import { makeToCreateBookEntryViewProps } from './toProps/makeToCreateBookEntryViewProps';
 import { CreateBookEntryView } from './views/createBookEntryView';
 import { AppearModal, DialogContainer } from '../../components/modal';
 import { Dialog } from './views/dialog';
 import { toOverrideDateConfirmationModalViewProps } from './toProps/toOverrideDateConfirmationModalViewProps';
+import { dispatch } from '../../applicationState/store';
 
 export const CreateBookEntry: React.FC = () => {
 	const appState = useAppState(selectAppState);
 	const [showDateOverrideConfirmationModal, setShowDateOverrideConfirmationModal] = React.useState(false);
 	const [showValidation, setShowValidation] = React.useState(false);
-	const viewProps = toCreateBookEntryViewProps({
+	const viewProps = makeToCreateBookEntryViewProps({
+		dispatch: dispatch,
 		appState: appState,
 		showValidation: showValidation,
 		setShowValidation: () => setShowValidation(true),

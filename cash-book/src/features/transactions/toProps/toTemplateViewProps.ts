@@ -1,10 +1,11 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { Template } from '../state';
 import { TemplateViewProps } from '../props/transactionsViewProps';
 import { IconType } from '../../../models/props';
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { compact } from '../../../models/utils';
 import { toTransactionViewProps } from './toTransactionViewProps';
+import { dispatch } from '../../../applicationState/store';
 
 export const toTemplateViewProps = (
 	appState: ApplicationState,
@@ -25,7 +26,7 @@ export const toTemplateViewProps = (
 		},
 	},
 	transactions: compact(
-		Object.values(template.transactions).map((transactionId) => {
+		Object.values(template.transactionIds).map((transactionId) => {
 			const transaction = appState.transactions.transactions[transactionId];
 			return toTransactionViewProps(appState, template, transaction);
 		})

@@ -1,10 +1,12 @@
 import { backupValidation } from './index';
 import { ValidationMap } from './makeBackupValidation';
+import { MISSING_TRANSACTION_ID_MESSAGE, MISSING_ACCOUNT_ID_MESSAGE, WRONG_VERSION_MESSAGE } from './messages';
+import { latestVersion } from '../backupMigrations';
 
 describe(backupValidation.name, () => {
-	test('given a valid v3, when called, then returns null', () => {
-		const validV3 = {
-			__version__: 'v3',
+	test('given a valid backup, when called, then returns null', () => {
+		const validBackup = {
+			__version__: latestVersion,
 			accounts: {
 				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
 					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
@@ -37,7 +39,7 @@ describe(backupValidation.name, () => {
 					name: 'T-1',
 					cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
 					diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					transactions: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+					transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
 					autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
 					autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
 				},
@@ -122,11 +124,11 @@ describe(backupValidation.name, () => {
 				},
 			},
 		};
-		expect(backupValidation(validV3)).toBe(null);
+		expect(backupValidation(validBackup)).toBe(null);
 	});
 
-	test('given a valid v3 with missing version, when called, then returns error', () => {
-		const validV3 = {
+	test('given a valid backup with missing version, when called, then returns error', () => {
+		const validBackup = {
 			accounts: {
 				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
 					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
@@ -159,7 +161,7 @@ describe(backupValidation.name, () => {
 					name: 'T-1',
 					cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
 					diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					transactions: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+					transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
 					autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
 					autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
 				},
@@ -245,14 +247,14 @@ describe(backupValidation.name, () => {
 			},
 		};
 		const expected: ValidationMap = {
-			version: 'Backup has not latest version!',
+			version: WRONG_VERSION_MESSAGE,
 		};
-		expect(backupValidation(validV3)).toEqual(expected);
+		expect(backupValidation(validBackup)).toEqual(expected);
 	});
 
-	test('given a v3 with missing account, when called, then returns error', () => {
-		const validV3 = {
-			__version__: 'v3',
+	test('given a backup with missing account, when called, then returns error', () => {
+		const validBackup = {
+			__version__: latestVersion,
 			accounts: {
 				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
 					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
@@ -279,7 +281,7 @@ describe(backupValidation.name, () => {
 					name: 'T-1',
 					cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
 					diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					transactions: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+					transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
 					autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
 					autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
 				},
@@ -365,15 +367,15 @@ describe(backupValidation.name, () => {
 			},
 		};
 		const expected: ValidationMap = {
-			accounts: 'Missing account for id!',
+			accounts: MISSING_ACCOUNT_ID_MESSAGE,
 			transactions: null,
 		};
-		expect(backupValidation(validV3)).toEqual(expected);
+		expect(backupValidation(validBackup)).toEqual(expected);
 	});
 
 	test('given a valid v3 with missing transaction, when called, then returns error', () => {
-		const validV3 = {
-			__version__: 'v3',
+		const validBackup = {
+			__version__: latestVersion,
 			accounts: {
 				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
 					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
@@ -406,7 +408,7 @@ describe(backupValidation.name, () => {
 					name: 'T-1',
 					cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
 					diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					transactions: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+					transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
 					autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
 					autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
 				},
@@ -452,14 +454,14 @@ describe(backupValidation.name, () => {
 		const expected: ValidationMap = {
 			accounts: null,
 			templates: null,
-			transactions: 'Missing transaction for id!',
+			transactions: MISSING_TRANSACTION_ID_MESSAGE,
 		};
-		expect(backupValidation(validV3)).toEqual(expected);
+		expect(backupValidation(validBackup)).toEqual(expected);
 	});
 
 	test('given a valid v3 with missing template, when called, then returns error', () => {
-		const validV3 = {
-			__version__: 'v3',
+		const validBackup = {
+			__version__: latestVersion,
 			accounts: {
 				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
 					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
@@ -571,6 +573,6 @@ describe(backupValidation.name, () => {
 			templates: 'Missing template for id!',
 			transactions: null,
 		};
-		expect(backupValidation(validV3)).toEqual(expected);
+		expect(backupValidation(validBackup)).toEqual(expected);
 	});
 });

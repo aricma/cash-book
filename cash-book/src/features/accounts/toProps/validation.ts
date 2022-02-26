@@ -1,4 +1,4 @@
-import { ApplicationState } from '../../../applicationState';
+import { AccountsState } from '../state';
 
 interface CreateAccountValidationMap {
 	id?: string;
@@ -7,9 +7,9 @@ interface CreateAccountValidationMap {
 	number?: string;
 }
 
-export const validateCreateAccount = (appState: ApplicationState): CreateAccountValidationMap | undefined => {
-	const name = !!appState.accounts.create.name ? undefined : 'Name is missing!';
-	const number = validateNumber(appState);
+export const validateCreateAccount = (state: AccountsState): CreateAccountValidationMap | undefined => {
+	const name = !!state.create.name ? undefined : 'Name is missing!';
+	const number = validateNumber(state);
 	if (name === undefined && number === undefined) return undefined;
 	return {
 		id: undefined,
@@ -19,15 +19,15 @@ export const validateCreateAccount = (appState: ApplicationState): CreateAccount
 	};
 };
 
-const validateNumber = (appState: ApplicationState): string | undefined => {
-	const number = appState.accounts.create.number;
+const validateNumber = (state: AccountsState): string | undefined => {
+	const number = state.create.number;
 	if (number === undefined) return 'Number is missing!';
 	if (!/^\d{4}$/.test(number)) return 'Account number is not a 4 digit number!';
 	const match =
-		Object.values(appState.accounts.accounts)
+		Object.values(state.accounts)
 			.filter((account) => {
-				if (appState.accounts.create.id) {
-					return account.id !== appState.accounts.create.id;
+				if (state.create.id) {
+					return account.id !== state.create.id;
 				} else {
 					return true;
 				}

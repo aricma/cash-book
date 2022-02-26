@@ -1,10 +1,11 @@
-import { ApplicationState, dispatch } from '../../../applicationState';
+import { ApplicationState } from '../../../applicationState';
 import { CreateTransaction, TransactionType } from '../state';
 import { CreateTransactionViewProps } from '../props/createTemplateViewProps';
 import { validateCreateTransaction } from './validation';
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { IconType } from '../../../models/props';
 import { AccountType } from '../../accounts/state';
+import { dispatch } from '../../../applicationState/store';
 
 export const toCreateTransactionViewProps = (
 	appState: ApplicationState,

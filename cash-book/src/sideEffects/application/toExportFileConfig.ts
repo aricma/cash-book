@@ -10,7 +10,7 @@ import {
 } from '../../misc/utils';
 import { compactObject, pad } from '../../models/utils';
 import { latestVersion } from '../../backupMigrations';
-import { headline, bookEntryToDatevRows } from './datev';
+import {headline, bookEntryToDatevRows, validateDatevRows} from './datev';
 import { DateWithoutTime } from '../../models/domain/date';
 
 interface Request {
@@ -21,7 +21,7 @@ interface Request {
 export type ToExportFileConfig = (req: Request) => ExportFileConfig | null;
 export const toExportFileConfig: ToExportFileConfig = (req) => {
 	switch (req.action.payload.type) {
-		case 'EXPORT_PAYLOAD_TYPE/ACCOUNTS':
+		case ExportPayloadType.ACCOUNTS:
 			switch (req.action.payload.fileType) {
 				case ExportFileType.CSV:
 					const headline = ['id', 'name', 'type', 'number'];
@@ -40,7 +40,7 @@ export const toExportFileConfig: ToExportFileConfig = (req) => {
 				default:
 					return null;
 			}
-		case 'EXPORT_PAYLOAD_TYPE/TRANSACTIONS':
+		case ExportPayloadType.TRANSACTIONS:
 			return {
 				name: `transactions-${req.unique}.json`,
 				content: toJSONContent(
@@ -62,6 +62,9 @@ export const toExportFileConfig: ToExportFileConfig = (req) => {
 						accounts: req.appState.accounts.accounts,
 						transactions: req.appState.transactions.transactions,
 					});
+					const rowsValidation = validateDatevRows(rows);
+					const rowsAreNotValid = rowsValidation !== null;
+					if (rowsAreNotValid) throw Error(rowsValidation)
 					const cashierName = toLowerCaseWithDashes(req.appState.transactions.templates[selectedTemplateId].name);
 					const date = toDateString(req.action.payload.date);
 					const fileName = `book-entry-${cashierName}-${date}-${req.unique}.csv`;
@@ -83,6 +86,9 @@ export const toExportFileConfig: ToExportFileConfig = (req) => {
 							}),
 						];
 					}, []);
+					const rowsValidation = validateDatevRows(rows);
+					const rowsAreNotValid = rowsValidation !== null;
+					if (rowsAreNotValid) throw Error(rowsValidation)
 					const cashierName = toLowerCaseWithDashes(req.appState.transactions.templates[selectedTemplateId].name);
 					const year = date.getFullYear();
 					const month = pad(date.getMonth() + 1, 2);

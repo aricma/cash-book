@@ -68,10 +68,12 @@ export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Ar
 	});
 };
 
-export const validateDatevRows = (rows: Array<Array<string>>): null | string => {
+export const validateDatevRows = (rows: Array<Array<string>>): string | null => {
 	const result = rows.reduce((result: number, row: Array<string>) => {
 		const value = Number(row[1].replace('+', '').replace(',', '.')) * 100;
 		return result + value;
 	}, 0);
-	return result === 0 ? null : `The Rows add up to: ${result / 100}!`;
+	return result === 0 ? null : INVALID_ROW_RESULT_MESSAGE(String(result / 100));
 };
+
+export const INVALID_ROW_RESULT_MESSAGE = (result: string) => `Datev Export: The entries add up to: ${result}! The result should be 0!`;

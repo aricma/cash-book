@@ -5,4 +5,6 @@ test.describe('BookEntries', () => {
 	test.fixme('edit bookEntry', () => {});
 	test.fixme('export month', () => {});
 	test.fixme('export day', () => {});
+	test.fixme('export invalid month', () => {});
+	test.fixme('export invalid day', () => {});
 });

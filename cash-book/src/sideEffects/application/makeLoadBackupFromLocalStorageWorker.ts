@@ -1,6 +1,5 @@
 import * as SE from 'redux-saga/effects';
 import * as TransactionsState from '../../features/transactions/state';
-import * as BookEntriesState from '../../features/bookEntries/state';
 import { ApplicationActionType, AccountsSet, BookEntriesSet, TransactionsSet } from '../../applicationState/actions';
 import { Validation } from '../../backupValidation/makeBackupValidation';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';

@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"preci": "yarn refactor",
-		"ci": "yarn compile && yarn lint && yarn coverage && yarn build",
+		"ci": "export CI=true && yarn compile && yarn coverage && yarn build",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",

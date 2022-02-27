@@ -1,5 +1,6 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
+import * as path from 'path';
 
 /**
  * Read environment variables from file.
@@ -96,10 +97,12 @@ const config: PlaywrightTestConfig = {
 	// outputDir: 'test-results/',
 
 	/* Run your local dev server before starting the tests */
-	// webServer: {
-	//   command: 'npm run start',
-	//   port: 3000,
-	// },
+	webServer: {
+		command: 'cd ' + path.join(__dirname, '../cash-book') + ' && yarn start',
+		timeout: 120 * 1000,
+		port: 3000,
+		reuseExistingServer: !process.env.CI,
+	},
 };
 
 export default config;

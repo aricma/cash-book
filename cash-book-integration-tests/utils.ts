@@ -30,40 +30,46 @@ export const makeCreateAccount = (page: Page) => async (type: string, name: stri
 	await page.locator('h2 >> "Create Account"').isHidden();
 };
 
-export const makeCreateTemplate =
-	(page: Page) => async (name: string, transactions: Array<[name: string, type: boolean, account: string]>) => {
-		await page.locator('button >> "Transactions"').click();
-		await page.waitForURL(PAGE_URL + '/transactions');
+interface CreateTemplateRequest {
+	name: string;
+	cashierAccount?: string;
+	differenceAccount?: string;
+	transactions: Array<[name: string, type: boolean, account: string]>;
+}
+export const makeCreateTemplate = (page: Page) => async (request: CreateTemplateRequest) => {
+	await page.locator('button >> "Transactions"').click();
+	await page.waitForURL(PAGE_URL + '/transactions');
 
-		await page.locator('button >> "Create"').nth(0).click();
-		await page.locator('h2 >> "Create Transaction Template"').isVisible();
+	await page.locator('button >> "Create"').nth(0).click();
+	await page.locator('h2 >> "Create Transaction Template"').isVisible();
 
-		const nameInput = await page.locator('input:near(label:text("Name"), 5)');
+	await fillInput(page)('Name', request.name);
+
+	request.cashierAccount && (await select(page)('set cashier account', request.cashierAccount));
+	// (request.differenceAccount) && await select(page)("???", request.differenceAccount);
+
+	await asyncForEach(async ([name, type, account], i) => {
+		await page.locator('#create-template-modal-content').evaluate((node) => node.scroll(0, 0));
+		const addTransactionButton = await page.locator('#modals >> button >> "Add Transaction"').nth(0);
+		await addTransactionButton.click();
+
+		const nameInput = await page.locator('input:near(label:text("Name"), 5)').nth(i + 1);
 		await nameInput.fill(name);
-		await expect(nameInput).toHaveValue(name);
 
-		await asyncForEach(async ([name, type, account], i) => {
-			await page.locator('#create-template-modal-content').evaluate((node) => node.scroll(0, 0));
-			const addTransactionButton = await page.locator('#modals >> button >> "Add Transaction"').nth(0);
-			await addTransactionButton.click();
+		if (type) {
+			await page.locator('button >> "Set transaction type"').nth(i).click();
+		}
 
-			const nameInput = await page.locator('input:near(label:text("Name"), 5)').nth(i + 1);
-			await nameInput.fill(name);
-			await expect(nameInput).toHaveValue(name);
+		await page
+			.locator('[data-test-id="create-transaction-select-other-account"] >> button >> "set other account"')
+			.click();
+		await page.locator(`"${account}"`).click();
+	})(request.transactions);
 
-			if (type) {
-				await page.locator('button >> "Set transaction type"').click();
-			}
+	await page.locator('button >> "Submit"').click();
 
-			await page.locator('button >> "set other account"').click();
-			await page.locator(`"${account}"`).click();
-			await page.locator(`button >> "${account}"`).isVisible();
-		})(transactions);
-
-		await page.locator('button >> "Submit"').click();
-
-		await page.locator('h2 >> "Create Transaction Template"').isHidden();
-	};
+	await page.locator('h2 >> "Create Transaction Template"').isHidden();
+};
 export const makeBookEntry =
 	(page: Page) => async (bookEntry: [string, string, string | null, string | null, string | null, string]) => {
 		await page.locator('button >> "Create Book Entry"').click();
@@ -93,16 +99,16 @@ export const select = (page: Page) => async (select: string, option: string) => 
 	await page.locator(`button >> "${option}"`).isVisible();
 };
 
-const fillInput = (page: Page) => async (label: string, value: string) => {
+export const fillInput = (page: Page) => async (label: string, value: string) => {
 	const input = await makeFindInput(page)(label);
 	await input.fill(value);
 	await expect(input).toHaveValue(value);
 };
 
-const makeFindInput =
+export const makeFindInput =
 	(page: Page) =>
-	async (label: string): Promise<Locator> => {
-		return page.locator(`input:near(label:text("${label}"), 5)`);
+	async (label: string, nth?: number): Promise<Locator> => {
+		return page.locator(`input:near(label:text("${label}"), 5)`).nth(nth || 0);
 	};
 
 export const download =
@@ -132,3 +138,9 @@ export const asyncForEach =
 export const readFile = (path: string) => fs.readFileSync(toAbsoluteFilePath(path), { encoding: 'utf8' });
 
 export const toAbsoluteFilePath = (path: string): string => (Path.isAbsolute(path) ? path : Path.join(__dirname, path));
+
+export const uploadBackup = (page: Page) => async (path: string) => {
+	await page.goto(PAGE_URL + '/settings');
+	page.on('dialog', (dialog) => dialog.accept());
+	await upload(page)([path])(page.locator('button >> "Load Backup"'));
+};

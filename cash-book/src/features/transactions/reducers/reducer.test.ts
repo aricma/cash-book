@@ -75,6 +75,46 @@ describe(ApplicationActionType.TRANSACTIONS_SET, () => {
 	});
 });
 
+describe(ApplicationActionType.TRANSACTIONS_RESET, () => {
+	test('when called, then returns expected state', () => {
+		const state: TransactionsState = {
+			...baseState,
+			create: {
+				id: 'A',
+				transactions: {
+					TA: {
+						id: 'TA',
+						type: TransactionType.IN,
+						name: 'TA',
+						accountId: 'ANY',
+					},
+				},
+				transactionIds: ['1', '2', '3'],
+			},
+			transactions: {
+				X: {
+					id: 'X',
+					name: 'TX',
+					type: TransactionType.IN,
+					accountId: 'ANY',
+				},
+			},
+			templates: {},
+		};
+		expectation({
+			state: {
+				...state,
+			},
+			action: {
+				type: ApplicationActionType.TRANSACTIONS_RESET,
+			},
+			expectedState: {
+				...initialState,
+			},
+		});
+	});
+});
+
 describe(ApplicationActionType.TRANSACTIONS_EDIT, () => {
 	const localBaseState: TransactionsState = {
 		...baseState,

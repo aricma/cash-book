@@ -1,13 +1,19 @@
 import { test, expect } from '@playwright/test';
 import { PAGE_URL } from '../environment';
-import { asyncForEach, download, makeBookEntry, makeCreateTemplate, makeCreateAccount, readFile } from '../utils';
-
-test.beforeEach(async ({ page }) => {
-	await page.goto(PAGE_URL);
-});
+import {
+	asyncForEach,
+	download,
+	makeBookEntry,
+	makeCreateTemplate,
+	makeCreateAccount,
+	readFile,
+	uploadBackup,
+	sleep,
+} from '../utils';
 
 test.describe('Setup', () => {
 	test('golden path', async ({ page }) => {
+		await page.goto(PAGE_URL);
 		await asyncForEach((account: [string, string, string]) => makeCreateAccount(page)(...account))([
 			['Cashier', 'Cashier 001', '1000'],
 			['Difference', 'Difference', '3400'],
@@ -16,11 +22,14 @@ test.describe('Setup', () => {
 			['Default', 'Bank', '6500'],
 		]);
 
-		await makeCreateTemplate(page)('Temp 1', [
-			['In', true, 'Income'],
-			['Out', false, 'Operating Expense'],
-			['Bank', false, 'Bank'],
-		]);
+		await makeCreateTemplate(page)({
+			name: 'Temp 1',
+			transactions: [
+				['In', true, 'Income'],
+				['Out', false, 'Operating Expense'],
+				['Bank', false, 'Bank'],
+			],
+		});
 
 		await asyncForEach(makeBookEntry(page))([
 			['1', '100', '100', '90', null, '110'],
@@ -36,7 +45,31 @@ test.describe('Setup', () => {
 		expect(fileContent).toEqual(expectedFileContent);
 	});
 
-	test.fixme('given no accounts', () => {});
-	test.fixme('given accounts and no transactions', () => {});
-	test.fixme('given accounts, transactions and no bookEntries', () => {});
+	test('given no accounts', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-empty-v3_1.json');
+		await page.goto(PAGE_URL);
+		await sleep(2000);
+		await expect(page).toHaveURL(PAGE_URL + '/accounts');
+	});
+
+	test('given accounts and neither transactions nor book entries', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-with-accounts-v3_1.json');
+		await page.goto(PAGE_URL);
+		await sleep(2000);
+		await expect(page).toHaveURL(PAGE_URL + '/transactions');
+	});
+
+	test('given accounts, transactions and no book entries', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-with-accounts-and-transactions-v3_1.json');
+		await page.goto(PAGE_URL);
+		await sleep(2000);
+		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create');
+	});
+
+	test('given accounts, transactions and book entries', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-with-account-transactions-and-book-entries-v3_1.json');
+		await page.goto(PAGE_URL);
+		await sleep(2000);
+		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create');
+	});
 });

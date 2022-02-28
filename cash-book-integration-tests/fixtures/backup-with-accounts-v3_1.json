@@ -1,0 +1,59 @@
+{
+    "__version__": "v3.1",
+    "accounts": {
+        "e8bdcc7806f707498f059830298005da7efcb9f4": {
+            "id": "e8bdcc7806f707498f059830298005da7efcb9f4",
+            "type": "ACCOUNT_TYPE/CASH_STATION",
+            "name": "Nikolassee",
+            "number": "1000"
+        },
+        "d7739eccd425fa3ed3709ec658c2cb539a7f1b3d": {
+            "id": "d7739eccd425fa3ed3709ec658c2cb539a7f1b3d",
+            "type": "ACCOUNT_TYPE/CASH_STATION",
+            "name": "Mitte",
+            "number": "5000"
+        },
+        "5edc40f5883c0982aa8439b78e4221488315e61f": {
+            "id": "5edc40f5883c0982aa8439b78e4221488315e61f",
+            "type": "ACCOUNT_TYPE/DIFFERENCE",
+            "name": "Kassendifferenz",
+            "number": "3000"
+        },
+        "add5287b8556383929b839cf7edae1517ef8c2ac": {
+            "id": "add5287b8556383929b839cf7edae1517ef8c2ac",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Bank",
+            "number": "1500"
+        },
+        "0fd3379e6f84e46f9e25497c4fba867ad8c02864": {
+            "id": "0fd3379e6f84e46f9e25497c4fba867ad8c02864",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Ware",
+            "number": "9000"
+        },
+        "58af949c500af03165e235fcd2edb84c2618348e": {
+            "id": "58af949c500af03165e235fcd2edb84c2618348e",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Privat",
+            "number": "4500"
+        },
+        "5de913bcf4c086510d30fda5ea229a0f16baab72": {
+            "id": "5de913bcf4c086510d30fda5ea229a0f16baab72",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Lohn",
+            "number": "7500"
+        },
+        "a874d1b5e043a779b1aa2cdef4f84a3efb36636e": {
+            "id": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Karte",
+            "number": "6000"
+        }
+    },
+    "templates": {
+    },
+    "transactions": {
+    },
+    "bookEntries": {
+    }
+}

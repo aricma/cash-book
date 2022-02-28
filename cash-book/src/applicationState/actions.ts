@@ -22,8 +22,10 @@ export enum ApplicationActionType {
 	ROUTER_FALLBACK = 'APPLICATION_ACTION_TYPE/ROUTER/FALLBACK',
 
 	SETTINGS_SET = 'APPLICATION_ACTION_TYPE/SETTINGS/SET',
+	SETTINGS_RESET = 'APPLICATION_ACTION_TYPE/SETTINGS/RESET',
 
 	ACCOUNTS_SET = 'APPLICATION_ACTION_TYPE/ACCOUNTS/SET',
+	ACCOUNTS_RESET = 'APPLICATION_ACTION_TYPE/ACCOUNTS/RESET',
 	ACCOUNTS_EDIT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/EDIT',
 	ACCOUNTS_REMOVE = 'APPLICATION_ACTION_TYPE/ACCOUNTS/REMOVE',
 	ACCOUNTS_CREATE_SET_TYPE = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/TYPE/SET',
@@ -33,6 +35,7 @@ export enum ApplicationActionType {
 	ACCOUNTS_CREATE_SUBMIT = 'APPLICATION_ACTION_TYPE/ACCOUNTS/CREATE/SUBMIT',
 
 	TRANSACTIONS_SET = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/SET',
+	TRANSACTIONS_RESET = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/RESET',
 	TRANSACTIONS_EDIT = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/EDIT',
 	TRANSACTIONS_MOVE = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/ORDER/MOVE',
 	TRANSACTIONS_ORDER_INC = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/ORDER/INCREASE',
@@ -51,6 +54,7 @@ export enum ApplicationActionType {
 	TRANSACTIONS_CREATE_TEMPLATE_SUBMIT = 'APPLICATION_ACTION_TYPE/TRANSACTIONS/CREATE/TEMPLATE/SUBMIT',
 
 	BOOK_ENTRIES_SET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/SET',
+	BOOK_ENTRIES_RESET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/RESET',
 	BOOK_ENTRIES_EDIT = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EDIT',
 	BOOK_ENTRIES_EDIT_SET = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/EDIT/SET',
 	BOOK_ENTRIES_SET_TEMPLATE = 'APPLICATION_ACTION_TYPE/BOOK_ENTRIES/TEMPLATE/SET',
@@ -134,11 +138,13 @@ export type RouterAction = RouterGoTo | RouterFallback;
 export type RouterGoTo = Action<ApplicationActionType.ROUTER_GO_TO, { path: string }>;
 export type RouterFallback = Action<ApplicationActionType.ROUTER_FALLBACK>;
 
-export type SettingsAction = SettingsSet;
+export type SettingsAction = SettingsSet | SettingsReset;
 export type SettingsSet = Action<ApplicationActionType.SETTINGS_SET, { state: SettingsState }>;
+export type SettingsReset = Action<ApplicationActionType.SETTINGS_RESET>;
 
 export type AccountsAction =
 	| AccountsSet
+	| AccountsReset
 	| AccountsEdit
 	| AccountsRemove
 	| AccountsCreateSetType
@@ -147,6 +153,7 @@ export type AccountsAction =
 	| AccountsCreateSubmit
 	| AccountsCreateCancel;
 export type AccountsSet = Action<ApplicationActionType.ACCOUNTS_SET, { accounts: { [accountId: string]: Account } }>;
+export type AccountsReset = Action<ApplicationActionType.ACCOUNTS_RESET>;
 export type AccountsEdit = Action<ApplicationActionType.ACCOUNTS_EDIT, { accountId: string }>;
 export type AccountsRemove = Action<ApplicationActionType.ACCOUNTS_REMOVE, { accountId: string }>;
 export type AccountsCreateSetType = Action<ApplicationActionType.ACCOUNTS_CREATE_SET_TYPE, { value: AccountType }>;
@@ -157,6 +164,7 @@ export type AccountsCreateCancel = Action<ApplicationActionType.ACCOUNTS_CREATE_
 
 export type TransactionsAction =
 	| TransactionsSet
+	| TransactionsReset
 	| TransactionsEdit
 	| TransactionsMove
 	| TransactionsOrderInc
@@ -174,6 +182,7 @@ export type TransactionsAction =
 	| TransactionsCreateSubmit
 	| TransactionsCreateTemplateCancel;
 export type TransactionsSet = Action<ApplicationActionType.TRANSACTIONS_SET, { state: TransactionsState }>;
+export type TransactionsReset = Action<ApplicationActionType.TRANSACTIONS_RESET>;
 export type TransactionsEdit = Action<ApplicationActionType.TRANSACTIONS_EDIT, { templateId: string }>;
 export type TransactionsMove = Action<
 	ApplicationActionType.TRANSACTIONS_MOVE,
@@ -233,6 +242,7 @@ export type TransactionsCreateTemplateCancel = Action<ApplicationActionType.TRAN
 
 export type BookEntriesAction =
 	| BookEntriesSet
+	| BookEntriesReset
 	| BookEntriesEdit
 	| BookEntriesEditSet
 	| BookEntriesSetTemplate
@@ -246,6 +256,7 @@ export type BookEntriesAction =
 	| BookEntriesCreateCancel
 	| BookEntriesCreateSubmit;
 export type BookEntriesSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { bookEntries: Templates }>;
+export type BookEntriesReset = Action<ApplicationActionType.BOOK_ENTRIES_RESET>;
 export type BookEntriesEdit = Action<ApplicationActionType.BOOK_ENTRIES_EDIT, { templateId: string; date: string }>;
 export type BookEntriesEditSet = Action<ApplicationActionType.BOOK_ENTRIES_EDIT_SET, { state: Create }>;
 export type BookEntriesSetTemplate = Action<ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE, { templateId: string }>;

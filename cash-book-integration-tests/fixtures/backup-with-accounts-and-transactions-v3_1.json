@@ -1,0 +1,388 @@
+{
+    "__version__": "v3.1",
+    "accounts": {
+        "e8bdcc7806f707498f059830298005da7efcb9f4": {
+            "id": "e8bdcc7806f707498f059830298005da7efcb9f4",
+            "type": "ACCOUNT_TYPE/CASH_STATION",
+            "name": "Nikolassee",
+            "number": "1000"
+        },
+        "d7739eccd425fa3ed3709ec658c2cb539a7f1b3d": {
+            "id": "d7739eccd425fa3ed3709ec658c2cb539a7f1b3d",
+            "type": "ACCOUNT_TYPE/CASH_STATION",
+            "name": "Mitte",
+            "number": "5000"
+        },
+        "5edc40f5883c0982aa8439b78e4221488315e61f": {
+            "id": "5edc40f5883c0982aa8439b78e4221488315e61f",
+            "type": "ACCOUNT_TYPE/DIFFERENCE",
+            "name": "Kassendifferenz",
+            "number": "3000"
+        },
+        "add5287b8556383929b839cf7edae1517ef8c2ac": {
+            "id": "add5287b8556383929b839cf7edae1517ef8c2ac",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Bank",
+            "number": "1500"
+        },
+        "0fd3379e6f84e46f9e25497c4fba867ad8c02864": {
+            "id": "0fd3379e6f84e46f9e25497c4fba867ad8c02864",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Ware",
+            "number": "9000"
+        },
+        "58af949c500af03165e235fcd2edb84c2618348e": {
+            "id": "58af949c500af03165e235fcd2edb84c2618348e",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Privat",
+            "number": "4500"
+        },
+        "5de913bcf4c086510d30fda5ea229a0f16baab72": {
+            "id": "5de913bcf4c086510d30fda5ea229a0f16baab72",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Lohn",
+            "number": "7500"
+        },
+        "a874d1b5e043a779b1aa2cdef4f84a3efb36636e": {
+            "id": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e",
+            "type": "ACCOUNT_TYPE/DEFAULT",
+            "name": "Karte",
+            "number": "6000"
+        }
+    },
+    "templates": {
+        "312ee6804e36707d592280fa251dc4b4df6f4816": {
+            "id": "312ee6804e36707d592280fa251dc4b4df6f4816",
+            "name": "Nikolassee",
+            "cashierAccountId": "e8bdcc7806f707498f059830298005da7efcb9f4",
+            "diffAccountId": "5edc40f5883c0982aa8439b78e4221488315e61f",
+            "autoDiffInId": "cdb4ac8decdc921aa361d471cd2ab46da2f4b353",
+            "autoDiffOutId": "01019e81db440fdbb34cbd863a0a70629448ce97",
+            "transactionIds": [
+                "fd2400b7bbd25eee936bffae3df60f6a791ab1f8",
+                "2f0fd09d0607c453bcfe26e47ae0f3bbb573ccb0",
+                "aab19944ce8e83d1046e6d9569a91743d9c40c0d",
+                "29693202e2628d2f2f4f5bc34777076a65eafd62",
+                "770ae7081c042df2704dad9349392fd5f3f687ed",
+                "8a7276a45ba3182fbd4b24b303cce519c5d8499a",
+                "c29aa6724f0054a03d13ffbdfcea59ace23ec37b",
+                "8a0dff39ccff4a1be5fec4373cbf9c9c9baac717",
+                "2cdc7bada20205a980548237b6f7551090023461",
+                "efec7c520d73b475d70d543f3039447040c18e5a",
+                "1d03d7add0e216fdab261b660b4dfe909b3f05cb",
+                "5842126061891e45c685244dcdd5f77a71d11fe2",
+                "cf5258552ec478565c28a3cd5b72b6e4135a93b3",
+                "104e9b32d3349cba7ff80994379f89e1d5b99fdb",
+                "d638d698786959af2e9916572041e2267dbd17b9",
+                "a20e8b5ea00137088333895d74159d839c8bdfff",
+                "bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362"
+            ]
+        },
+        "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd": {
+            "id": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
+            "name": "Mitte",
+            "cashierAccountId": "d7739eccd425fa3ed3709ec658c2cb539a7f1b3d",
+            "diffAccountId": "5edc40f5883c0982aa8439b78e4221488315e61f",
+            "autoDiffInId": "d64e2267dd450ef2992837d14096eb397e440b78",
+            "autoDiffOutId": "942b5e2a2530f80b6692472e4cf4acb8d5616c7c",
+            "transactionIds": [
+                "1442b1193919d6ace5c1e5dba4e3360f2376f39c",
+                "bf9ede12f7449a2641827a76f9defc5d5ca6624a",
+                "20c0b3fccf3753e63df9b987ee008082915309a0",
+                "129fbfb9db01aa8bab3b07c797c4be8837dd13f9",
+                "4b110321719546f0d25a25511295bcec99c6ebcf",
+                "4c6ca9263914f06f887c839a393cef2c784ed76d",
+                "06b87b2f4d6786e246ef8eb407ec0ef685dbc346",
+                "47d1a845634b8d90f92d779feddeaf2f669e906f",
+                "c1103f29c45ea2420fc6806dd7c3994be824a7ef",
+                "b3e884a4629394349c82407c929160f437340448",
+                "75f76c2124788aa5cdf347c1ec0a4d6235574105",
+                "fcdf0dd61576fa278c93aa52f1db8b85a18b7467",
+                "66220e44ce986fe325a5104a921406b9a890a5b0",
+                "d3fdaa58d9f02d967f56ae90239ace0079fcb635",
+                "b00e5bc59b7238e4f22a20577ce3562ef9059c7b",
+                "fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40",
+                "c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8"
+            ]
+        }
+    },
+    "transactions": {
+        "fd2400b7bbd25eee936bffae3df60f6a791ab1f8": {
+            "id": "fd2400b7bbd25eee936bffae3df60f6a791ab1f8",
+            "type": "TRANSACTION_TYPE/IN",
+            "name": "7%",
+            "accountId": "0fd3379e6f84e46f9e25497c4fba867ad8c02864"
+        },
+        "2f0fd09d0607c453bcfe26e47ae0f3bbb573ccb0": {
+            "id": "2f0fd09d0607c453bcfe26e47ae0f3bbb573ccb0",
+            "type": "TRANSACTION_TYPE/IN",
+            "name": "19%",
+            "accountId": "0fd3379e6f84e46f9e25497c4fba867ad8c02864"
+        },
+        "aab19944ce8e83d1046e6d9569a91743d9c40c0d": {
+            "id": "aab19944ce8e83d1046e6d9569a91743d9c40c0d",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Amex",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "29693202e2628d2f2f4f5bc34777076a65eafd62": {
+            "id": "29693202e2628d2f2f4f5bc34777076a65eafd62",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Maestro",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "770ae7081c042df2704dad9349392fd5f3f687ed": {
+            "id": "770ae7081c042df2704dad9349392fd5f3f687ed",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Master",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "8a7276a45ba3182fbd4b24b303cce519c5d8499a": {
+            "id": "8a7276a45ba3182fbd4b24b303cce519c5d8499a",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Visa",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "c29aa6724f0054a03d13ffbdfcea59ace23ec37b": {
+            "id": "c29aa6724f0054a03d13ffbdfcea59ace23ec37b",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Visa Electron",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "8a0dff39ccff4a1be5fec4373cbf9c9c9baac717": {
+            "id": "8a0dff39ccff4a1be5fec4373cbf9c9c9baac717",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Manuelle Karte",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "2cdc7bada20205a980548237b6f7551090023461": {
+            "id": "2cdc7bada20205a980548237b6f7551090023461",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Paypal",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "efec7c520d73b475d70d543f3039447040c18e5a": {
+            "id": "efec7c520d73b475d70d543f3039447040c18e5a",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "UnionPay",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "1d03d7add0e216fdab261b660b4dfe909b3f05cb": {
+            "id": "1d03d7add0e216fdab261b660b4dfe909b3f05cb",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "SatisPay",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "5842126061891e45c685244dcdd5f77a71d11fe2": {
+            "id": "5842126061891e45c685244dcdd5f77a71d11fe2",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Rechnung",
+            "accountId": "0fd3379e6f84e46f9e25497c4fba867ad8c02864"
+        },
+        "104e9b32d3349cba7ff80994379f89e1d5b99fdb": {
+            "id": "104e9b32d3349cba7ff80994379f89e1d5b99fdb",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Lohnauszahnungen",
+            "accountId": "5de913bcf4c086510d30fda5ea229a0f16baab72"
+        },
+        "cf5258552ec478565c28a3cd5b72b6e4135a93b3": {
+            "id": "cf5258552ec478565c28a3cd5b72b6e4135a93b3",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Privatentnahme ",
+            "accountId": "58af949c500af03165e235fcd2edb84c2618348e"
+        },
+        "a20e8b5ea00137088333895d74159d839c8bdfff": {
+            "id": "a20e8b5ea00137088333895d74159d839c8bdfff",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Abschöpfung",
+            "accountId": "add5287b8556383929b839cf7edae1517ef8c2ac"
+        },
+        "d638d698786959af2e9916572041e2267dbd17b9": {
+            "id": "d638d698786959af2e9916572041e2267dbd17b9",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Kleingeldabschöpfung",
+            "accountId": "add5287b8556383929b839cf7edae1517ef8c2ac"
+        },
+        "bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": {
+            "id": "bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Tagesabrechnung",
+            "accountId": "add5287b8556383929b839cf7edae1517ef8c2ac"
+        },
+        "cdb4ac8decdc921aa361d471cd2ab46da2f4b353": {
+            "id": "cdb4ac8decdc921aa361d471cd2ab46da2f4b353",
+            "name": "Auto Difference In",
+            "type": "TRANSACTION_TYPE/PROTECTED/IN",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "01019e81db440fdbb34cbd863a0a70629448ce97": {
+            "id": "01019e81db440fdbb34cbd863a0a70629448ce97",
+            "name": "Auto Difference Out",
+            "type": "TRANSACTION_TYPE/PROTECTED/OUT",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "1442b1193919d6ace5c1e5dba4e3360f2376f39c": {
+            "id": "1442b1193919d6ace5c1e5dba4e3360f2376f39c",
+            "type": "TRANSACTION_TYPE/IN",
+            "name": "7%",
+            "accountId": "0fd3379e6f84e46f9e25497c4fba867ad8c02864"
+        },
+        "d64e2267dd450ef2992837d14096eb397e440b78": {
+            "id": "d64e2267dd450ef2992837d14096eb397e440b78",
+            "name": "Auto Difference In",
+            "type": "TRANSACTION_TYPE/PROTECTED/IN",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "942b5e2a2530f80b6692472e4cf4acb8d5616c7c": {
+            "id": "942b5e2a2530f80b6692472e4cf4acb8d5616c7c",
+            "name": "Auto Difference Out",
+            "type": "TRANSACTION_TYPE/PROTECTED/OUT",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "bf9ede12f7449a2641827a76f9defc5d5ca6624a": {
+            "id": "bf9ede12f7449a2641827a76f9defc5d5ca6624a",
+            "type": "TRANSACTION_TYPE/IN",
+            "name": "19%",
+            "accountId": "0fd3379e6f84e46f9e25497c4fba867ad8c02864"
+        },
+        "20c0b3fccf3753e63df9b987ee008082915309a0": {
+            "id": "20c0b3fccf3753e63df9b987ee008082915309a0",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Amex",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "129fbfb9db01aa8bab3b07c797c4be8837dd13f9": {
+            "id": "129fbfb9db01aa8bab3b07c797c4be8837dd13f9",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Maestro",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "4b110321719546f0d25a25511295bcec99c6ebcf": {
+            "id": "4b110321719546f0d25a25511295bcec99c6ebcf",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Master",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "4c6ca9263914f06f887c839a393cef2c784ed76d": {
+            "id": "4c6ca9263914f06f887c839a393cef2c784ed76d",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Visa",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "06b87b2f4d6786e246ef8eb407ec0ef685dbc346": {
+            "id": "06b87b2f4d6786e246ef8eb407ec0ef685dbc346",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Visa Electron",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "47d1a845634b8d90f92d779feddeaf2f669e906f": {
+            "id": "47d1a845634b8d90f92d779feddeaf2f669e906f",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Manuelle Karte",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "c1103f29c45ea2420fc6806dd7c3994be824a7ef": {
+            "id": "c1103f29c45ea2420fc6806dd7c3994be824a7ef",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Paypal",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "b3e884a4629394349c82407c929160f437340448": {
+            "id": "b3e884a4629394349c82407c929160f437340448",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Union Pay",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "75f76c2124788aa5cdf347c1ec0a4d6235574105": {
+            "id": "75f76c2124788aa5cdf347c1ec0a4d6235574105",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Satispay",
+            "accountId": "a874d1b5e043a779b1aa2cdef4f84a3efb36636e"
+        },
+        "fcdf0dd61576fa278c93aa52f1db8b85a18b7467": {
+            "id": "fcdf0dd61576fa278c93aa52f1db8b85a18b7467",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Rechnung",
+            "accountId": "0fd3379e6f84e46f9e25497c4fba867ad8c02864"
+        },
+        "66220e44ce986fe325a5104a921406b9a890a5b0": {
+            "id": "66220e44ce986fe325a5104a921406b9a890a5b0",
+            "type": "TRANSACTION_TYPE/IN",
+            "name": "Lohn",
+            "accountId": "5de913bcf4c086510d30fda5ea229a0f16baab72"
+        },
+        "d3fdaa58d9f02d967f56ae90239ace0079fcb635": {
+            "id": "d3fdaa58d9f02d967f56ae90239ace0079fcb635",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Privatentnahme",
+            "accountId": "58af949c500af03165e235fcd2edb84c2618348e"
+        },
+        "b00e5bc59b7238e4f22a20577ce3562ef9059c7b": {
+            "id": "b00e5bc59b7238e4f22a20577ce3562ef9059c7b",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Kleingeldabschöpfung",
+            "accountId": "add5287b8556383929b839cf7edae1517ef8c2ac"
+        },
+        "fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": {
+            "id": "fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Abschöpfung",
+            "accountId": "add5287b8556383929b839cf7edae1517ef8c2ac"
+        },
+        "c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8": {
+            "id": "c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8",
+            "type": "TRANSACTION_TYPE/OUT",
+            "name": "Tagesgeldabschöpfung",
+            "accountId": "add5287b8556383929b839cf7edae1517ef8c2ac"
+        },
+        "1eebb5004baf435ef8ba4b2edb9eaf591a6bf7f8": {
+            "id": "d64e2267dd450ef2992837d14096eb397e440b78",
+            "name": "Auto Difference In",
+            "type": "TRANSACTION_TYPE/PROTECTED/IN",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "39682f52dde6eb39a53578ec75c6e3811e4bcd1a": {
+            "id": "942b5e2a2530f80b6692472e4cf4acb8d5616c7c",
+            "name": "Auto Difference Out",
+            "type": "TRANSACTION_TYPE/PROTECTED/OUT",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "eeb4c2d7a37ea242bc5ed80cb5373770e1b77850": {
+            "id": "d64e2267dd450ef2992837d14096eb397e440b78",
+            "name": "Auto Difference In",
+            "type": "TRANSACTION_TYPE/PROTECTED/IN",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "2cd798fdfd07cb8b9d5acd9c41b249ea49fadcac": {
+            "id": "942b5e2a2530f80b6692472e4cf4acb8d5616c7c",
+            "name": "Auto Difference Out",
+            "type": "TRANSACTION_TYPE/PROTECTED/OUT",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "27b39faee9ea23257f3aeb7082d6f251cf095af7": {
+            "id": "d64e2267dd450ef2992837d14096eb397e440b78",
+            "name": "Auto Difference In",
+            "type": "TRANSACTION_TYPE/PROTECTED/IN",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "591b7037059c57098beeda1cc7b838ffcac70e3b": {
+            "id": "942b5e2a2530f80b6692472e4cf4acb8d5616c7c",
+            "name": "Auto Difference Out",
+            "type": "TRANSACTION_TYPE/PROTECTED/OUT",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "47077970e007e313e9e0f6dd1977770fc1a77099": {
+            "id": "d64e2267dd450ef2992837d14096eb397e440b78",
+            "name": "Auto Difference In",
+            "type": "TRANSACTION_TYPE/PROTECTED/IN",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        },
+        "8e7b2ab5a759ecf3a0609e3c31a3efc09d172929": {
+            "id": "942b5e2a2530f80b6692472e4cf4acb8d5616c7c",
+            "name": "Auto Difference Out",
+            "type": "TRANSACTION_TYPE/PROTECTED/OUT",
+            "accountId": "5edc40f5883c0982aa8439b78e4221488315e61f"
+        }
+    },
+    "bookEntries": {}
+}

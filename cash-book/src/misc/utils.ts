@@ -26,6 +26,10 @@ export const setInLocalStorage = (key: string, value: string) => {
 	window.localStorage.setItem(key, value);
 };
 
+export const removeFromLocalStorage = (key: string) => {
+	window.localStorage.removeItem(key);
+};
+
 export const loadFromLocalStorage = (key: string) => {
 	return window.localStorage.getItem(key) || undefined;
 };

@@ -25,3 +25,19 @@ describe(ApplicationActionType.SETTINGS_SET, () => {
 		});
 	});
 });
+
+describe(ApplicationActionType.SETTINGS_RESET, () => {
+	test('when called, then returns expected', () => {
+		expectation({
+			state: {
+				save: SettingsSaveType.MANUAL,
+			},
+			action: {
+				type: ApplicationActionType.SETTINGS_RESET,
+			},
+			expectedState: {
+				save: SettingsSaveType.AUTO,
+			},
+		});
+	});
+});

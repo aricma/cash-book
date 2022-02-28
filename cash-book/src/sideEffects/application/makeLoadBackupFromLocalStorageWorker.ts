@@ -32,6 +32,7 @@ export const makeLoadBackupFromLocalStorageWorker = (request: Request) => {
 						type: ApplicationActionType.APPLICATION_ERROR_SET,
 						error: Error(INVALID_BACKUP_ERROR),
 					});
+					continue;
 				}
 
 				yield SE.put<AccountsSet>({

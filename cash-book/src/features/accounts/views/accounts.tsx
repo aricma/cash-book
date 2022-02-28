@@ -8,7 +8,10 @@ export const Accounts: React.FC<{ accounts: Array<AccountProps> }> = (props) => 
 		{props.accounts.map((accountProps, index) => {
 			return (
 				<React.Fragment key={index}>
-					<div className="bg-blue-200 dark:bg-blue-900/50 text-blue-500 dark:text-blue-300 rounded-md shadow-md shadow-blue-600/30 dark:shadow-gray-900 py-2 pl-4 pr-2">
+					<div
+						data-test-id="account"
+						className="bg-blue-200 dark:bg-blue-900/50 text-blue-500 dark:text-blue-300 rounded-md shadow-md shadow-blue-600/30 dark:shadow-gray-900 py-2 pl-4 pr-2"
+					>
 						<div className="grid grid-cols-[max-content_1fr_max-content] grid-rows-[max-content_max-content] gap-y-2 gap-x-4">
 							<div className="flex items-end justify-start">
 								<p className="place-self-left text-lg font-medium">{accountProps.title}</p>

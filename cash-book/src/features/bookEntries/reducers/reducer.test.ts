@@ -3,6 +3,7 @@ import {
 	BookEntriesSet,
 	BookEntriesCreateSetTemplate,
 	BookEntriesSetTemplate,
+	BookEntriesReset,
 } from '../../../applicationState/actions';
 import { BookEntriesState, BookEntry, initialState } from '../state';
 import { makeReducerExpectation, makeDefaultReducerTest } from '../../../misc/tests';
@@ -69,6 +70,40 @@ describe(ApplicationActionType.BOOK_ENTRIES_SET, () => {
 						}),
 					},
 				},
+			},
+		});
+	});
+});
+
+describe(ApplicationActionType.BOOK_ENTRIES_RESET, () => {
+	test('when called, then resets state', () => {
+		expectation<BookEntriesReset>({
+			state: {
+				...baseState,
+				templates: {
+					'1': {
+						'2000-1-1': makeBookEntry({
+							templateId: '1',
+							date: '2000-1-1',
+						}),
+						'2000-1-2': makeBookEntry({
+							templateId: '1',
+							date: '2000-1-2',
+						}),
+					},
+					'2': {
+						'2000-1-3': makeBookEntry({
+							templateId: '2',
+							date: '2000-1-3',
+						}),
+					},
+				},
+			},
+			action: {
+				type: ApplicationActionType.BOOK_ENTRIES_RESET,
+			},
+			expectedState: {
+				...initialState,
 			},
 		});
 	});

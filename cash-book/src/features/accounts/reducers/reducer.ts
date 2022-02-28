@@ -1,5 +1,5 @@
 import { Reducer } from '../../../models/reducers';
-import { AccountsState, AccountType, Account } from '../state';
+import { AccountsState, AccountType, Account, initialState } from '../state';
 import { ApplicationActionType, AccountsAction } from '../../../applicationState/actions';
 import { compactObject } from '../../../models/utils';
 import { validateCreateAccount } from '../toProps/validation';
@@ -14,6 +14,10 @@ export const makeReducer =
 					accounts: {
 						...action.accounts,
 					},
+				};
+			case ApplicationActionType.ACCOUNTS_RESET:
+				return {
+					...initialState,
 				};
 			case ApplicationActionType.ACCOUNTS_EDIT: {
 				const account = state.accounts[action.accountId];

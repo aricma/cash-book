@@ -1,21 +1,35 @@
 import { test, expect } from '@playwright/test';
-import { upload, select, toAbsoluteFilePath, sleep } from '../utils';
+import { select, sleep, uploadBackup } from '../utils';
 import { PAGE_URL } from '../environment';
 
 test.describe('Backup', () => {
-	test('upload backup', async ({ page }) => {
-		await page.goto(PAGE_URL + '/settings');
-		page.on('dialog', (dialog) => dialog.accept());
-		await upload(page)(['./fixtures/backup-v3_1.json'])(page.locator('button >> "Load Backup"'));
+	test('upload and download backup', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-v3_1.json');
 
 		await page.goto(PAGE_URL + '/book-entries');
 
 		await select(page)('Set Template', 'Nikolassee');
 		await expect(page.locator('#difference-account-aggregation >> "-30.73"')).toBeVisible();
 	});
-	test.fixme('download backup', () => {});
-	test.fixme('download backup reset and upload', () => {});
-	test.fixme('upload change and download', () => {});
 
-	test.fixme('upload invalid backup', () => {});
+	test('download backup reset and upload', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-v3_1.json');
+
+		await page.goto(PAGE_URL);
+		await sleep(2000);
+		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create');
+
+		await page.goto(PAGE_URL + '/settings');
+		await page.locator('button >> "Reset"').click();
+
+		await expect(page).toHaveURL(PAGE_URL + '/accounts');
+	});
+
+	test('upload invalid backup', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-invalid-v3_1.json');
+		await expect(page.locator('"Failed To Load Backup"')).toBeVisible();
+		await expect(page.locator('button >> "Reset"')).toBeVisible();
+		await expect(page.locator('button >> "Download Backup"')).toBeVisible();
+		await expect(page.locator('button >> "Reload"')).toBeVisible();
+	});
 });

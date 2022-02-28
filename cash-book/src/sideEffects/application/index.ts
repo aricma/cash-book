@@ -5,13 +5,14 @@ import { makeResetWorker } from './makeResetWorker';
 import { makeSaveBackupToLocalStorage } from './makeSaveBackupToLocalStorage';
 import { makeLoadBackupFromLocalStorageWorker } from './makeLoadBackupFromLocalStorageWorker';
 import { makeExports } from './makeExports';
-import { exportToFile, loadFromLocalStorage, setInLocalStorage } from '../../misc/utils';
+import { exportToFile, loadFromLocalStorage, setInLocalStorage, removeFromLocalStorage } from '../../misc/utils';
 import { channel } from 'redux-saga';
 import { toExportFileConfig } from './toExportFileConfig';
 import { backupValidation } from '../../backupValidation';
 import { migrateBackup } from '../../backupMigrations';
 import { makeUniqueID } from '../../misc/makeUniqueID';
 import { toBackup } from '../../misc/toBackup';
+import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 
 const exportFilesQueue = channel<ExportFileConfig>();
 
@@ -37,8 +38,12 @@ export function* applicationBroker() {
 		)
 	);
 	yield SE.spawn(
-		makeResetWorker(setInLocalStorage, () =>
-			window.confirm('Do you really want to reset your app? Everything will be deleted! This action can not be undone!')
+		makeResetWorker(
+			() => removeFromLocalStorage(LOCAL_STORAGE_KEY),
+			() =>
+				window.confirm(
+					'Do you really want to reset your app? Everything will be deleted! This action can not be undone!'
+				)
 		)
 	);
 	yield SE.spawn(makeSaveBackupToLocalStorage(setInLocalStorage, toBackup));

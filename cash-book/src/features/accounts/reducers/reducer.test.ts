@@ -61,6 +61,34 @@ describe(ApplicationActionType.ACCOUNTS_SET, () => {
 	});
 });
 
+describe(ApplicationActionType.ACCOUNTS_RESET, () => {
+	test('when called, then returns expected state', () => {
+		reducerExpectation({
+			state: {
+				create: {
+					type: AccountType.DEFAULT,
+					name: 'ANY',
+					number: 'ANY',
+				},
+				accounts: {
+					B: {
+						id: 'B',
+						type: AccountType.DEFAULT,
+						name: 'Acc B',
+						number: '1010',
+					},
+				},
+			},
+			action: {
+				type: ApplicationActionType.ACCOUNTS_RESET,
+			},
+			expectedState: {
+				...initialState,
+			},
+		});
+	});
+});
+
 describe(ApplicationActionType.ACCOUNTS_EDIT, () => {
 	test('given action with invalid account Id, when called, then returns expected state', () => {
 		reducerExpectation<AccountsEdit>({

@@ -80,13 +80,13 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			.run({ silenceTimeout: true });
 	});
 
-	test('given validation fails, when called, then sets error in state', async () => {
+	test('given validation returns map, when called, then sets error in state', async () => {
 		getFromLocalStorage.mockReturnValue('{}');
 		parseJSON.mockReturnValue({});
 		migrateBackup.mockReturnValue({});
-		backupValidation.mockImplementation(() => {
-			throw Error('ANY');
-		});
+		backupValidation.mockImplementation(() => ({
+			accounts: 'MISSING ACCOUNT!',
+		}));
 		await expectSaga(loadBackupFromLocalStorageWorker)
 			.dispatch({
 				type: ApplicationActionType.APPLICATION_LOAD,
@@ -96,7 +96,7 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: Error(INVALID_BACKUP_ERROR),
 			})
 			.run({ silenceTimeout: true });
 	});

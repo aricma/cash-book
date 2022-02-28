@@ -19,7 +19,7 @@ export const CreateTransactionView: React.FC<CreateTransactionViewProps> = (prop
 						<span className="sr-only">{props.type.title}</span>
 					</button>
 				</div>
-				<div className="flex-grow">
+				<div data-test-id="create-transaction-select-other-account" className="flex-grow">
 					<Select {...props.account} />
 					{props.account.validation && <span className="ml-2 text-sm text-danger">{props.account.validation}</span>}
 				</div>

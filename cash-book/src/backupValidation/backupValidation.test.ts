@@ -253,7 +253,7 @@ describe(backupValidation.name, () => {
 	});
 
 	test('given a backup with missing account, when called, then returns error', () => {
-		const validBackup = {
+		const invalidBackup = {
 			__version__: latestVersion,
 			accounts: {
 				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
@@ -370,7 +370,7 @@ describe(backupValidation.name, () => {
 			accounts: MISSING_ACCOUNT_ID_MESSAGE,
 			transactions: null,
 		};
-		expect(backupValidation(validBackup)).toEqual(expected);
+		expect(backupValidation(invalidBackup)).toEqual(expected);
 	});
 
 	test('given a valid v3 with missing transaction, when called, then returns error', () => {

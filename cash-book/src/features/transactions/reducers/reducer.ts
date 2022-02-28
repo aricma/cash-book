@@ -1,5 +1,5 @@
 import { Reducer } from '../../../models/reducers';
-import { TransactionsState, Transaction, TransactionType, Template, CreateTransaction } from '../state';
+import { TransactionsState, Transaction, TransactionType, Template, CreateTransaction, initialState } from '../state';
 import { TransactionsAction, ApplicationActionType } from '../../../applicationState/actions';
 import { compactObject, move } from '../../../models/utils';
 
@@ -9,6 +9,10 @@ export const makeReducer =
 		switch (action.type) {
 			case ApplicationActionType.TRANSACTIONS_SET:
 				return action.state;
+			case ApplicationActionType.TRANSACTIONS_RESET:
+				return {
+					...initialState,
+				};
 			case ApplicationActionType.TRANSACTIONS_EDIT: {
 				const template = state.templates[action.templateId];
 				if (template.id === state.create.id) return state;

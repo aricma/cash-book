@@ -1,46 +1,60 @@
-import { makeResetWorker, initialAppState } from './makeResetWorker';
+import { makeResetWorker } from './makeResetWorker';
 import { expectSaga } from 'redux-saga-test-plan';
 import { ApplicationActionType } from '../../applicationState/actions';
-import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 
-const setLocalStorage = jest.fn();
+const clearLocalStorage = jest.fn();
 const getUserConsent = jest.fn();
 
 beforeEach(() => {
-	setLocalStorage.mockReset();
+	clearLocalStorage.mockReset();
 	getUserConsent.mockReset();
 });
 
 describe(makeResetWorker.name, () => {
-	test('given user consent, when called, then sets local storage with initial app state', async () => {
+	test('given user consent, when called, then resets local storage', async () => {
 		getUserConsent.mockReturnValue(true);
-		await expectSaga(makeResetWorker(setLocalStorage, getUserConsent))
+		await expectSaga(makeResetWorker(clearLocalStorage, getUserConsent))
 			.dispatch({
 				type: ApplicationActionType.APPLICATION_RESET,
 			})
 			.put({
-				type: ApplicationActionType.APPLICATION_LOAD,
+				type: ApplicationActionType.APPLICATION_DEFAULT_SET,
+			})
+			.put({
+				type: ApplicationActionType.SETTINGS_RESET,
+			})
+			.put({
+				type: ApplicationActionType.ACCOUNTS_RESET,
+			})
+			.put({
+				type: ApplicationActionType.TRANSACTIONS_RESET,
+			})
+			.put({
+				type: ApplicationActionType.BOOK_ENTRIES_RESET,
+			})
+			.put({
+				type: ApplicationActionType.ROUTER_FALLBACK,
 			})
 			.run({ silenceTimeout: true });
-		expect(setLocalStorage).toBeCalledWith(LOCAL_STORAGE_KEY, JSON.stringify(initialAppState));
+		expect(clearLocalStorage).toBeCalled();
 	});
 
 	test('given no consent by user, when called, then continues', async () => {
 		getUserConsent.mockReturnValue(false);
-		await expectSaga(makeResetWorker(setLocalStorage, getUserConsent))
+		await expectSaga(makeResetWorker(clearLocalStorage, getUserConsent))
 			.dispatch({
 				type: ApplicationActionType.APPLICATION_RESET,
 			})
 			.run({ silenceTimeout: true });
-		expect(setLocalStorage).not.toBeCalled();
+		expect(clearLocalStorage).not.toBeCalled();
 	});
 
 	test('given some error, when called, then sets application error in state', async () => {
 		getUserConsent.mockReturnValue(true);
-		setLocalStorage.mockImplementation(() => {
+		clearLocalStorage.mockImplementation(() => {
 			throw Error('ANY');
 		});
-		await expectSaga(makeResetWorker(setLocalStorage, getUserConsent))
+		await expectSaga(makeResetWorker(clearLocalStorage, getUserConsent))
 			.dispatch({
 				type: ApplicationActionType.APPLICATION_RESET,
 			})

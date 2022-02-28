@@ -1,5 +1,5 @@
 import { Reducer } from '../../../models/reducers';
-import { BookEntriesState } from '../state';
+import { BookEntriesState, initialState } from '../state';
 import { BookEntriesAction, ApplicationActionType } from '../../../applicationState/actions';
 import { compactObject } from '../../../models/utils';
 
@@ -13,6 +13,10 @@ export const makeReducer =
 					templates: {
 						...action.bookEntries,
 					},
+				};
+			case ApplicationActionType.BOOK_ENTRIES_RESET:
+				return {
+					...initialState,
 				};
 			case ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE:
 			case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE:

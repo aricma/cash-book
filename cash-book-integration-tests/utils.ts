@@ -1,5 +1,7 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { PAGE_URL } from './environment';
+import * as fs from 'fs';
+import * as Path from 'path';
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const makeCreateAccount = (page: Page) => async (type: string, name: string, number: string) => {
@@ -85,6 +87,12 @@ export const makeBookEntry =
 		await page.locator('button >> "Submit"').click();
 	};
 
+export const select = (page: Page) => async (select: string, option: string) => {
+	await page.locator(`button >> "${select}"`).click();
+	await page.locator(`"${option}"`).click();
+	await page.locator(`button >> "${option}"`).isVisible();
+};
+
 const fillInput = (page: Page) => async (label: string, value: string) => {
 	const input = await makeFindInput(page)(label);
 	await input.fill(value);
@@ -103,6 +111,16 @@ export const download =
 		const [download] = await Promise.all([page.waitForEvent('download'), locator.click()]);
 		return await download.path();
 	};
+
+export const upload = (page: Page) => (files: Array<string>) => async (locator: Locator) => {
+	const absoluteFilePaths = files.map(toAbsoluteFilePath);
+	await Promise.all([
+		// https://github.com/microsoft/playwright/pull/5467/files
+		page.waitForEvent('filechooser').then((fileChooser) => fileChooser.setFiles(absoluteFilePaths)),
+		locator.click(),
+	]);
+};
+
 export const asyncForEach =
 	<T>(fn: (x: T, index: number) => Promise<void>) =>
 	async (list: Array<T>): Promise<void> => {
@@ -110,3 +128,7 @@ export const asyncForEach =
 			await fn(list[i], i);
 		}
 	};
+
+export const readFile = (path: string) => fs.readFileSync(toAbsoluteFilePath(path), { encoding: 'utf8' });
+
+export const toAbsoluteFilePath = (path: string): string => (Path.isAbsolute(path) ? path : Path.join(__dirname, path));

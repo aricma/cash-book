@@ -76,4 +76,5 @@ export const validateDatevRows = (rows: Array<Array<string>>): string | null => 
 	return result === 0 ? null : INVALID_ROW_RESULT_MESSAGE(String(result / 100));
 };
 
-export const INVALID_ROW_RESULT_MESSAGE = (result: string) => `Datev Export: The entries add up to: ${result}! The result should be 0!`;
+export const INVALID_ROW_RESULT_MESSAGE = (result: string) =>
+	`Datev Export: The entries add up to: ${result}! The result should be 0!`;

@@ -1,7 +1,6 @@
-import * as fs from 'fs';
 import { test, expect } from '@playwright/test';
 import { PAGE_URL } from '../environment';
-import { asyncForEach, download, makeBookEntry, makeCreateTemplate, makeCreateAccount } from '../utils';
+import { asyncForEach, download, makeBookEntry, makeCreateTemplate, makeCreateAccount, readFile } from '../utils';
 
 test.beforeEach(async ({ page }) => {
 	await page.goto(PAGE_URL);
@@ -9,8 +8,6 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Setup', () => {
 	test('golden path', async ({ page }) => {
-		const EXPECTED_DATEV_EXPORT_PATH = process.env.PWD + '/fixtures/golden-path-expected-datev-export.csv';
-
 		await asyncForEach((account: [string, string, string]) => makeCreateAccount(page)(...account))([
 			['Cashier', 'Cashier 001', '1000'],
 			['Difference', 'Difference', '3400'],
@@ -34,8 +31,8 @@ test.describe('Setup', () => {
 		await page.locator('button >> "Entries"').click();
 		await page.waitForURL(PAGE_URL + '/book-entries');
 		const path = await download(page)(page.locator('button >> "Export"').nth(0));
-		const fileContent = fs.readFileSync(path, { encoding: 'utf8' });
-		const expectedFileContent = fs.readFileSync(EXPECTED_DATEV_EXPORT_PATH, { encoding: 'utf8' });
+		const fileContent = readFile(path);
+		const expectedFileContent = readFile('./fixtures/golden-path-expected-datev-export.csv');
 		expect(fileContent).toEqual(expectedFileContent);
 	});
 

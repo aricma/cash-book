@@ -1,6 +1,6 @@
 import * as SE from 'redux-saga/effects';
 import { RouterGoTo, ApplicationActionType, RouterFallback } from '../../applicationState/actions';
-import { PartialApplicationState, partialApplicationState } from '../fixtures';
+import { partialApplicationState } from '../fixtures';
 import { makeGoToWorker, makeFallbackWorker } from './router';
 import { selectAppState } from '../../applicationState';
 import { expectSaga } from 'redux-saga-test-plan';
@@ -35,7 +35,7 @@ describe(makeGoToWorker.name, () => {
 
 describe(makeFallbackWorker.name, () => {
 	test('given filled state, when called, then calls goTo with expected path', async () => {
-		const filledState: PartialApplicationState = {
+		const filledState = {
 			...partialApplicationState,
 		};
 		const goTo = jest.fn();
@@ -51,7 +51,7 @@ describe(makeFallbackWorker.name, () => {
 	});
 
 	test('given state without transactions, when called, then calls goTo with expected path', async () => {
-		const stateWithoutTransactions: PartialApplicationState = {
+		const stateWithoutTransactions = {
 			...partialApplicationState,
 			transactions: {
 				...partialApplicationState.transactions,
@@ -71,7 +71,7 @@ describe(makeFallbackWorker.name, () => {
 	});
 
 	test('given state without accounts, when called, then calls goTo with expected path', async () => {
-		const stateWithoutAccounts: PartialApplicationState = {
+		const stateWithoutAccounts = {
 			...partialApplicationState,
 			accounts: {
 				...partialApplicationState.accounts,

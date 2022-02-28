@@ -10,7 +10,7 @@ import {
 } from '../../misc/utils';
 import { compactObject, pad } from '../../models/utils';
 import { latestVersion } from '../../backupMigrations';
-import {headline, bookEntryToDatevRows, validateDatevRows} from './datev';
+import { headline, bookEntryToDatevRows, validateDatevRows } from './datev';
 import { DateWithoutTime } from '../../models/domain/date';
 
 interface Request {
@@ -64,7 +64,7 @@ export const toExportFileConfig: ToExportFileConfig = (req) => {
 					});
 					const rowsValidation = validateDatevRows(rows);
 					const rowsAreNotValid = rowsValidation !== null;
-					if (rowsAreNotValid) throw Error(rowsValidation)
+					if (rowsAreNotValid) throw Error(rowsValidation);
 					const cashierName = toLowerCaseWithDashes(req.appState.transactions.templates[selectedTemplateId].name);
 					const date = toDateString(req.action.payload.date);
 					const fileName = `book-entry-${cashierName}-${date}-${req.unique}.csv`;
@@ -88,7 +88,7 @@ export const toExportFileConfig: ToExportFileConfig = (req) => {
 					}, []);
 					const rowsValidation = validateDatevRows(rows);
 					const rowsAreNotValid = rowsValidation !== null;
-					if (rowsAreNotValid) throw Error(rowsValidation)
+					if (rowsAreNotValid) throw Error(rowsValidation);
 					const cashierName = toLowerCaseWithDashes(req.appState.transactions.templates[selectedTemplateId].name);
 					const year = date.getFullYear();
 					const month = pad(date.getMonth() + 1, 2);

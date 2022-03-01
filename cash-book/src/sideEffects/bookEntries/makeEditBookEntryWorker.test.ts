@@ -5,9 +5,9 @@ import { GlobalStateType } from '../../features/application/state';
 import { SettingsSaveType } from '../../features/settings/state';
 import { AccountType } from '../../features/accounts/state';
 import { TransactionType } from '../../features/transactions/state';
+import {CreateBookEntry} from '../../features/bookEntries/state';
 import { makeEditBookEntryWorker, editBookEntryReducer } from './makeEditBookEntryWorker';
 import { expectSaga } from 'redux-saga-test-plan';
-import { BookEntriesState } from '../../features/bookEntries/state';
 
 const state: ApplicationState = {
 	global: {
@@ -119,26 +119,17 @@ const state: ApplicationState = {
 };
 
 describe(makeEditBookEntryWorker.name, () => {
-	test('when called, then sets state', async () => {
-		const expectedState: BookEntriesState = {
-			...state.bookEntries,
-			create: {
-				...state.bookEntries.create,
-				templates: {
-					...state.bookEntries.create.templates,
-					T1: {
-						date: '2000-1-1',
-						templateId: 'T1',
-						cash: {
-							start: '100.00',
-							end: '100.00',
-						},
-						transactions: {
-							TA: '100.00',
-							TB: '120.00',
-						},
-					},
-				},
+	test('when called, then calls put with expected action', async () => {
+		const expectedState: CreateBookEntry = {
+			date: '2000-1-1',
+			templateId: 'T1',
+			cash: {
+				start: '100.00',
+				end: '100.00',
+			},
+			transactions: {
+				TA: '100.00',
+				TB: '120.00',
 			},
 		};
 		await expectSaga(makeEditBookEntryWorker(editBookEntryReducer))
@@ -149,7 +140,7 @@ describe(makeEditBookEntryWorker.name, () => {
 				date: '2000-1-1',
 			})
 			.put({
-				type: ApplicationActionType.BOOK_ENTRIES_SET,
+				type: ApplicationActionType.BOOK_ENTRIES_EDIT_SET,
 				state: expectedState,
 			})
 			.run({ silenceTimeout: true });

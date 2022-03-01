@@ -18,6 +18,17 @@ export const makeReducer =
 				return {
 					...initialState,
 				};
+			case ApplicationActionType.BOOK_ENTRIES_EDIT_SET:
+				return {
+					...state,
+					create: {
+						...state.create,
+						templates: {
+							...state.create.templates,
+							[action.state.templateId]: action.state,
+						}
+					}
+				}
 			case ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE:
 			case ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE:
 				const config = state.create.templates[action.templateId];

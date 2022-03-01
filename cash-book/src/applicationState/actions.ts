@@ -1,7 +1,7 @@
 import { Action } from '../models/reducers';
 import { AccountType, Account } from '../features/accounts/state';
 import { TransactionType, TransactionsState } from '../features/transactions/state';
-import { Templates, Create } from '../features/bookEntries/state';
+import {Templates, CreateBookEntry} from '../features/bookEntries/state';
 import { SettingsState } from '../features/settings/state';
 
 export enum ApplicationActionType {
@@ -258,7 +258,7 @@ export type BookEntriesAction =
 export type BookEntriesSet = Action<ApplicationActionType.BOOK_ENTRIES_SET, { bookEntries: Templates }>;
 export type BookEntriesReset = Action<ApplicationActionType.BOOK_ENTRIES_RESET>;
 export type BookEntriesEdit = Action<ApplicationActionType.BOOK_ENTRIES_EDIT, { templateId: string; date: string }>;
-export type BookEntriesEditSet = Action<ApplicationActionType.BOOK_ENTRIES_EDIT_SET, { state: Create }>;
+export type BookEntriesEditSet = Action<ApplicationActionType.BOOK_ENTRIES_EDIT_SET, { state: CreateBookEntry }>;
 export type BookEntriesSetTemplate = Action<ApplicationActionType.BOOK_ENTRIES_SET_TEMPLATE, { templateId: string }>;
 export type BookEntriesCreateSetTemplate = Action<
 	ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE,

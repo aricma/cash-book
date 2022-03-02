@@ -8,7 +8,8 @@ import {
 	makeCreateAccount,
 	readFile,
 	uploadBackup,
-	sleep, expectFilesToBeEqual,
+	sleep,
+	expectFilesToBeEqual,
 } from '../utils';
 
 test.describe('Setup', () => {
@@ -33,7 +34,7 @@ test.describe('Setup', () => {
 
 		await asyncForEach(makeCreateBookEntry(page))([
 			{
-				date: ["2022", "Februar", '1'],
+				date: ['2022', 'Februar', '1'],
 				start: '100',
 				transactions: [
 					['In', '100'],
@@ -43,7 +44,7 @@ test.describe('Setup', () => {
 				end: '110',
 			},
 			{
-				date: ["2022", "Februar", '2'],
+				date: ['2022', 'Februar', '2'],
 				start: '110',
 				transactions: [
 					['In', '50'],
@@ -53,7 +54,7 @@ test.describe('Setup', () => {
 				end: '110',
 			},
 			{
-				date: ["2022", "Februar", '3'],
+				date: ['2022', 'Februar', '3'],
 				start: '110',
 				transactions: [
 					['In', '60'],

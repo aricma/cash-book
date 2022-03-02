@@ -1,10 +1,15 @@
 import { backupValidation } from './index';
 import { ValidationMap } from './makeBackupValidation';
-import { MISSING_TRANSACTION_ID_MESSAGE, MISSING_ACCOUNT_ID_MESSAGE, WRONG_VERSION_MESSAGE, TRANSACTION_FORMAT_MESSAGE, CASH_VALUE_FORMAT_MESSAGE } from './messages';
+import {
+	MISSING_TRANSACTION_ID_MESSAGE,
+	MISSING_ACCOUNT_ID_MESSAGE,
+	WRONG_VERSION_MESSAGE,
+	TRANSACTION_FORMAT_MESSAGE,
+	CASH_VALUE_FORMAT_MESSAGE,
+} from './messages';
 import { latestVersion } from '../backupMigrations';
 
 describe(backupValidation.name, () => {
-
 	test('given a valid backup, when called, then returns null', () => {
 		const validBackup = {
 			__version__: latestVersion,
@@ -253,7 +258,7 @@ describe(backupValidation.name, () => {
 		expect(backupValidation(validBackup)).toEqual(expected);
 	});
 
-	describe("transactions", () => {
+	describe('transactions', () => {
 		test('given a backup with missing account, when called, then returns error', () => {
 			const invalidBackup = {
 				__version__: latestVersion,
@@ -376,7 +381,7 @@ describe(backupValidation.name, () => {
 		});
 	});
 
-	describe("book entries", () => {
+	describe('book entries', () => {
 		test('given a backup with missing transaction, when called, then returns error', () => {
 			const validBackup = {
 				__version__: latestVersion,

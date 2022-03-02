@@ -85,10 +85,10 @@ export const makeCreateBookEntry = (page: Page) => async (request: CreateBookEnt
 
 	await makeSetDatePicker(page)(...request.date);
 
-	await fillInput(page)('Cash Station: Start Value', request.start || "0");
+	await fillInput(page)('Cash Station: Start Value', request.start || '0');
 	await asyncForEach<[string, string | null]>(async ([label, value]) => {
 		if (value === null) return;
-	 	await fillInput(page)(label, value);
+		await fillInput(page)(label, value);
 	})(request.transactions);
 	await fillInput(page)('Cash Station: End Value', request.end);
 
@@ -104,12 +104,16 @@ export const makeCreateBookEntry = (page: Page) => async (request: CreateBookEnt
 export const makeSetDatePicker = (page: Page) => async (year: string, month: string, day: string) => {
 	await expect(page.locator('[data-test-id="create-book-entry-date-picker"]')).toBeVisible();
 	while (true) {
-		const hasCorrectYear = await page.locator(`[data-test-id="create-book-entry-date-picker"] >> "${month}"`).isVisible();
+		const hasCorrectYear = await page
+			.locator(`[data-test-id="create-book-entry-date-picker"] >> "${month}"`)
+			.isVisible();
 		if (hasCorrectYear) break;
 		await page.locator('[data-test-id="create-book-entry-date-picker"] >> "Nächster Monat"').click();
 	}
 	while (true) {
-		const hasCorrectYear = await page.locator(`[data-test-id="create-book-entry-date-picker"] >> "${year}"`).isVisible();
+		const hasCorrectYear = await page
+			.locator(`[data-test-id="create-book-entry-date-picker"] >> "${year}"`)
+			.isVisible();
 		if (hasCorrectYear) break;
 		await page.locator('[data-test-id="create-book-entry-date-picker"] >> "Vorheriges Jahr"').click();
 	}
@@ -120,7 +124,7 @@ export const expectFilesToBeEqual = (pathToFile: string, pathToExpectedFile: str
 	const fileContent = readFile(pathToFile);
 	const expectedFileContent = readFile(pathToExpectedFile);
 	expect(fileContent).toEqual(expectedFileContent);
-}
+};
 
 export const select = (page: Page) => async (select: string, option: string) => {
 	await page.locator(`button >> "${select}"`).click();
@@ -128,12 +132,14 @@ export const select = (page: Page) => async (select: string, option: string) => 
 	await page.locator(`button >> "${option}"`).isVisible();
 };
 
-export const fillInput = (page: Page) => async (label: string, value: string): Promise<Locator> => {
-	const input = await makeFindInput(page)(label);
-	await input.fill(value);
-	await expect(input).toHaveValue(value);
-	return input;
-};
+export const fillInput =
+	(page: Page) =>
+	async (label: string, value: string): Promise<Locator> => {
+		const input = await makeFindInput(page)(label);
+		await input.fill(value);
+		await expect(input).toHaveValue(value);
+		return input;
+	};
 
 export const makeFindInput =
 	(page: Page) =>

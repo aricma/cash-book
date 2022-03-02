@@ -26,6 +26,4 @@ export const invalidRowsWrongResult = [
 	['EUR', '+5,36', '', '0201', 'Kassendifferenz', '', '', '3000', '', '', '', '', 'Auto Difference In'],
 ];
 
-export const invalidRowsWrongFormat = [
-	['EUR', '+2380;17', '', '0201', 'Ware', '', '', '9000', '', '', '', '', '7%'],
-];
+export const invalidRowsWrongFormat = [['EUR', '+2380;17', '', '0201', 'Ware', '', '', '9000', '', '', '', '', '7%']];

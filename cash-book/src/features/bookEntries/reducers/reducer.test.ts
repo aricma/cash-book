@@ -3,7 +3,8 @@ import {
 	BookEntriesSet,
 	BookEntriesCreateSetTemplate,
 	BookEntriesSetTemplate,
-	BookEntriesReset, BookEntriesEditSet,
+	BookEntriesReset,
+	BookEntriesEditSet,
 } from '../../../applicationState/actions';
 import { BookEntriesState, BookEntry, initialState } from '../state';
 import { makeReducerExpectation, makeDefaultReducerTest } from '../../../misc/tests';
@@ -42,7 +43,7 @@ describe(ApplicationActionType.BOOK_ENTRIES_SET, () => {
 					date: '2000-1-3',
 				}),
 			},
-		}
+		};
 		expectation<BookEntriesSet>({
 			state: {
 				...baseState,
@@ -98,7 +99,6 @@ describe(ApplicationActionType.BOOK_ENTRIES_RESET, () => {
 });
 
 describe(ApplicationActionType.BOOK_ENTRIES_EDIT_SET, () => {
-
 	test('when called, then returns expected state', () => {
 		const state = {
 			...baseState,
@@ -120,7 +120,7 @@ describe(ApplicationActionType.BOOK_ENTRIES_EDIT_SET, () => {
 					}),
 				},
 			},
-		}
+		};
 		expectation<BookEntriesEditSet>({
 			state: {
 				...state,
@@ -128,42 +128,41 @@ describe(ApplicationActionType.BOOK_ENTRIES_EDIT_SET, () => {
 			action: {
 				type: ApplicationActionType.BOOK_ENTRIES_EDIT_SET,
 				state: {
-					templateId: "A",
-					date: "2000-1-1",
+					templateId: 'A',
+					date: '2000-1-1',
 					cash: {
-						start: "100.00",
-						end: "100.00",
+						start: '100.00',
+						end: '100.00',
 					},
 					transactions: {
-						"1": "150.00",
-						"2": "100.00",
-						"3": "50.00",
-					}
-				}
+						'1': '150.00',
+						'2': '100.00',
+						'3': '50.00',
+					},
+				},
 			},
 			expectedState: {
 				...state,
 				create: {
 					templates: {
 						A: {
-							templateId: "A",
-							date: "2000-1-1",
+							templateId: 'A',
+							date: '2000-1-1',
 							cash: {
-								start: "100.00",
-								end: "100.00",
+								start: '100.00',
+								end: '100.00',
 							},
 							transactions: {
-								"1": "150.00",
-								"2": "100.00",
-								"3": "50.00",
-							}
-						}
-					}
-				}
+								'1': '150.00',
+								'2': '100.00',
+								'3': '50.00',
+							},
+						},
+					},
+				},
 			},
 		});
 	});
-
 });
 
 describe(ApplicationActionType.BOOK_ENTRIES_CREATE_SET_TEMPLATE, () => {

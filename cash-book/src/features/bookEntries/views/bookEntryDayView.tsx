@@ -3,7 +3,7 @@ import { BookEntryDayViewProps, DataBookEntryViewProps, ErrorBookEnrtyViewProps 
 import { IconType } from '../../../models/props';
 import { Disclosure } from '@headlessui/react';
 import { Icon } from '../../../components/icons';
-import {CurrencyInt} from '../../../models/currencyInt';
+import { CurrencyInt } from '../../../models/currencyInt';
 
 export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 	const cashInformation: Array<[title: string, value: string, icon?: IconType]> = [

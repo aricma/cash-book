@@ -14,7 +14,6 @@
  */
 
 export const CurrencyInt = {
-
 	fromString: (value: string): number | null => {
 		if (/^[+-]?\d+$/.test(value)) return Number(value + '00');
 		if (/^[+-]?\d+[,.]\d$/.test(value)) return Number(value.replaceAll(/[+,.]/g, '') + '0');
@@ -28,11 +27,10 @@ export const CurrencyInt = {
 	},
 
 	toString: (value: number, withSign: boolean = false) => {
-		const sign = withSign ? (value > 0 ? "+" : "-") : (value > 0 ? "" : "-");
+		const sign = withSign ? (value > 0 ? '+' : '-') : value > 0 ? '' : '-';
 		const parsedValue = sign + String(Math.abs(value) / 100);
 		if (/^[+-]?\d+$/.test(parsedValue)) return parsedValue + '.00';
 		if (/^[+-]?\d+[,.]\d$/.test(parsedValue)) return parsedValue + '0';
 		return parsedValue;
 	},
-
-}
+};

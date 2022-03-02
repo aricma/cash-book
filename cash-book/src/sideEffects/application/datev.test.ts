@@ -1,5 +1,5 @@
-import {validateDatevRows, bookEntryToDatevRows, INVALID_ROW_RESULT_MESSAGE} from './datev';
-import {validRows, invalidRowsWrongResult, invalidRowsWrongFormat} from './fixtures';
+import { validateDatevRows, bookEntryToDatevRows, INVALID_ROW_RESULT_MESSAGE } from './datev';
+import { validRows, invalidRowsWrongResult, invalidRowsWrongFormat } from './fixtures';
 import { TransactionType } from '../../features/transactions/state';
 import { AccountType } from '../../features/accounts/state';
 import { BookEntry } from '../../features/bookEntries/state';
@@ -136,7 +136,7 @@ describe(validateDatevRows.name, () => {
 	});
 
 	test('given invalid rows(wrong aggregated result), when called, then returns error message', () => {
-		expect(validateDatevRows(invalidRowsWrongResult)).toStrictEqual(INVALID_ROW_RESULT_MESSAGE("5.00"));
+		expect(validateDatevRows(invalidRowsWrongResult)).toStrictEqual(INVALID_ROW_RESULT_MESSAGE('5.00'));
 	});
 
 	test('given invalid rows(value format), when called, then returns error message', () => {

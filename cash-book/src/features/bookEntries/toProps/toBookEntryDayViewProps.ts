@@ -5,7 +5,7 @@ import { BookEntryDayViewProps, DataBookEntryViewProps, ErrorBookEnrtyViewProps 
 import { IconType } from '../../../models/props';
 import { ApplicationActionType, ExportPayloadType, ExportFileType } from '../../../applicationState/actions';
 import { DateWithoutTime } from '../../../models/dateWithoutTime';
-import {CurrencyInt} from '../../../models/currencyInt';
+import { CurrencyInt } from '../../../models/currencyInt';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../../variables/routes';
 import { dispatch } from '../../../applicationState/store';
 

@@ -5,7 +5,7 @@ import { GlobalStateType } from '../../features/application/state';
 import { SettingsSaveType } from '../../features/settings/state';
 import { AccountType } from '../../features/accounts/state';
 import { TransactionType } from '../../features/transactions/state';
-import {CreateBookEntry} from '../../features/bookEntries/state';
+import { CreateBookEntry } from '../../features/bookEntries/state';
 import { makeEditBookEntryWorker, editBookEntryReducer } from './makeEditBookEntryWorker';
 import { expectSaga } from 'redux-saga-test-plan';
 

@@ -1,7 +1,7 @@
 import { ApplicationState } from '../../applicationState';
 import { AccountType, Account } from '../accounts/state';
 import { TransactionType, Transaction } from '../transactions/state';
-import {CurrencyInt} from '../../models/currencyInt';
+import { CurrencyInt } from '../../models/currencyInt';
 
 export const transactionValue = (appState: ApplicationState): number => {
 	const selectedTemplateId = appState.bookEntries.selectedTemplateId;

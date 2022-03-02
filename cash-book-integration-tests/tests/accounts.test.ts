@@ -23,9 +23,11 @@ test.describe('Accounts', () => {
 
 		const nameInput = await page.locator('input:near(label:text("Name"), 5)');
 		await nameInput.fill('Cash Station 001');
+		await expect(nameInput).toHaveValue('Cash Station 001');
 
 		const numberInput = await page.locator('input:near(label:text("Number"), 5)');
 		await numberInput.fill('1000');
+		await expect(numberInput).toHaveValue('1000');
 
 		await page.locator('button >> "Submit"').click();
 

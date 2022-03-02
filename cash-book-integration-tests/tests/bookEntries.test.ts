@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { makeCreateBookEntry, uploadBackup, select, expectFilesToBeEqual, download, readFile } from '../utils';
+import {makeCreateBookEntry, uploadBackup, select, expectFilesToBeEqual, download, readFile, fillInput} from '../utils';
 import { PAGE_URL } from '../environment';
 
 test.describe('BookEntries', () => {
@@ -45,7 +45,23 @@ test.describe('BookEntries', () => {
 		await expect(page.locator('#difference-account-aggregation >> "10"')).toBeVisible();
 	});
 
-	test.fixme('edit bookEntry', () => {});
+	test('edit bookEntry', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-v3_1.json');
+
+		await page.goto(PAGE_URL + '/book-entries');
+		await select(page)('Set Template', 'Nikolassee');
+
+		await page.locator('button >> "Edit"').nth(0).click()
+
+		await fillInput(page)('Privat', '50');
+		await page.locator('#difference-account-message-id >> input[type="checkbox"]').click();
+
+		await page.locator('button >> "Submit"').click();
+
+		await page.locator('button >> "Yes"').click();
+
+		await expect(page.locator('#difference-account-aggregation >> "-80.73"')).toBeVisible();
+	});
 
 	test('export month', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-v3_1.json');

@@ -2,12 +2,9 @@ import { test, expect } from '@playwright/test';
 import { readFile, upload, download } from '../utils';
 import { PAGE_URL } from '../environment';
 
-test.beforeEach(async ({ page }) => {
-	await page.goto(PAGE_URL + '/settings');
-});
-
 test.describe('Migrations', () => {
 	test('v3 -> v3.1', async ({ page }) => {
+		await page.goto(PAGE_URL + '/settings');
 		page.on('dialog', (dialog) => dialog.accept());
 		await upload(page)(['./fixtures/backup-v3.json'])(page.locator('button >> "Load Backup"'));
 		const path = await download(page)(page.locator('button >> "Download Backup"'));

@@ -1,6 +1,6 @@
 import { ApplicationState } from '../../../applicationState';
 import { OverrideDateConfirmationModalViewProps } from '../props';
-import { DateWithoutTime } from '../../../models/domain/date';
+import { DateWithoutTime } from '../../../models/dateWithoutTime';
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { ROUTES_BOOK_ENTRIES } from '../../../variables/routes';
 import { dispatch } from '../../../applicationState/store';

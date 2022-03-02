@@ -2,7 +2,7 @@
 // https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
 import { BookEntries } from '../features/bookEntries/state';
 import { pad, getFirstDateOfTheMonth, getLastDateOfTheMonth } from '../models/utils';
-import { DateWithoutTime } from '../models/domain/date';
+import { DateWithoutTime } from '../models/dateWithoutTime';
 
 export const exportToFile = (content: string, name: string) => {
 	const link = document.createElement('a');

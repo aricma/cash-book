@@ -5,7 +5,7 @@ import { ApplicationActionType } from '../../../applicationState/actions';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../../variables/routes';
 import { compact, pad } from '../../../models/utils';
 import { TransactionWithValue, accountWithValue } from '../misc';
-import { DateWithoutTime } from '../../../models/domain/date';
+import { DateWithoutTime } from '../../../models/dateWithoutTime';
 import { toBookEntryDayViewProps } from './toBookEntryDayViewProps';
 import { toBookEntryMonthViewProps } from './toBookEntryMonthViewProps';
 import { dispatch } from '../../../applicationState/store';

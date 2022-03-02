@@ -42,7 +42,7 @@ const config: PlaywrightTestConfig = {
 	},
 
 	/* Configure projects for major browsers */
-	projects: [
+	projects: process.env.CI ? [
 		{
 			name: 'chromium',
 			use: {
@@ -91,6 +91,13 @@ const config: PlaywrightTestConfig = {
 		//     channel: 'chrome',
 		//   },
 		// },
+	] : [
+		{
+			name: 'firefox',
+			use: {
+				...devices['Desktop Firefox'],
+			},
+		}
 	],
 
 	/* Folder for test artifacts such as screenshots, videos, traces, etc. */

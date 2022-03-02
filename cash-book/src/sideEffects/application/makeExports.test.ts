@@ -159,7 +159,7 @@ describe(toExportFileConfig.name, () => {
 						unique: unique,
 						action: action,
 					});
-				expect(result).toThrow(Error(INVALID_ROW_RESULT_MESSAGE('10')));
+				expect(result).toThrow(Error(INVALID_ROW_RESULT_MESSAGE('10.00')));
 			});
 		});
 
@@ -215,7 +215,7 @@ describe(toExportFileConfig.name, () => {
 						unique: unique,
 						action: action,
 					});
-				expect(result).toThrow(Error(INVALID_ROW_RESULT_MESSAGE('10')));
+				expect(result).toThrow(Error(INVALID_ROW_RESULT_MESSAGE('10.00')));
 			});
 		});
 

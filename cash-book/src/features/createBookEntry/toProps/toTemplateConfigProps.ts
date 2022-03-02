@@ -2,7 +2,7 @@ import { ApplicationState, Dispatch } from '../../../applicationState';
 import { CreateBookEntryTemplateConfigProps, ToggleDiffViewType } from '../props';
 import { validateCreateBookEntry, validateIfDateExists } from './validation';
 import { transactionValue } from '../../bookEntries/misc';
-import { DateWithoutTime } from '../../../models/domain/date';
+import { DateWithoutTime } from '../../../models/dateWithoutTime';
 import { ApplicationActionType } from '../../../applicationState/actions';
 import { subtractDays } from '../../../models/utils';
 import { cashInformationParser, transactionParser } from '../../../misc/parser';

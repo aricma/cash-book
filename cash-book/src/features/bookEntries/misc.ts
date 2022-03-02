@@ -1,7 +1,7 @@
 import { ApplicationState } from '../../applicationState';
 import { AccountType, Account } from '../accounts/state';
 import { TransactionType, Transaction } from '../transactions/state';
-import { toCurrencyInt } from '../../models/currencyInt';
+import {CurrencyInt} from '../../models/currencyInt';
 
 export const transactionValue = (appState: ApplicationState): number => {
 	const selectedTemplateId = appState.bookEntries.selectedTemplateId;
@@ -29,7 +29,7 @@ export type TransactionsWithValues = Array<TransactionWithValue>;
 export const getTransactionValue = (transactionsWithValues: TransactionsWithValues): number => {
 	return (
 		transactionsWithValues.reduce((value, transaction) => {
-			const transactionValue = toCurrencyInt(transaction.value) || 0;
+			const transactionValue = CurrencyInt.fromStringOr(transaction.value, 0);
 			switch (transaction.type) {
 				case TransactionType.IN:
 				case TransactionType.SYS_IN:

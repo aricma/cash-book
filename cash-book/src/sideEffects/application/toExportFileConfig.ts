@@ -11,7 +11,7 @@ import {
 import { compactObject, pad } from '../../models/utils';
 import { latestVersion } from '../../backupMigrations';
 import { headline, bookEntryToDatevRows, validateDatevRows } from './datev';
-import { DateWithoutTime } from '../../models/domain/date';
+import { DateWithoutTime } from '../../models/dateWithoutTime';
 
 interface Request {
 	appState: ApplicationState;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { BookEntryDayViewProps, DataBookEntryViewProps, ErrorBookEnrtyViewProps } from '../props';
 import { IconType } from '../../../models/props';
-import { toNumber } from '../../../models/utils';
 import { Disclosure } from '@headlessui/react';
 import { Icon } from '../../../components/icons';
+import {CurrencyInt} from '../../../models/currencyInt';
 
 export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 	const cashInformation: Array<[title: string, value: string, icon?: IconType]> = [
@@ -14,7 +14,7 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 		[
 			'Diff',
 			props.cashInfo.diff,
-			(toNumber(props.cashInfo.diff) || 0) >= 0 ? IconType.TRENDING_UP_FILL : IconType.TRENDING_DOWN_FILL,
+			CurrencyInt.fromStringOr(props.cashInfo.diff, 0) >= 0 ? IconType.TRENDING_UP_FILL : IconType.TRENDING_DOWN_FILL,
 		],
 	];
 	return (

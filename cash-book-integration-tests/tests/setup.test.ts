@@ -3,12 +3,12 @@ import { PAGE_URL } from '../environment';
 import {
 	asyncForEach,
 	download,
-	makeBookEntry,
+	makeCreateBookEntry,
 	makeCreateTemplate,
 	makeCreateAccount,
 	readFile,
 	uploadBackup,
-	sleep,
+	sleep, expectFilesToBeEqual,
 } from '../utils';
 
 test.describe('Setup', () => {
@@ -31,18 +31,43 @@ test.describe('Setup', () => {
 			],
 		});
 
-		await asyncForEach(makeBookEntry(page))([
-			['1', '100', '100', '90', null, '110'],
-			['2', '110', '50', '50', null, '110'],
-			['3', '110', '60', '70', null, '100'],
+		await asyncForEach(makeCreateBookEntry(page))([
+			{
+				date: ["2022", "Februar", '1'],
+				start: '100',
+				transactions: [
+					['In', '100'],
+					['Out', '90'],
+					['Bank', null],
+				],
+				end: '110',
+			},
+			{
+				date: ["2022", "Februar", '2'],
+				start: '110',
+				transactions: [
+					['In', '50'],
+					['Out', '50'],
+					['Bank', null],
+				],
+				end: '110',
+			},
+			{
+				date: ["2022", "Februar", '3'],
+				start: '110',
+				transactions: [
+					['In', '60'],
+					['Out', '70'],
+					['Bank', null],
+				],
+				end: '100',
+			},
 		]);
 
 		await page.locator('button >> "Entries"').click();
 		await page.waitForURL(PAGE_URL + '/book-entries');
 		const path = await download(page)(page.locator('button >> "Export"').nth(0));
-		const fileContent = readFile(path);
-		const expectedFileContent = readFile('./fixtures/golden-path-expected-datev-export.csv');
-		expect(fileContent).toEqual(expectedFileContent);
+		expectFilesToBeEqual(path, './fixtures/golden-path-expected-datev-export.csv');
 	});
 
 	test('given no accounts', async ({ page }) => {

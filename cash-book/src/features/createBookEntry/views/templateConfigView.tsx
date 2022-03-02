@@ -6,7 +6,7 @@ import { DifferenceAccount } from './differenceAccount';
 
 export const TemplateConfigView: React.FC<CreateBookEntryTemplateConfigProps> = (props) => (
 	<>
-		<div className="flex flex-col items-center justify-center space-y-2">
+		<div data-test-id="create-book-entry-date-picker" className="flex flex-col items-center justify-center space-y-2">
 			{props.date.input.label && <p className="text-1">{props.date.input.label}</p>}
 			<div className="flex items-center space-x-2">
 				<button type="button" onClick={props.date.yesterday.onSelect} className="button button-sm">

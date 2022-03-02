@@ -390,8 +390,8 @@
 				"date": "2022-01-01T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "2380.17",
@@ -411,8 +411,8 @@
 				"date": "2022-01-02T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "785.30",
@@ -433,27 +433,27 @@
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "731.85",
-					"2f0fd09d0607c453bcfe26e47ae0f3bbb573ccb0": "79.2",
-					"aab19944ce8e83d1046e6d9569a91743d9c40c0d": "4.8",
+					"2f0fd09d0607c453bcfe26e47ae0f3bbb573ccb0": "79.20",
+					"aab19944ce8e83d1046e6d9569a91743d9c40c0d": "4.80",
 					"29693202e2628d2f2f4f5bc34777076a65eafd62": "164.05",
 					"770ae7081c042df2704dad9349392fd5f3f687ed": "79.35",
-					"8a7276a45ba3182fbd4b24b303cce519c5d8499a": "63.9",
+					"8a7276a45ba3182fbd4b24b303cce519c5d8499a": "63.90",
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "142.55",
-					"a20e8b5ea00137088333895d74159d839c8bdfff": "310",
-					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "50",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "3.6"
+					"a20e8b5ea00137088333895d74159d839c8bdfff": "310.00",
+					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "50.00",
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "3.60"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-04T23:00:00.000Z": {
 				"date": "2022-01-04T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "793.53",
@@ -472,8 +472,8 @@
 				"date": "2022-01-05T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "736.25",
@@ -493,8 +493,8 @@
 				"date": "2022-01-06T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1071.51",
@@ -512,8 +512,8 @@
 				"date": "2022-01-07T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1764.44",
@@ -531,8 +531,8 @@
 				"date": "2022-01-08T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "2449.40",
@@ -544,15 +544,15 @@
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "437.60",
 					"a20e8b5ea00137088333895d74159d839c8bdfff": "545.00",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "265.00",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "19.7"
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "19.70"
 				}
 			},
 			"2022-01-09T23:00:00.000Z": {
 				"date": "2022-01-09T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "622.94",
@@ -570,8 +570,8 @@
 				"date": "2022-01-10T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "749.27",
@@ -590,8 +590,8 @@
 				"date": "2022-01-11T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "797.10",
@@ -610,8 +610,8 @@
 				"date": "2022-01-12T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1021.17",
@@ -630,8 +630,8 @@
 				"date": "2022-01-13T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1045.44",
@@ -650,8 +650,8 @@
 				"date": "2022-01-14T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1727.34",
@@ -670,8 +670,8 @@
 				"date": "2022-01-15T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "2433.20",
@@ -691,8 +691,8 @@
 				"date": "2022-01-16T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "827.20",
@@ -703,15 +703,15 @@
 					"8a7276a45ba3182fbd4b24b303cce519c5d8499a": "48.00",
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "172.60",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "440.00",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "90.5"
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "90.50"
 				}
 			},
 			"2022-01-17T23:00:00.000Z": {
 				"date": "2022-01-17T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "844.64",
@@ -730,8 +730,8 @@
 				"date": "2022-01-18T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "830.77",
@@ -750,8 +750,8 @@
 				"date": "2022-01-19T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "802.79",
@@ -763,15 +763,15 @@
 					"8a7276a45ba3182fbd4b24b303cce519c5d8499a": "59.95",
 					"a20e8b5ea00137088333895d74159d839c8bdfff": "200.00",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "165.00",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "5.6"
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "5.60"
 				}
 			},
 			"2022-01-20T23:00:00.000Z": {
 				"date": "2022-01-20T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1071.59",
@@ -789,8 +789,8 @@
 				"date": "2022-01-21T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "2197.66",
@@ -809,8 +809,8 @@
 				"date": "2022-01-22T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "2458.00",
@@ -823,15 +823,15 @@
 					"2cdc7bada20205a980548237b6f7551090023461": "23.60",
 					"a20e8b5ea00137088333895d74159d839c8bdfff": "500.00",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "260.00",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "7.7"
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "7.70"
 				}
 			},
 			"2022-01-23T23:00:00.000Z": {
 				"date": "2022-01-23T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "962.09",
@@ -850,8 +850,8 @@
 				"date": "2022-01-24T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "723.30",
@@ -862,15 +862,15 @@
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "102.35",
 					"a20e8b5ea00137088333895d74159d839c8bdfff": "200.00",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "200.00",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "3.7"
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "3.70"
 				}
 			},
 			"2022-01-25T23:00:00.000Z": {
 				"date": "2022-01-25T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "778.79",
@@ -889,8 +889,8 @@
 				"date": "2022-01-26T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "774.70",
@@ -901,15 +901,15 @@
 					"8a7276a45ba3182fbd4b24b303cce519c5d8499a": "67.25",
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "111.10",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "365.00",
-					"01019e81db440fdbb34cbd863a0a70629448ce97": "29.2"
+					"01019e81db440fdbb34cbd863a0a70629448ce97": "29.20"
 				}
 			},
 			"2022-01-27T23:00:00.000Z": {
 				"date": "2022-01-27T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1260.58",
@@ -928,8 +928,8 @@
 				"date": "2022-01-28T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1682.40",
@@ -941,15 +941,15 @@
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "201.90",
 					"a20e8b5ea00137088333895d74159d839c8bdfff": "250.00",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "100.00",
-					"01019e81db440fdbb34cbd863a0a70629448ce97": "32.4"
+					"01019e81db440fdbb34cbd863a0a70629448ce97": "32.40"
 				}
 			},
 			"2022-01-29T23:00:00.000Z": {
 				"date": "2022-01-29T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "1874.65",
@@ -961,15 +961,15 @@
 					"c29aa6724f0054a03d13ffbdfcea59ace23ec37b": "417.25",
 					"a20e8b5ea00137088333895d74159d839c8bdfff": "360.00",
 					"bc3b6c49af32ce070c0c2d01c6f0ba7b9513b362": "385.00",
-					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "34.6"
+					"cdb4ac8decdc921aa361d471cd2ab46da2f4b353": "34.60"
 				}
 			},
 			"2022-01-30T23:00:00.000Z": {
 				"date": "2022-01-30T23:00:00.000Z",
 				"templateId": "312ee6804e36707d592280fa251dc4b4df6f4816",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"fd2400b7bbd25eee936bffae3df60f6a791ab1f8": "731.14",
@@ -989,8 +989,8 @@
 				"date": "2022-01-01T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "911.25",
@@ -1002,7 +1002,7 @@
 					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "191.95",
 					"47d1a845634b8d90f92d779feddeaf2f669e906f": "10.30",
 					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "290.00",
-					"942b5e2a2530f80b6692472e4cf4acb8d5616c7c": "52.8"
+					"942b5e2a2530f80b6692472e4cf4acb8d5616c7c": "52.80"
 				}
 			},
 			"2022-01-02T23:00:00.000Z": {
@@ -1010,18 +1010,18 @@
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "437.45",
-					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "72.6",
+					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "72.60",
 					"20c0b3fccf3753e63df9b987ee008082915309a0": "13.35",
 					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "100.85",
 					"4b110321719546f0d25a25511295bcec99c6ebcf": "33.05",
 					"4c6ca9263914f06f887c839a393cef2c784ed76d": "71.35",
-					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "66.1",
-					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "270",
+					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "66.10",
+					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "270.00",
 					"d64e2267dd450ef2992837d14096eb397e440b78": "44.65"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-03T23:00:00.000Z": {
@@ -1029,68 +1029,68 @@
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "226.05",
-					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "37.6",
-					"20c0b3fccf3753e63df9b987ee008082915309a0": "27.8",
-					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "29.2",
+					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "37.60",
+					"20c0b3fccf3753e63df9b987ee008082915309a0": "27.80",
+					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "29.20",
 					"4c6ca9263914f06f887c839a393cef2c784ed76d": "17.95",
-					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "38.7",
+					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "38.70",
 					"fcdf0dd61576fa278c93aa52f1db8b85a18b7467": "3.36",
-					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "130",
-					"c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8": "40",
+					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "130.00",
+					"c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8": "40.00",
 					"d64e2267dd450ef2992837d14096eb397e440b78": "16.64"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-04T23:00:00.000Z": {
 				"date": "2022-01-04T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"transactions": {
-					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "363.5",
-					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "90.5",
-					"20c0b3fccf3753e63df9b987ee008082915309a0": "26.9",
+					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "363.50",
+					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "90.50",
+					"20c0b3fccf3753e63df9b987ee008082915309a0": "26.90",
 					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "81.05",
-					"4b110321719546f0d25a25511295bcec99c6ebcf": "9.5",
-					"4c6ca9263914f06f887c839a393cef2c784ed76d": "37",
-					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "67.4",
-					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "190",
+					"4b110321719546f0d25a25511295bcec99c6ebcf": "9.50",
+					"4c6ca9263914f06f887c839a393cef2c784ed76d": "37.00",
+					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "67.40",
+					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "190.00",
 					"942b5e2a2530f80b6692472e4cf4acb8d5616c7c": "42.15"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-06T23:00:00.000Z": {
 				"date": "2022-01-06T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"transactions": {
-					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "361.7",
+					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "361.70",
 					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "66.05",
 					"20c0b3fccf3753e63df9b987ee008082915309a0": "22.65",
-					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "46.9",
+					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "46.90",
 					"4b110321719546f0d25a25511295bcec99c6ebcf": "23.95",
 					"4c6ca9263914f06f887c839a393cef2c784ed76d": "47.25",
-					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "96.5",
-					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "150",
-					"c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8": "70",
-					"d64e2267dd450ef2992837d14096eb397e440b78": "29.5"
+					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "96.50",
+					"fcb93ac2257d98b82f17c6a3bfa8cfab1d105c40": "150.00",
+					"c3c97408fb47dbf2e0b62e0e1e556e9dd0c252b8": "70.00",
+					"d64e2267dd450ef2992837d14096eb397e440b78": "29.50"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-05T23:00:00.000Z": {
 				"date": "2022-01-05T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"transactions": {
-					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "299.6",
-					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "76.4",
-					"20c0b3fccf3753e63df9b987ee008082915309a0": "24.5",
-					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "16.2",
+					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "299.60",
+					"bf9ede12f7449a2641827a76f9defc5d5ca6624a": "76.40",
+					"20c0b3fccf3753e63df9b987ee008082915309a0": "24.50",
+					"129fbfb9db01aa8bab3b07c797c4be8837dd13f9": "16.20",
 					"4b110321719546f0d25a25511295bcec99c6ebcf": "34.15",
 					"4c6ca9263914f06f887c839a393cef2c784ed76d": "37.40",
 					"06b87b2f4d6786e246ef8eb407ec0ef685dbc346": "75.50",
@@ -1098,8 +1098,8 @@
 					"d64e2267dd450ef2992837d14096eb397e440b78": "1.75"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-07T23:00:00.000Z": {
@@ -1118,8 +1118,8 @@
 					"d64e2267dd450ef2992837d14096eb397e440b78": "2.70"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-08T23:00:00.000Z": {
@@ -1138,8 +1138,8 @@
 					"d64e2267dd450ef2992837d14096eb397e440b78": "8.15"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-09T23:00:00.000Z": {
@@ -1158,8 +1158,8 @@
 					"942b5e2a2530f80b6692472e4cf4acb8d5616c7c": "98.40"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-10T23:00:00.000Z": {
@@ -1177,8 +1177,8 @@
 					"942b5e2a2530f80b6692472e4cf4acb8d5616c7c": "324.95"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-11T23:00:00.000Z": {
@@ -1197,16 +1197,16 @@
 					"942b5e2a2530f80b6692472e4cf4acb8d5616c7c": "322.90"
 				},
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				}
 			},
 			"2022-01-12T23:00:00.000Z": {
 				"date": "2022-01-12T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "298.55",
@@ -1224,8 +1224,8 @@
 				"date": "2022-01-13T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "418.80",
@@ -1243,8 +1243,8 @@
 				"date": "2022-01-14T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "598.20",
@@ -1262,8 +1262,8 @@
 				"date": "2022-01-15T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "1006.95",
@@ -1282,8 +1282,8 @@
 				"date": "2022-01-16T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "378.10",
@@ -1301,8 +1301,8 @@
 				"date": "2022-01-17T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "401.90",
@@ -1319,8 +1319,8 @@
 				"date": "2022-01-18T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "350.00",
@@ -1339,8 +1339,8 @@
 				"date": "2022-01-20T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "346.00",
@@ -1358,8 +1358,8 @@
 				"date": "2022-01-21T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "594.35",
@@ -1377,8 +1377,8 @@
 				"date": "2022-01-22T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "928.70",
@@ -1396,8 +1396,8 @@
 				"date": "2022-01-23T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "324.35",
@@ -1414,8 +1414,8 @@
 				"date": "2022-01-24T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "358.50",
@@ -1433,8 +1433,8 @@
 				"date": "2022-01-25T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "374.90",
@@ -1453,8 +1453,8 @@
 				"date": "2022-01-26T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "381.85",
@@ -1471,8 +1471,8 @@
 				"date": "2022-01-27T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "329.45",
@@ -1490,8 +1490,8 @@
 				"date": "2022-01-28T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "719.35",
@@ -1510,8 +1510,8 @@
 				"date": "2022-01-19T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "370.80",
@@ -1530,8 +1530,8 @@
 				"date": "2022-01-29T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "790.85",
@@ -1549,8 +1549,8 @@
 				"date": "2022-01-30T23:00:00.000Z",
 				"templateId": "d9aa0fa376813d57ecee8d8bd30ea8eeff585edd",
 				"cash": {
-					"start": "0",
-					"end": "0"
+					"start": "0.00",
+					"end": "0.00"
 				},
 				"transactions": {
 					"1442b1193919d6ace5c1e5dba4e3360f2376f39c": "341.45",

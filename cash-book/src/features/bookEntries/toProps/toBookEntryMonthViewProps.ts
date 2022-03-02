@@ -5,7 +5,7 @@ import { IconType } from '../../../models/props';
 import { ApplicationActionType, ExportFileType, ExportPayloadType } from '../../../applicationState/actions';
 import { dispatch } from '../../../applicationState/store';
 import { toBookEntryDayViewProps } from './toBookEntryDayViewProps';
-import { DateWithoutTime } from '../../../models/domain/date';
+import { DateWithoutTime } from '../../../models/dateWithoutTime';
 
 export const toBookEntryMonthViewProps = (
 	appState: ApplicationState,

@@ -2,11 +2,11 @@ import { ApplicationState } from '../../../applicationState';
 import { BookEntry } from '../state';
 import { TransactionType, Transaction } from '../../transactions/state';
 import { BookEntryDayViewProps, DataBookEntryViewProps, ErrorBookEnrtyViewProps } from '../props';
-import { DateWithoutTime } from '../../../models/domain/date';
 import { IconType } from '../../../models/props';
 import { ApplicationActionType, ExportPayloadType, ExportFileType } from '../../../applicationState/actions';
+import { DateWithoutTime } from '../../../models/dateWithoutTime';
+import {CurrencyInt} from '../../../models/currencyInt';
 import { ROUTES_CREATE_BOOK_ENTRY } from '../../../variables/routes';
-import { toCurrencyInt } from '../../../models/currencyInt';
 import { dispatch } from '../../../applicationState/store';
 
 export const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: BookEntry): BookEntryDayViewProps => {
@@ -122,31 +122,31 @@ const toBookEntryViewProps = (appState: ApplicationState, bookEntry: BookEntry) 
 };
 
 export const toAddInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
-	return String(
+	return CurrencyInt.toString(
 		Object.entries(bookEntry.transactions).reduce((addInfo: number, [transactionId, value]) => {
 			const transaction = appState.transactions.transactions[transactionId];
 			if (transaction === undefined) return addInfo;
 			switch (transaction.type) {
 				case TransactionType.IN:
-					return addInfo + toNumberOrZero(value);
+					return addInfo + CurrencyInt.fromStringOr(value, 0);
 				default:
 					return addInfo;
 			}
-		}, 0) / 100
+		}, 0)
 	);
 };
 export const toSubtractInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
-	return String(
+	return CurrencyInt.toString(
 		Object.entries(bookEntry.transactions).reduce((subInfo: number, [transactionId, value]) => {
 			const transaction = appState.transactions.transactions[transactionId];
 			if (transaction === undefined) return subInfo;
 			switch (transaction.type) {
 				case TransactionType.OUT:
-					return subInfo - toNumberOrZero(value);
+					return subInfo - CurrencyInt.fromStringOr(value, 0);
 				default:
 					return subInfo;
 			}
-		}, 0) / 100
+		}, 0)
 	);
 };
 export const toDiffInfo = (appState: ApplicationState, bookEntry: BookEntry): string => {
@@ -155,17 +155,15 @@ export const toDiffInfo = (appState: ApplicationState, bookEntry: BookEntry): st
 		if (transaction === undefined) return diffInfo;
 		switch (transaction.type) {
 			case TransactionType.IN:
-				return diffInfo + toNumberOrZero(value);
+				return diffInfo + CurrencyInt.fromStringOr(value, 0);
 			case TransactionType.OUT:
-				return diffInfo - toNumberOrZero(value);
+				return diffInfo - CurrencyInt.fromStringOr(value, 0);
 			default:
 				return diffInfo;
 		}
-	}, toNumberOrZero(bookEntry.cash.start));
-	return String((-1 * (aggregatedEnd - toNumberOrZero(bookEntry.cash.end))) / 100);
+	}, CurrencyInt.fromStringOr(bookEntry.cash.start, 0));
+	return CurrencyInt.toString(-1 * (aggregatedEnd - CurrencyInt.fromStringOr(bookEntry.cash.end, 0)));
 };
-
-export const toNumberOrZero = (value: string) => toCurrencyInt(value) || 0;
 
 const OVERWRITE_CREATE_STATE_CONFIRM_MESSAGE =
 	"Do you really want to edit this date, while you still haven't submitted your current date? This action can not be undone!";

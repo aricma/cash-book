@@ -1,9 +1,10 @@
 import { backupValidation } from './index';
 import { ValidationMap } from './makeBackupValidation';
-import { MISSING_TRANSACTION_ID_MESSAGE, MISSING_ACCOUNT_ID_MESSAGE, WRONG_VERSION_MESSAGE } from './messages';
+import { MISSING_TRANSACTION_ID_MESSAGE, MISSING_ACCOUNT_ID_MESSAGE, WRONG_VERSION_MESSAGE, TRANSACTION_FORMAT_MESSAGE, CASH_VALUE_FORMAT_MESSAGE } from './messages';
 import { latestVersion } from '../backupMigrations';
 
 describe(backupValidation.name, () => {
+
 	test('given a valid backup, when called, then returns null', () => {
 		const validBackup = {
 			__version__: latestVersion,
@@ -112,13 +113,13 @@ describe(backupValidation.name, () => {
 						date: '2022-01-29T23:00:00.000Z',
 						templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
 						cash: {
-							start: '0',
-							end: '0',
+							start: '0.00',
+							end: '0.00',
 						},
 						transactions: {
 							'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
 							'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
-							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4',
+							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4.00',
 						},
 					},
 				},
@@ -234,13 +235,13 @@ describe(backupValidation.name, () => {
 						date: '2022-01-29T23:00:00.000Z',
 						templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
 						cash: {
-							start: '0',
-							end: '0',
+							start: '0.00',
+							end: '0.00',
 						},
 						transactions: {
 							'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
 							'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
-							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4',
+							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4.00',
 						},
 					},
 				},
@@ -252,327 +253,594 @@ describe(backupValidation.name, () => {
 		expect(backupValidation(validBackup)).toEqual(expected);
 	});
 
-	test('given a backup with missing account, when called, then returns error', () => {
-		const invalidBackup = {
-			__version__: latestVersion,
-			accounts: {
-				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
-					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
-					type: 'ACCOUNT_TYPE/CASH_STATION',
-					name: 'K1',
-					number: '1000',
+	describe("transactions", () => {
+		test('given a backup with missing account, when called, then returns error', () => {
+			const invalidBackup = {
+				__version__: latestVersion,
+				accounts: {
+					'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
+						id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						type: 'ACCOUNT_TYPE/CASH_STATION',
+						name: 'K1',
+						number: '1000',
+					},
+					'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
+						id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						type: 'ACCOUNT_TYPE/DIFFERENCE',
+						name: 'D',
+						number: '3400',
+					},
+					'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
+						id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'G',
+						number: '9800',
+					},
 				},
-				'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
-					id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					type: 'ACCOUNT_TYPE/DIFFERENCE',
-					name: 'D',
-					number: '3400',
+				templates: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						id: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+						name: 'T-1',
+						cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+						autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
+					},
 				},
-				'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
-					id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-					type: 'ACCOUNT_TYPE/DEFAULT',
-					name: 'G',
-					number: '9800',
+				transactions: {
+					d18730889d885ad292b90a5f4d6ea5713ce83eb7: {
+						id: 'd18730889d885ad292b90a5f4d6ea5713ce83eb7',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'6ba3791ffdfea84dc4f69d02139556fe75c99e74': {
+						id: '6ba3791ffdfea84dc4f69d02139556fe75c99e74',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0e0d0e7e9996714e745d9ae37234deed58330b33': {
+						id: '0e0d0e7e9996714e745d9ae37234deed58330b33',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					ef52d14b685d56b3734d10239e596c5233349a3f: {
+						id: 'ef52d14b685d56b3734d10239e596c5233349a3f',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					a3577de19325d5150196b7524686b6b5f7512848: {
+						id: 'a3577de19325d5150196b7524686b6b5f7512848',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'15d3862971781389d5c05b124c8063160f41f148': {
+						id: '15d3862971781389d5c05b124c8063160f41f148',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'0b9b92723dcf38ff575cf61d5d2c104538b489be': {
+						id: '0b9b92723dcf38ff575cf61d5d2c104538b489be',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'67949e956ef7bc08893705f172c3ad8564b85475': {
+						id: '67949e956ef7bc08893705f172c3ad8564b85475',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
+						id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'049e11ed251929d2730f540595715c7757b26edc': {
+						id: '049e11ed251929d2730f540595715c7757b26edc',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
 				},
-			},
-			templates: {
-				d25d46ba48eddc50237d061eee101d6a9b39e587: {
-					id: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
-					name: 'T-1',
-					cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
-					diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
-					autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
-					autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
-				},
-			},
-			transactions: {
-				d18730889d885ad292b90a5f4d6ea5713ce83eb7: {
-					id: 'd18730889d885ad292b90a5f4d6ea5713ce83eb7',
-					type: 'TRANSACTION_TYPE/IN',
-					name: 'In',
-					accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-				},
-				'6ba3791ffdfea84dc4f69d02139556fe75c99e74': {
-					id: '6ba3791ffdfea84dc4f69d02139556fe75c99e74',
-					type: 'TRANSACTION_TYPE/OUT',
-					name: 'Out',
-					accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-				},
-				'0e0d0e7e9996714e745d9ae37234deed58330b33': {
-					id: '0e0d0e7e9996714e745d9ae37234deed58330b33',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				ef52d14b685d56b3734d10239e596c5233349a3f: {
-					id: 'ef52d14b685d56b3734d10239e596c5233349a3f',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				a3577de19325d5150196b7524686b6b5f7512848: {
-					id: 'a3577de19325d5150196b7524686b6b5f7512848',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'15d3862971781389d5c05b124c8063160f41f148': {
-					id: '15d3862971781389d5c05b124c8063160f41f148',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'0b9b92723dcf38ff575cf61d5d2c104538b489be': {
-					id: '0b9b92723dcf38ff575cf61d5d2c104538b489be',
-					type: 'TRANSACTION_TYPE/IN',
-					name: 'In',
-					accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-				},
-				'67949e956ef7bc08893705f172c3ad8564b85475': {
-					id: '67949e956ef7bc08893705f172c3ad8564b85475',
-					type: 'TRANSACTION_TYPE/OUT',
-					name: 'Out',
-					accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-				},
-				'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
-					id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'049e11ed251929d2730f540595715c7757b26edc': {
-					id: '049e11ed251929d2730f540595715c7757b26edc',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-			},
-			bookEntries: {
-				d25d46ba48eddc50237d061eee101d6a9b39e587: {
-					'2022-01-29T23:00:00.000Z': {
-						date: '2022-01-29T23:00:00.000Z',
-						templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
-						cash: {
-							start: '0',
-							end: '0',
-						},
-						transactions: {
-							'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
-							'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
-							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4',
+				bookEntries: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						'2022-01-29T23:00:00.000Z': {
+							date: '2022-01-29T23:00:00.000Z',
+							templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+							cash: {
+								start: '0.00',
+								end: '0.00',
+							},
+							transactions: {
+								'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
+								'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
+								'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4.00',
+							},
 						},
 					},
 				},
-			},
-		};
-		const expected: ValidationMap = {
-			accounts: MISSING_ACCOUNT_ID_MESSAGE,
-			transactions: null,
-		};
-		expect(backupValidation(invalidBackup)).toEqual(expected);
+			};
+			const expected: ValidationMap = {
+				accounts: MISSING_ACCOUNT_ID_MESSAGE,
+				transactions: null,
+			};
+			expect(backupValidation(invalidBackup)).toEqual(expected);
+		});
 	});
 
-	test('given a valid v3 with missing transaction, when called, then returns error', () => {
-		const validBackup = {
-			__version__: latestVersion,
-			accounts: {
-				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
-					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
-					type: 'ACCOUNT_TYPE/CASH_STATION',
-					name: 'K1',
-					number: '1000',
+	describe("book entries", () => {
+		test('given a backup with missing transaction, when called, then returns error', () => {
+			const validBackup = {
+				__version__: latestVersion,
+				accounts: {
+					'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
+						id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						type: 'ACCOUNT_TYPE/CASH_STATION',
+						name: 'K1',
+						number: '1000',
+					},
+					'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
+						id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						type: 'ACCOUNT_TYPE/DIFFERENCE',
+						name: 'D',
+						number: '3400',
+					},
+					e631e842f6120896ca5f74477c0041bbb0b15894: {
+						id: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'B',
+						number: '5600',
+					},
+					'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
+						id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'G',
+						number: '9800',
+					},
 				},
-				'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
-					id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					type: 'ACCOUNT_TYPE/DIFFERENCE',
-					name: 'D',
-					number: '3400',
+				templates: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						id: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+						name: 'T-1',
+						cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+						autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
+					},
 				},
-				e631e842f6120896ca5f74477c0041bbb0b15894: {
-					id: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-					type: 'ACCOUNT_TYPE/DEFAULT',
-					name: 'B',
-					number: '5600',
+				transactions: {
+					'67949e956ef7bc08893705f172c3ad8564b85475': {
+						id: '67949e956ef7bc08893705f172c3ad8564b85475',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
+						id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'049e11ed251929d2730f540595715c7757b26edc': {
+						id: '049e11ed251929d2730f540595715c7757b26edc',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
 				},
-				'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
-					id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-					type: 'ACCOUNT_TYPE/DEFAULT',
-					name: 'G',
-					number: '9800',
-				},
-			},
-			templates: {
-				d25d46ba48eddc50237d061eee101d6a9b39e587: {
-					id: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
-					name: 'T-1',
-					cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
-					diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
-					autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
-					autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
-				},
-			},
-			transactions: {
-				'67949e956ef7bc08893705f172c3ad8564b85475': {
-					id: '67949e956ef7bc08893705f172c3ad8564b85475',
-					type: 'TRANSACTION_TYPE/OUT',
-					name: 'Out',
-					accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-				},
-				'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
-					id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'049e11ed251929d2730f540595715c7757b26edc': {
-					id: '049e11ed251929d2730f540595715c7757b26edc',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-			},
-			bookEntries: {
-				d25d46ba48eddc50237d061eee101d6a9b39e587: {
-					'2022-01-29T23:00:00.000Z': {
-						date: '2022-01-29T23:00:00.000Z',
-						templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
-						cash: {
-							start: '0',
-							end: '0',
-						},
-						transactions: {
-							'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
-							'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
-							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4',
+				bookEntries: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						'2022-01-29T23:00:00.000Z': {
+							date: '2022-01-29T23:00:00.000Z',
+							templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+							cash: {
+								start: '0.00',
+								end: '0.00',
+							},
+							transactions: {
+								'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
+								'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
+								'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4.00',
+							},
 						},
 					},
 				},
-			},
-		};
-		const expected: ValidationMap = {
-			accounts: null,
-			templates: null,
-			transactions: MISSING_TRANSACTION_ID_MESSAGE,
-		};
-		expect(backupValidation(validBackup)).toEqual(expected);
-	});
+			};
+			const expected: ValidationMap = {
+				accounts: null,
+				templates: null,
+				transactions: MISSING_TRANSACTION_ID_MESSAGE,
+				bookEntries: null,
+			};
+			expect(backupValidation(validBackup)).toEqual(expected);
+		});
 
-	test('given a valid v3 with missing template, when called, then returns error', () => {
-		const validBackup = {
-			__version__: latestVersion,
-			accounts: {
-				'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
-					id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
-					type: 'ACCOUNT_TYPE/CASH_STATION',
-					name: 'K1',
-					number: '1000',
+		test('given a backup with missing template, when called, then returns error', () => {
+			const validBackup = {
+				__version__: latestVersion,
+				accounts: {
+					'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
+						id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						type: 'ACCOUNT_TYPE/CASH_STATION',
+						name: 'K1',
+						number: '1000',
+					},
+					'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
+						id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						type: 'ACCOUNT_TYPE/DIFFERENCE',
+						name: 'D',
+						number: '3400',
+					},
+					e631e842f6120896ca5f74477c0041bbb0b15894: {
+						id: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'B',
+						number: '5600',
+					},
+					'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
+						id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'G',
+						number: '9800',
+					},
 				},
-				'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
-					id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-					type: 'ACCOUNT_TYPE/DIFFERENCE',
-					name: 'D',
-					number: '3400',
+				templates: {},
+				transactions: {
+					d18730889d885ad292b90a5f4d6ea5713ce83eb7: {
+						id: 'd18730889d885ad292b90a5f4d6ea5713ce83eb7',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'6ba3791ffdfea84dc4f69d02139556fe75c99e74': {
+						id: '6ba3791ffdfea84dc4f69d02139556fe75c99e74',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0e0d0e7e9996714e745d9ae37234deed58330b33': {
+						id: '0e0d0e7e9996714e745d9ae37234deed58330b33',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					ef52d14b685d56b3734d10239e596c5233349a3f: {
+						id: 'ef52d14b685d56b3734d10239e596c5233349a3f',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					a3577de19325d5150196b7524686b6b5f7512848: {
+						id: 'a3577de19325d5150196b7524686b6b5f7512848',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'15d3862971781389d5c05b124c8063160f41f148': {
+						id: '15d3862971781389d5c05b124c8063160f41f148',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'0b9b92723dcf38ff575cf61d5d2c104538b489be': {
+						id: '0b9b92723dcf38ff575cf61d5d2c104538b489be',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'67949e956ef7bc08893705f172c3ad8564b85475': {
+						id: '67949e956ef7bc08893705f172c3ad8564b85475',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
+						id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'049e11ed251929d2730f540595715c7757b26edc': {
+						id: '049e11ed251929d2730f540595715c7757b26edc',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
 				},
-				e631e842f6120896ca5f74477c0041bbb0b15894: {
-					id: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-					type: 'ACCOUNT_TYPE/DEFAULT',
-					name: 'B',
-					number: '5600',
-				},
-				'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
-					id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-					type: 'ACCOUNT_TYPE/DEFAULT',
-					name: 'G',
-					number: '9800',
-				},
-			},
-			templates: {},
-			transactions: {
-				d18730889d885ad292b90a5f4d6ea5713ce83eb7: {
-					id: 'd18730889d885ad292b90a5f4d6ea5713ce83eb7',
-					type: 'TRANSACTION_TYPE/IN',
-					name: 'In',
-					accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-				},
-				'6ba3791ffdfea84dc4f69d02139556fe75c99e74': {
-					id: '6ba3791ffdfea84dc4f69d02139556fe75c99e74',
-					type: 'TRANSACTION_TYPE/OUT',
-					name: 'Out',
-					accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-				},
-				'0e0d0e7e9996714e745d9ae37234deed58330b33': {
-					id: '0e0d0e7e9996714e745d9ae37234deed58330b33',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				ef52d14b685d56b3734d10239e596c5233349a3f: {
-					id: 'ef52d14b685d56b3734d10239e596c5233349a3f',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				a3577de19325d5150196b7524686b6b5f7512848: {
-					id: 'a3577de19325d5150196b7524686b6b5f7512848',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'15d3862971781389d5c05b124c8063160f41f148': {
-					id: '15d3862971781389d5c05b124c8063160f41f148',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'0b9b92723dcf38ff575cf61d5d2c104538b489be': {
-					id: '0b9b92723dcf38ff575cf61d5d2c104538b489be',
-					type: 'TRANSACTION_TYPE/IN',
-					name: 'In',
-					accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
-				},
-				'67949e956ef7bc08893705f172c3ad8564b85475': {
-					id: '67949e956ef7bc08893705f172c3ad8564b85475',
-					type: 'TRANSACTION_TYPE/OUT',
-					name: 'Out',
-					accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
-				},
-				'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
-					id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
-					name: 'Auto Difference In',
-					type: 'TRANSACTION_TYPE/PROTECTED/IN',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-				'049e11ed251929d2730f540595715c7757b26edc': {
-					id: '049e11ed251929d2730f540595715c7757b26edc',
-					name: 'Auto Difference Out',
-					type: 'TRANSACTION_TYPE/PROTECTED/OUT',
-					accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
-				},
-			},
-			bookEntries: {
-				d25d46ba48eddc50237d061eee101d6a9b39e587: {
-					'2022-01-29T23:00:00.000Z': {
-						date: '2022-01-29T23:00:00.000Z',
-						templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
-						cash: {
-							start: '0',
-							end: '0',
-						},
-						transactions: {
-							'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
-							'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
-							'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4',
+				bookEntries: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						'2022-01-29T23:00:00.000Z': {
+							date: '2022-01-29T23:00:00.000Z',
+							templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+							cash: {
+								start: '0.00',
+								end: '0.00',
+							},
+							transactions: {
+								'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
+								'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
+								'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4.00',
+							},
 						},
 					},
 				},
-			},
-		};
-		const expected: ValidationMap = {
-			templates: 'Missing template for id!',
-			transactions: null,
-		};
-		expect(backupValidation(validBackup)).toEqual(expected);
+			};
+			const expected: ValidationMap = {
+				accounts: null,
+				templates: 'Missing template for id!',
+				transactions: null,
+				bookEntries: null,
+			};
+			expect(backupValidation(validBackup)).toEqual(expected);
+		});
+
+		test('given a backup with falsely formatted book entry transaction values, when called, then returns expected map', () => {
+			const validBackup = {
+				__version__: latestVersion,
+				accounts: {
+					'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
+						id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						type: 'ACCOUNT_TYPE/CASH_STATION',
+						name: 'K1',
+						number: '1000',
+					},
+					'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
+						id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						type: 'ACCOUNT_TYPE/DIFFERENCE',
+						name: 'D',
+						number: '3400',
+					},
+					e631e842f6120896ca5f74477c0041bbb0b15894: {
+						id: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'B',
+						number: '5600',
+					},
+					'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
+						id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'G',
+						number: '9800',
+					},
+				},
+				templates: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						id: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+						name: 'T-1',
+						cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+						autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
+					},
+				},
+				transactions: {
+					d18730889d885ad292b90a5f4d6ea5713ce83eb7: {
+						id: 'd18730889d885ad292b90a5f4d6ea5713ce83eb7',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'6ba3791ffdfea84dc4f69d02139556fe75c99e74': {
+						id: '6ba3791ffdfea84dc4f69d02139556fe75c99e74',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0e0d0e7e9996714e745d9ae37234deed58330b33': {
+						id: '0e0d0e7e9996714e745d9ae37234deed58330b33',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					ef52d14b685d56b3734d10239e596c5233349a3f: {
+						id: 'ef52d14b685d56b3734d10239e596c5233349a3f',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					a3577de19325d5150196b7524686b6b5f7512848: {
+						id: 'a3577de19325d5150196b7524686b6b5f7512848',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'15d3862971781389d5c05b124c8063160f41f148': {
+						id: '15d3862971781389d5c05b124c8063160f41f148',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'0b9b92723dcf38ff575cf61d5d2c104538b489be': {
+						id: '0b9b92723dcf38ff575cf61d5d2c104538b489be',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'67949e956ef7bc08893705f172c3ad8564b85475': {
+						id: '67949e956ef7bc08893705f172c3ad8564b85475',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
+						id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'049e11ed251929d2730f540595715c7757b26edc': {
+						id: '049e11ed251929d2730f540595715c7757b26edc',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+				},
+				bookEntries: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						'2022-01-29T23:00:00.000Z': {
+							date: '2022-01-29T23:00:00.000Z',
+							templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+							cash: {
+								start: '0.00',
+								end: '0.00',
+							},
+							transactions: {
+								'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
+								'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
+								'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4',
+							},
+						},
+					},
+				},
+			};
+
+			const expected: ValidationMap = {
+				accounts: null,
+				templates: null,
+				transactions: null,
+				bookEntries: TRANSACTION_FORMAT_MESSAGE,
+			};
+			expect(backupValidation(validBackup)).toEqual(expected);
+		});
+
+		test('given a backup with falsely formatted book entry cash values, when called, then returns expected map', () => {
+			const validBackup = {
+				__version__: latestVersion,
+				accounts: {
+					'7ef4461eaf03725df64163ef4d3a77af491f3f84': {
+						id: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						type: 'ACCOUNT_TYPE/CASH_STATION',
+						name: 'K1',
+						number: '1000',
+					},
+					'992aad9e9401dd73c5e9be67f9ad30f0d607f776': {
+						id: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						type: 'ACCOUNT_TYPE/DIFFERENCE',
+						name: 'D',
+						number: '3400',
+					},
+					e631e842f6120896ca5f74477c0041bbb0b15894: {
+						id: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'B',
+						number: '5600',
+					},
+					'15700616af207a2d82d2a32e15e3fca2649a6a5f': {
+						id: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+						type: 'ACCOUNT_TYPE/DEFAULT',
+						name: 'G',
+						number: '9800',
+					},
+				},
+				templates: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						id: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+						name: 'T-1',
+						cashierAccountId: '7ef4461eaf03725df64163ef4d3a77af491f3f84',
+						diffAccountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+						transactionIds: ['0b9b92723dcf38ff575cf61d5d2c104538b489be', '67949e956ef7bc08893705f172c3ad8564b85475'],
+						autoDiffInId: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						autoDiffOutId: '049e11ed251929d2730f540595715c7757b26edc',
+					},
+				},
+				transactions: {
+					d18730889d885ad292b90a5f4d6ea5713ce83eb7: {
+						id: 'd18730889d885ad292b90a5f4d6ea5713ce83eb7',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'6ba3791ffdfea84dc4f69d02139556fe75c99e74': {
+						id: '6ba3791ffdfea84dc4f69d02139556fe75c99e74',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0e0d0e7e9996714e745d9ae37234deed58330b33': {
+						id: '0e0d0e7e9996714e745d9ae37234deed58330b33',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					ef52d14b685d56b3734d10239e596c5233349a3f: {
+						id: 'ef52d14b685d56b3734d10239e596c5233349a3f',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					a3577de19325d5150196b7524686b6b5f7512848: {
+						id: 'a3577de19325d5150196b7524686b6b5f7512848',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'15d3862971781389d5c05b124c8063160f41f148': {
+						id: '15d3862971781389d5c05b124c8063160f41f148',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'0b9b92723dcf38ff575cf61d5d2c104538b489be': {
+						id: '0b9b92723dcf38ff575cf61d5d2c104538b489be',
+						type: 'TRANSACTION_TYPE/IN',
+						name: 'In',
+						accountId: '15700616af207a2d82d2a32e15e3fca2649a6a5f',
+					},
+					'67949e956ef7bc08893705f172c3ad8564b85475': {
+						id: '67949e956ef7bc08893705f172c3ad8564b85475',
+						type: 'TRANSACTION_TYPE/OUT',
+						name: 'Out',
+						accountId: 'e631e842f6120896ca5f74477c0041bbb0b15894',
+					},
+					'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': {
+						id: '0c063da62b4b290693357c6e1a86fe99a9d9b4d4',
+						name: 'Auto Difference In',
+						type: 'TRANSACTION_TYPE/PROTECTED/IN',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+					'049e11ed251929d2730f540595715c7757b26edc': {
+						id: '049e11ed251929d2730f540595715c7757b26edc',
+						name: 'Auto Difference Out',
+						type: 'TRANSACTION_TYPE/PROTECTED/OUT',
+						accountId: '992aad9e9401dd73c5e9be67f9ad30f0d607f776',
+					},
+				},
+				bookEntries: {
+					d25d46ba48eddc50237d061eee101d6a9b39e587: {
+						'2022-01-29T23:00:00.000Z': {
+							date: '2022-01-29T23:00:00.000Z',
+							templateId: 'd25d46ba48eddc50237d061eee101d6a9b39e587',
+							cash: {
+								start: '0',
+								end: '0.00',
+							},
+							transactions: {
+								'0b9b92723dcf38ff575cf61d5d2c104538b489be': '50.00',
+								'67949e956ef7bc08893705f172c3ad8564b85475': '54.00',
+								'0c063da62b4b290693357c6e1a86fe99a9d9b4d4': '4.00',
+							},
+						},
+					},
+				},
+			};
+
+			const expected: ValidationMap = {
+				accounts: null,
+				templates: null,
+				transactions: null,
+				bookEntries: CASH_VALUE_FORMAT_MESSAGE,
+			};
+			expect(backupValidation(validBackup)).toEqual(expected);
+		});
 	});
 });

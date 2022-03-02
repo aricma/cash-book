@@ -25,6 +25,24 @@ const baseState: BookEntriesState = {
 
 describe(ApplicationActionType.BOOK_ENTRIES_SET, () => {
 	test('when called, then adds book entries', () => {
+		const bookEntries = {
+			'1': {
+				'2000-1-1': makeBookEntry({
+					templateId: '1',
+					date: '2000-1-1',
+				}),
+				'2000-1-2': makeBookEntry({
+					templateId: '1',
+					date: '2000-1-2',
+				}),
+			},
+			'2': {
+				'2000-1-3': makeBookEntry({
+					templateId: '2',
+					date: '2000-1-3',
+				}),
+			},
+		}
 		expectation<BookEntriesSet>({
 			state: {
 				...baseState,
@@ -32,43 +50,13 @@ describe(ApplicationActionType.BOOK_ENTRIES_SET, () => {
 			action: {
 				type: ApplicationActionType.BOOK_ENTRIES_SET,
 				bookEntries: {
-					'1': {
-						'2000-1-1': makeBookEntry({
-							templateId: '1',
-							date: '2000-1-1',
-						}),
-						'2000-1-2': makeBookEntry({
-							templateId: '1',
-							date: '2000-1-2',
-						}),
-					},
-					'2': {
-						'2000-1-3': makeBookEntry({
-							templateId: '2',
-							date: '2000-1-3',
-						}),
-					},
+					...bookEntries,
 				},
 			},
 			expectedState: {
 				...baseState,
 				templates: {
-					'1': {
-						'2000-1-1': makeBookEntry({
-							templateId: '1',
-							date: '2000-1-1',
-						}),
-						'2000-1-2': makeBookEntry({
-							templateId: '1',
-							date: '2000-1-2',
-						}),
-					},
-					'2': {
-						'2000-1-3': makeBookEntry({
-							templateId: '2',
-							date: '2000-1-3',
-						}),
-					},
+					...bookEntries,
 				},
 			},
 		});
@@ -109,7 +97,7 @@ describe(ApplicationActionType.BOOK_ENTRIES_RESET, () => {
 	});
 });
 
-describe.only(ApplicationActionType.BOOK_ENTRIES_EDIT_SET, () => {
+describe(ApplicationActionType.BOOK_ENTRIES_EDIT_SET, () => {
 
 	test('when called, then returns expected state', () => {
 		const state = {

@@ -12,7 +12,7 @@ export const validRows = [
 	['EUR', '+0,36', '', '0201', 'Kassendifferenz', '', '', '3000', '', '', '', '', 'Auto Difference In'],
 ];
 
-export const invalidRows = [
+export const invalidRowsWrongResult = [
 	['EUR', '+2380,17', '', '0201', 'Ware', '', '', '9000', '', '', '', '', '7%'],
 	['EUR', '+106,2', '', '0201', 'Ware', '', '', '9000', '', '', '', '', '19%'],
 	['EUR', '-26,3', '', '0201', 'Karte', '', '', '6000', '', '', '', '', 'Amex'],
@@ -24,4 +24,8 @@ export const invalidRows = [
 	['EUR', '-600', '', '0201', 'Bank', '', '', '1500', '', '', '', '', 'Abschöpfung'],
 	['EUR', '-320', '', '0201', 'Bank', '', '', '1500', '', '', '', '', 'Tagesabrechnung'],
 	['EUR', '+5,36', '', '0201', 'Kassendifferenz', '', '', '3000', '', '', '', '', 'Auto Difference In'],
+];
+
+export const invalidRowsWrongFormat = [
+	['EUR', '+2380;17', '', '0201', 'Ware', '', '', '9000', '', '', '', '', '7%'],
 ];

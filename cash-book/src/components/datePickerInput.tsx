@@ -8,7 +8,7 @@ import {
 	getLastDateOfTheWeek,
 	getAllDatesInRange,
 } from '../models/utils';
-import { DateWithoutTime } from '../models/domain/date';
+import { DateWithoutTime } from '../models/dateWithoutTime';
 
 export const makeToDatePickerProps =
 	(

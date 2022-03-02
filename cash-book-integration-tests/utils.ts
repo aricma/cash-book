@@ -36,6 +36,7 @@ interface CreateTemplateRequest {
 	differenceAccount?: string;
 	transactions: Array<[name: string, type: boolean, account: string]>;
 }
+
 export const makeCreateTemplate = (page: Page) => async (request: CreateTemplateRequest) => {
 	await page.locator('button >> "Transactions"').click();
 	await page.waitForURL(PAGE_URL + '/transactions');
@@ -70,28 +71,56 @@ export const makeCreateTemplate = (page: Page) => async (request: CreateTemplate
 
 	await page.locator('h2 >> "Create Transaction Template"').isHidden();
 };
-export const makeBookEntry =
-	(page: Page) => async (bookEntry: [string, string, string | null, string | null, string | null, string]) => {
-		await page.locator('button >> "Create Book Entry"').click();
-		await page.waitForURL(PAGE_URL + '/book-entries/create');
 
-		const [day, start, income, expense, bank, end] = bookEntry;
+interface CreateBookEntryRequest {
+	date: [year: string, month: string, day: string];
+	start?: string;
+	transactions: Array<[string, string | null]>;
+	end?: string;
+}
 
-		await page.locator(`button >> "${day}"`).nth(0).click();
-		start !== null && (await fillInput(page)('Cash Station: Start Value', start));
-		income !== null && (await fillInput(page)('In', income));
-		expense !== null && (await fillInput(page)('Out', expense));
-		bank !== null && (await fillInput(page)('Bank', bank));
-		await fillInput(page)('Cash Station: End Value', end);
+export const makeCreateBookEntry = (page: Page) => async (request: CreateBookEntryRequest) => {
+	await page.locator('button >> "Create Book Entry"').click();
+	await page.waitForURL(PAGE_URL + '/book-entries/create');
 
-		const diffTransactionDiv = await page.locator('#difference-account-message-id');
-		const needsDiffTransaction = await diffTransactionDiv.isVisible();
-		if (needsDiffTransaction) {
-			await diffTransactionDiv.locator('input[type="checkbox"]').click();
-		}
+	await makeSetDatePicker(page)(...request.date);
 
-		await page.locator('button >> "Submit"').click();
-	};
+	await fillInput(page)('Cash Station: Start Value', request.start || "0");
+	await asyncForEach<[string, string | null]>(async ([label, value]) => {
+		if (value === null) return;
+	 	await fillInput(page)(label, value);
+	})(request.transactions);
+	await fillInput(page)('Cash Station: End Value', request.end);
+
+	const diffTransactionDiv = await page.locator('#difference-account-message-id');
+	const needsDiffTransaction = await diffTransactionDiv.isVisible();
+	if (needsDiffTransaction) {
+		await diffTransactionDiv.locator('input[type="checkbox"]').click();
+	}
+
+	await page.locator('button >> "Submit"').click();
+};
+
+export const makeSetDatePicker = (page: Page) => async (year: string, month: string, day: string) => {
+	await expect(page.locator('[data-test-id="create-book-entry-date-picker"]')).toBeVisible();
+	while (true) {
+		const hasCorrectYear = await page.locator(`[data-test-id="create-book-entry-date-picker"] >> "${month}"`).isVisible();
+		if (hasCorrectYear) break;
+		await page.locator('[data-test-id="create-book-entry-date-picker"] >> "Nächster Monat"').click();
+	}
+	while (true) {
+		const hasCorrectYear = await page.locator(`[data-test-id="create-book-entry-date-picker"] >> "${year}"`).isVisible();
+		if (hasCorrectYear) break;
+		await page.locator('[data-test-id="create-book-entry-date-picker"] >> "Vorheriges Jahr"').click();
+	}
+	await page.locator(`button:not([disabled=""]) >> "${day}"`).nth(0).click();
+};
+
+export const expectFilesToBeEqual = (pathToFile: string, pathToExpectedFile: string) => {
+	const fileContent = readFile(pathToFile);
+	const expectedFileContent = readFile(pathToExpectedFile);
+	expect(fileContent).toEqual(expectedFileContent);
+}
 
 export const select = (page: Page) => async (select: string, option: string) => {
 	await page.locator(`button >> "${select}"`).click();
@@ -99,10 +128,11 @@ export const select = (page: Page) => async (select: string, option: string) => 
 	await page.locator(`button >> "${option}"`).isVisible();
 };
 
-export const fillInput = (page: Page) => async (label: string, value: string) => {
+export const fillInput = (page: Page) => async (label: string, value: string): Promise<Locator> => {
 	const input = await makeFindInput(page)(label);
 	await input.fill(value);
 	await expect(input).toHaveValue(value);
+	return input;
 };
 
 export const makeFindInput =

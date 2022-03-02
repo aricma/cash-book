@@ -1,8 +1,10 @@
-import { Account } from '../../features/accounts/state';
-import { BookEntry } from '../../features/bookEntries/state';
-import { TransactionType, Transaction } from '../../features/transactions/state';
-import { DateWithoutTime } from '../../models/domain/date';
-import { pad } from '../../models/utils';
+import {Account} from '../../features/accounts/state';
+import {BookEntry} from '../../features/bookEntries/state';
+import {TransactionType, Transaction} from '../../features/transactions/state';
+import {DateWithoutTime} from '../../models/dateWithoutTime';
+import {CurrencyInt} from '../../models/currencyInt';
+import {pad} from '../../models/utils';
+
 
 export const headline = [
 	'Währung',
@@ -69,11 +71,16 @@ export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Ar
 };
 
 export const validateDatevRows = (rows: Array<Array<string>>): string | null => {
-	const result = rows.reduce((result: number, row: Array<string>) => {
-		const value = Number(row[1].replace('+', '').replace(',', '.')) * 100;
-		return result + value;
-	}, 0);
-	return result === 0 ? null : INVALID_ROW_RESULT_MESSAGE(String(result / 100));
+	try {
+		const result = rows.reduce((result: number, row: Array<string>, i) => {
+			const value = CurrencyInt.fromString(row[1].replace(/[,]/, '.'));
+			if (value === null) throw Error(`validateDatevRows: invalid value found in row [${i}]: ${row[1]}!`)
+			return result + value;
+		}, 0);
+		return result === 0 ? null : INVALID_ROW_RESULT_MESSAGE(CurrencyInt.toString(result));
+	} catch (e) {
+		return null;
+	}
 };
 
 export const INVALID_ROW_RESULT_MESSAGE = (result: string) =>

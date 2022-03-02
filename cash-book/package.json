@@ -69,6 +69,7 @@
 			"src/features/**/reducer/**/*.{ts,tsx}",
 			"src/features/**/*reducer*.ts",
 			"src/features/**/validation.ts",
+			"src/models/currencyInt.ts",
 			"src/misc/makeUniqueID.ts",
 			"src/misc/toBackup.ts",
 			"!src/**/index.{ts,tsx}",

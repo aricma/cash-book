@@ -30,16 +30,16 @@ Here are a couple of examples of succinct overviews from products with really gr
 
 Follow our handy guides to get started on the basics as quickly as possible:
 
-{% content-ref url="guides/creating-your-first-project.md" %}
-[creating-your-first-project.md](guides/creating-your-first-project.md)
+{% content-ref url="guides/creating-your-first-account.md" %}
+[creating-your-first-account.md](guides/creating-your-first-account.md)
 {% endcontent-ref %}
 
-{% content-ref url="guides/creating-your-first-task.md" %}
-[creating-your-first-task.md](guides/creating-your-first-task.md)
+{% content-ref url="guides/creating-your-first-template.md" %}
+[creating-your-first-template.md](guides/creating-your-first-template.md)
 {% endcontent-ref %}
 
-{% content-ref url="guides/advanced-permissions.md" %}
-[advanced-permissions.md](guides/advanced-permissions.md)
+{% content-ref url="broken-reference" %}
+[Broken link](broken-reference)
 {% endcontent-ref %}
 
 {% hint style="info" %}
@@ -48,22 +48,22 @@ Follow our handy guides to get started on the basics as quickly as possible:
 
 ### Fundamentals: Dive a little deeper
 
-Learn the fundamentals of MyProduct to get a deeper understanding of our main features:
+Learn about the fundamental data types of CashBook to get a deeper understanding of our main features:
 
-{% content-ref url="fundamentals/accounts.md" %}
-[accounts.md](fundamentals/accounts.md)
+{% content-ref url="fundamentals/data-types/accounts.md" %}
+[accounts.md](fundamentals/data-types/accounts.md)
 {% endcontent-ref %}
 
-{% content-ref url="fundamentals/transactions/" %}
-[transactions](fundamentals/transactions/)
+{% content-ref url="fundamentals/data-types/templates.md" %}
+[templates.md](fundamentals/data-types/templates.md)
 {% endcontent-ref %}
 
-{% content-ref url="fundamentals/bookentries.md" %}
-[bookentries.md](fundamentals/bookentries.md)
+{% content-ref url="fundamentals/data-types/transactions.md" %}
+[transactions.md](fundamentals/data-types/transactions.md)
 {% endcontent-ref %}
 
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
+{% content-ref url="fundamentals/data-types/bookentries.md" %}
+[bookentries.md](fundamentals/data-types/bookentries.md)
 {% endcontent-ref %}
 
 {% hint style="info" %}

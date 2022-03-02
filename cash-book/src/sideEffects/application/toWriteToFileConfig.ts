@@ -1,6 +1,6 @@
 import { ApplicationState } from '../../applicationState';
 import { Export, ExportFileType, ExportPayloadType } from '../../applicationState/actions';
-import { ExportFileConfig } from './makeExportToFile';
+import { WriteToFileConfig } from './makeWriteToFile';
 import {
 	toCSVContent,
 	toJSONContent,
@@ -18,8 +18,8 @@ interface Request {
 	unique: string;
 	action: Export;
 }
-export type ToExportFileConfig = (req: Request) => ExportFileConfig | null;
-export const toExportFileConfig: ToExportFileConfig = (req) => {
+export type ToExportFileConfig = (req: Request) => WriteToFileConfig | null;
+export const toWriteToFileConfig: ToExportFileConfig = (req) => {
 	switch (req.action.payload.type) {
 		case ExportPayloadType.ACCOUNTS:
 			switch (req.action.payload.fileType) {

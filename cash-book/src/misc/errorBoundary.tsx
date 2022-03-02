@@ -2,6 +2,7 @@ import React, { ErrorInfo } from 'react';
 import { ApplicationActionType } from '../applicationState/actions';
 import { dispatch } from '../applicationState/store';
 import { IS_DEVELOPMENT_ENVIRONMENT } from '../variables/environments';
+import { CashBookError, CashBookErrorType } from '../models/cashBookError';
 
 export class ErrorBoundary extends React.Component {
 	state: {
@@ -24,7 +25,7 @@ export class ErrorBoundary extends React.Component {
 		if (IS_DEVELOPMENT_ENVIRONMENT) console.log(error, errorInfo);
 		dispatch({
 			type: ApplicationActionType.APPLICATION_ERROR_SET,
-			error: error,
+			error: new CashBookError(CashBookErrorType.UNKNOWN, error),
 		});
 	}
 

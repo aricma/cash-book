@@ -1,3 +1,5 @@
+import { CashBookError } from '../../models/cashBookError';
+
 export enum GlobalStateType {
 	DEFAULT = 'GLOBAL_STATE_TYPE/DEFAULT',
 	LOADING = 'GLOBAL_STATE_TYPE/LOADING',
@@ -16,7 +18,7 @@ export interface LoadingGlobalState {
 
 export interface ErrorGlobalState {
 	type: GlobalStateType.ERROR;
-	error: Error;
+	error: CashBookError;
 }
 
 export const initialState: GlobalState = {

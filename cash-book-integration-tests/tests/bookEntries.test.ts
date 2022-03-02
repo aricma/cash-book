@@ -56,6 +56,7 @@ test.describe('BookEntries', () => {
 		const path = await download(page)(page.locator('button >> "Export"').nth(0));
 		expectFilesToBeEqual(path, './fixtures/export-datev-month.csv');
 	});
+
 	test('export day', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-v3_1.json');
 
@@ -65,6 +66,24 @@ test.describe('BookEntries', () => {
 		const path = await download(page)(page.locator('button >> "Export"').nth(1));
 		expectFilesToBeEqual(path, './fixtures/export-datev-day.csv');
 	});
-	test.fixme('export invalid month', () => {});
-	test.fixme('export invalid day', () => {});
+
+	test('export invalid month', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-invalid-book-entries-false-result-v3_1.json');
+
+		await page.goto(PAGE_URL + '/book-entries');
+		await select(page)('Set Template', 'Nikolassee');
+
+		await page.locator('button >> "Export"').nth(0).click();
+		await expect(page.locator('"Failed To Export"')).toBeVisible();
+	});
+
+	test('export invalid day', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-invalid-book-entries-false-result-v3_1.json');
+
+		await page.goto(PAGE_URL + '/book-entries');
+		await select(page)('Set Template', 'Nikolassee');
+
+		await page.locator('button >> "Export"').nth(1).click();
+		await expect(page.locator('"Failed To Export"')).toBeVisible();
+	});
 });

@@ -2,6 +2,7 @@ import { ApplicationActionType, DefaultSet, LoadingSet, ErrorSet } from '../../a
 import { makeReducerExpectation, makeDefaultReducerTest } from '../../misc/tests';
 import { reducer } from './reducer';
 import { initialState, GlobalStateType } from './state';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 const expectation = makeReducerExpectation(reducer);
 
@@ -47,11 +48,11 @@ describe(ApplicationActionType.APPLICATION_ERROR_SET, () => {
 			},
 			action: {
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.UNKNOWN, Error('ANY')),
 			},
 			expectedState: {
 				type: GlobalStateType.ERROR,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.UNKNOWN, Error('ANY')),
 			},
 		});
 	});

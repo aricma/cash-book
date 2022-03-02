@@ -1,6 +1,7 @@
 import { makeResetWorker } from './makeResetWorker';
 import { expectSaga } from 'redux-saga-test-plan';
 import { ApplicationActionType } from '../../applicationState/actions';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 const clearLocalStorage = jest.fn();
 const getUserConsent = jest.fn();
@@ -60,7 +61,7 @@ describe(makeResetWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_RESET, Error('ANY')),
 			})
 			.run({ silenceTimeout: true });
 	});

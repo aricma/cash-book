@@ -1,37 +1,37 @@
 import * as SE from 'redux-saga/effects';
-import { ExportFileConfig, makeExportToFile } from './makeExportToFile';
-import { makeLoadBackupWorker } from './makeLoadBackupWorker';
+import { WriteToFileConfig, makeWriteToFile } from './makeWriteToFile';
+import { makeUploadBackupWorker } from './makeUploadBackupWorker';
 import { makeResetWorker } from './makeResetWorker';
 import { makeSaveBackupToLocalStorage } from './makeSaveBackupToLocalStorage';
 import { makeLoadBackupFromLocalStorageWorker } from './makeLoadBackupFromLocalStorageWorker';
-import { makeExports } from './makeExports';
+import { makeExportsWorker } from './makeExportsWorker';
 import { exportToFile, loadFromLocalStorage, setInLocalStorage, removeFromLocalStorage } from '../../misc/utils';
 import { channel } from 'redux-saga';
-import { toExportFileConfig } from './toExportFileConfig';
+import { toWriteToFileConfig } from './toWriteToFileConfig';
 import { backupValidation } from '../../backupValidation';
 import { migrateBackup } from '../../backupMigrations';
 import { makeUniqueID } from '../../misc/makeUniqueID';
 import { toBackup } from '../../misc/toBackup';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 
-const exportFilesQueue = channel<ExportFileConfig>();
+const writeToFilesQueue = channel<WriteToFileConfig>();
 
 export function* applicationBroker() {
 	yield SE.spawn(
-		makeExports({
-			exportFilesQueue: exportFilesQueue,
+		makeExportsWorker({
+			exportFilesQueue: writeToFilesQueue,
 			makeUniqueID: makeUniqueID,
-			toExportFileConfig: toExportFileConfig,
+			toExportFileConfig: toWriteToFileConfig,
 		})
 	);
 	yield SE.spawn(
-		makeExportToFile({
-			exportFilesQueue: exportFilesQueue,
-			exportToFile: exportToFile,
+		makeWriteToFile({
+			writeToFilesQueue: writeToFilesQueue,
+			writeToFile: exportToFile,
 		})
 	);
 	yield SE.spawn(
-		makeLoadBackupWorker(setInLocalStorage, () =>
+		makeUploadBackupWorker(setInLocalStorage, () =>
 			window.confirm(
 				'Do you really want to load this backup? This action will overwrite your current state of the app! This action can not be undone!'
 			)

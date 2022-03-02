@@ -1,16 +1,17 @@
 import { channel } from 'redux-saga';
-import { makeExportToFile, ExportFileConfig } from './makeExportToFile';
+import { makeWriteToFile, WriteToFileConfig } from './makeWriteToFile';
 import { expectSaga } from 'redux-saga-test-plan';
 import { ErrorSet, ApplicationActionType } from '../../applicationState/actions';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
-describe(makeExportToFile.name, () => {
+describe(makeWriteToFile.name, () => {
 	const callback = jest.fn();
-	const queue = channel<ExportFileConfig>();
-	const itemInQueue1: ExportFileConfig = {
+	const queue = channel<WriteToFileConfig>();
+	const itemInQueue1: WriteToFileConfig = {
 		name: 'some.txt',
 		content: 'abc',
 	};
-	const itemInQueue2: ExportFileConfig = {
+	const itemInQueue2: WriteToFileConfig = {
 		name: 'other.txt',
 		content: 'def',
 	};
@@ -22,9 +23,9 @@ describe(makeExportToFile.name, () => {
 	});
 
 	test('given something in the queue, then calls export with expected', async () => {
-		const worker = makeExportToFile({
-			exportFilesQueue: queue,
-			exportToFile: callback,
+		const worker = makeWriteToFile({
+			writeToFilesQueue: queue,
+			writeToFile: callback,
 		});
 		await expectSaga(worker).run({ silenceTimeout: true });
 
@@ -33,16 +34,16 @@ describe(makeExportToFile.name, () => {
 	});
 
 	test('given exportFile fails, then puts error action', async () => {
-		const worker = makeExportToFile({
-			exportFilesQueue: queue,
-			exportToFile: () => {
+		const worker = makeWriteToFile({
+			writeToFilesQueue: queue,
+			writeToFile: () => {
 				throw Error('ANY');
 			},
 		});
 		await expectSaga(worker)
 			.put<ErrorSet>({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_WRITE_TO_FILE, Error('ANY')),
 			})
 			.run({ silenceTimeout: true });
 

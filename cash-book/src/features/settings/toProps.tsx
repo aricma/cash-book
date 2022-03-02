@@ -55,7 +55,7 @@ export const toSettingsViewProps = (): SettingsViewProps => {
 				placeholder: '',
 				onChange: (file) => {
 					dispatch({
-						type: ApplicationActionType.APPLICATION_BACKUP_LOAD,
+						type: ApplicationActionType.APPLICATION_BACKUP_UPLOAD,
 						file: file,
 					});
 				},

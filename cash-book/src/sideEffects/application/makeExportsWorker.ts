@@ -2,16 +2,17 @@ import * as SE from 'redux-saga/effects';
 import { ApplicationActionType, Export } from '../../applicationState/actions';
 import { ApplicationState, selectAppState } from '../../applicationState';
 import { Channel } from 'redux-saga';
-import { ExportFileConfig } from './makeExportToFile';
-import { ToExportFileConfig } from './toExportFileConfig';
+import { WriteToFileConfig } from './makeWriteToFile';
+import { ToExportFileConfig } from './toWriteToFileConfig';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 interface Request {
-	exportFilesQueue: Channel<ExportFileConfig>;
+	exportFilesQueue: Channel<WriteToFileConfig>;
 	makeUniqueID: () => string;
 	toExportFileConfig: ToExportFileConfig;
 }
 
-export const makeExports = (req: Request) => {
+export const makeExportsWorker = (req: Request) => {
 	return function* worker() {
 		while (true) {
 			try {
@@ -24,10 +25,10 @@ export const makeExports = (req: Request) => {
 				});
 				if (exportFileConfig === null) continue;
 				req.exportFilesQueue.put(exportFileConfig);
-			} catch (error) {
+			} catch (error: any) {
 				yield SE.put({
 					type: ApplicationActionType.APPLICATION_ERROR_SET,
-					error: error,
+					error: new CashBookError(CashBookErrorType.FAILED_TO_EXPORT, error),
 				});
 			}
 		}

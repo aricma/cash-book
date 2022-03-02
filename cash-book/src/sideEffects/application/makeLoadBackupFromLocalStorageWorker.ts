@@ -3,6 +3,7 @@ import * as TransactionsState from '../../features/transactions/state';
 import { ApplicationActionType, AccountsSet, BookEntriesSet, TransactionsSet } from '../../applicationState/actions';
 import { Validation } from '../../backupValidation/makeBackupValidation';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 export const INVALID_BACKUP_ERROR = 'Load Backup: given backup in local storage is in ';
 
@@ -30,7 +31,7 @@ export const makeLoadBackupFromLocalStorageWorker = (request: Request) => {
 				if (backupIsNotValid) {
 					yield SE.put({
 						type: ApplicationActionType.APPLICATION_ERROR_SET,
-						error: Error(INVALID_BACKUP_ERROR),
+						error: new CashBookError(CashBookErrorType.INVALID_BACKUP, Error(INVALID_BACKUP_ERROR)),
 					});
 					continue;
 				}
@@ -52,10 +53,10 @@ export const makeLoadBackupFromLocalStorageWorker = (request: Request) => {
 					bookEntries: migratedBackup.bookEntries,
 				});
 				yield SE.put({ type: ApplicationActionType.APPLICATION_DEFAULT_SET });
-			} catch (error) {
+			} catch (error: any) {
 				yield SE.put({
 					type: ApplicationActionType.APPLICATION_ERROR_SET,
-					error: error,
+					error: new CashBookError(CashBookErrorType.FAILED_TO_LOAD_BACKUP, error),
 				});
 			}
 		}

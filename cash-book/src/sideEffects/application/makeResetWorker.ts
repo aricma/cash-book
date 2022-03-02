@@ -1,5 +1,6 @@
 import * as SE from 'redux-saga/effects';
 import { ApplicationActionType } from '../../applicationState/actions';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 export const makeResetWorker = (clearLocalStorage: () => void, getUserConfirm: () => boolean) => {
 	return function* worker() {
@@ -26,10 +27,10 @@ export const makeResetWorker = (clearLocalStorage: () => void, getUserConfirm: (
 				yield SE.put({
 					type: ApplicationActionType.ROUTER_FALLBACK,
 				});
-			} catch (error) {
+			} catch (error: any) {
 				yield SE.put({
 					type: ApplicationActionType.APPLICATION_ERROR_SET,
-					error: error,
+					error: new CashBookError(CashBookErrorType.FAILED_TO_RESET, error),
 				});
 			}
 		}

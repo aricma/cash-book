@@ -1,19 +1,20 @@
 import { Export, ExportFileType, ExportPayloadType, ApplicationActionType } from '../../applicationState/actions';
 import { AccountType } from '../../features/accounts/state';
-import { ExportFileConfig } from './makeExportToFile';
+import { WriteToFileConfig } from './makeWriteToFile';
 import { channel, Channel } from 'redux-saga';
-import { makeExports } from './makeExports';
-import { toExportFileConfig } from './toExportFileConfig';
+import { makeExportsWorker } from './makeExportsWorker';
+import { toWriteToFileConfig } from './toWriteToFileConfig';
 import { toCSVContent, toJSONContent } from '../../misc/utils';
 import { latestVersion } from '../../backupMigrations';
 import { headline, INVALID_ROW_RESULT_MESSAGE } from './datev';
 import { expectSaga } from 'redux-saga-test-plan';
 import { partialApplicationState } from '../fixtures';
 import { ApplicationState } from '../../applicationState';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 const unique = 'UNIQUE';
 
-describe(toExportFileConfig.name, () => {
+describe(toWriteToFileConfig.name, () => {
 	describe(ExportPayloadType.ACCOUNTS, () => {
 		describe(ExportFileType.CSV, () => {
 			test('when called, then returns expected', () => {
@@ -24,7 +25,7 @@ describe(toExportFileConfig.name, () => {
 						fileType: ExportFileType.CSV,
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'accounts-UNIQUE.csv',
 					content: toCSVContent([
 						['id', 'name', 'type', 'number'],
@@ -35,7 +36,7 @@ describe(toExportFileConfig.name, () => {
 					]),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -53,12 +54,12 @@ describe(toExportFileConfig.name, () => {
 						fileType: ExportFileType.JSON,
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'accounts-UNIQUE.json',
 					content: toJSONContent(partialApplicationState.accounts.accounts),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -77,7 +78,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -97,7 +98,7 @@ describe(toExportFileConfig.name, () => {
 						fileType: ExportFileType.JSON,
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'transactions-UNIQUE.json',
 					content: toJSONContent({
 						templates: partialApplicationState.transactions.templates,
@@ -105,7 +106,7 @@ describe(toExportFileConfig.name, () => {
 					}),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -127,7 +128,7 @@ describe(toExportFileConfig.name, () => {
 						date: '2000-1-1',
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'book-entry-temp-1-2000-01-01-UNIQUE.csv',
 					content: toCSVContent([
 						headline,
@@ -135,7 +136,7 @@ describe(toExportFileConfig.name, () => {
 						['EUR', '-100,00', 'Trans 2', '0101', 'Acc B', '', '', '2000', '', '', '', '', ''],
 					]),
 				};
-				const result = toExportFileConfig({
+				const result = toWriteToFileConfig({
 					appState: partialApplicationState as any,
 					unique: unique,
 					action: action,
@@ -154,7 +155,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				const result = () =>
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -174,7 +175,7 @@ describe(toExportFileConfig.name, () => {
 						date: '2000-1-5',
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'book-entries-temp-1-2000-01-UNIQUE.csv',
 					content: toCSVContent([
 						headline,
@@ -191,7 +192,7 @@ describe(toExportFileConfig.name, () => {
 					]),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -210,7 +211,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				const result = () =>
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -230,12 +231,12 @@ describe(toExportFileConfig.name, () => {
 						date: '2000-1-1',
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'book-entry-temp-1-2000-01-01-UNIQUE.json',
 					content: toJSONContent(partialApplicationState.bookEntries.templates['1']['2000-1-1']),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -255,7 +256,7 @@ describe(toExportFileConfig.name, () => {
 						date: '2000-1-6',
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'book-entries-temp-1-2000-01-UNIQUE.json',
 					content: toJSONContent({
 						'2000-1-1': partialApplicationState.bookEntries.templates['1']['2000-1-1'],
@@ -264,7 +265,7 @@ describe(toExportFileConfig.name, () => {
 					}),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -292,7 +293,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: stateWithoutSelectedTemplateId as any,
 						unique: unique,
 						action: action,
@@ -311,7 +312,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action1,
@@ -328,7 +329,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action2,
@@ -350,7 +351,7 @@ describe(toExportFileConfig.name, () => {
 					},
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -370,7 +371,7 @@ describe(toExportFileConfig.name, () => {
 						fileType: ExportFileType.JSON,
 					},
 				};
-				const expected: ExportFileConfig = {
+				const expected: WriteToFileConfig = {
 					name: 'backup-UNIQUE.json',
 					content: toJSONContent({
 						__version__: latestVersion,
@@ -381,7 +382,7 @@ describe(toExportFileConfig.name, () => {
 					}),
 				};
 				expect(
-					toExportFileConfig({
+					toWriteToFileConfig({
 						appState: partialApplicationState as any,
 						unique: unique,
 						action: action,
@@ -402,7 +403,7 @@ describe(toExportFileConfig.name, () => {
 				},
 			};
 			expect(
-				toExportFileConfig({
+				toWriteToFileConfig({
 					appState: partialApplicationState as any,
 					unique: unique,
 					action: action,
@@ -412,7 +413,7 @@ describe(toExportFileConfig.name, () => {
 	});
 });
 
-describe(makeExports.name, () => {
+describe(makeExportsWorker.name, () => {
 	const action: Export = {
 		type: ApplicationActionType.APPLICATION_EXPORT,
 		payload: {
@@ -424,7 +425,7 @@ describe(makeExports.name, () => {
 	test('given exportFilesQueue returns not null, when called, then it puts the request in the queue', async () => {
 		// @ts-ignore
 		const queue = { put: jest.fn() } as Channel<any>;
-		const worker = makeExports({
+		const worker = makeExportsWorker({
 			exportFilesQueue: queue,
 			makeUniqueID: () => unique,
 			toExportFileConfig: () => ({
@@ -440,7 +441,7 @@ describe(makeExports.name, () => {
 	});
 
 	test('given getUnique fails, when called, then calls put with expected', async () => {
-		const worker = makeExports({
+		const worker = makeExportsWorker({
 			exportFilesQueue: channel<any>(),
 			makeUniqueID: () => {
 				throw Error('ANY');
@@ -454,7 +455,7 @@ describe(makeExports.name, () => {
 			.dispatch(action)
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_EXPORT, Error('ANY')),
 			})
 			.run({
 				silenceTimeout: true,
@@ -465,7 +466,7 @@ describe(makeExports.name, () => {
 	test('given exportFilesQueue returns null, when called, then it continues', async () => {
 		// @ts-ignore
 		const queue = { put: jest.fn() } as Channel<any>;
-		const worker = makeExports({
+		const worker = makeExportsWorker({
 			exportFilesQueue: queue,
 			makeUniqueID: () => unique,
 			toExportFileConfig: () => null,

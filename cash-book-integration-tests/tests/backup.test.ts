@@ -27,7 +27,7 @@ test.describe('Backup', () => {
 
 	test('upload invalid backup', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-invalid-v3_1.json');
-		await expect(page.locator('"Failed To Load Backup"')).toBeVisible();
+		await expect(page.locator('"Failed To Read/Validate The Backup"')).toBeVisible();
 		await expect(page.locator('button >> "Reset"')).toBeVisible();
 		await expect(page.locator('button >> "Download Backup"')).toBeVisible();
 		await expect(page.locator('button >> "Reload"')).toBeVisible();

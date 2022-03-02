@@ -1,7 +1,8 @@
 import { ApplicationActionType } from '../../applicationState/actions';
 import { expectSaga } from 'redux-saga-test-plan';
-import { makeLoadBackupWorker } from './makeLoadBackupWorker';
+import { makeUploadBackupWorker } from './makeUploadBackupWorker';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 const setLocalStorage = jest.fn();
 const getUserConsent = jest.fn();
@@ -11,7 +12,7 @@ beforeEach(() => {
 	getUserConsent.mockReset();
 });
 
-describe(makeLoadBackupWorker.name, () => {
+describe(makeUploadBackupWorker.name, () => {
 	const fileContent = 'abc';
 	const file = {
 		text: async () => fileContent,
@@ -19,9 +20,9 @@ describe(makeLoadBackupWorker.name, () => {
 
 	test('given user consent, when called, then sets local storage with given backup', async () => {
 		getUserConsent.mockReturnValue(true);
-		await expectSaga(makeLoadBackupWorker(setLocalStorage, getUserConsent))
+		await expectSaga(makeUploadBackupWorker(setLocalStorage, getUserConsent))
 			.dispatch({
-				type: ApplicationActionType.APPLICATION_BACKUP_LOAD,
+				type: ApplicationActionType.APPLICATION_BACKUP_UPLOAD,
 				file: file,
 			})
 			.put({
@@ -33,9 +34,9 @@ describe(makeLoadBackupWorker.name, () => {
 
 	test('given no consent by user, when called, then continues', async () => {
 		getUserConsent.mockReturnValue(false);
-		await expectSaga(makeLoadBackupWorker(setLocalStorage, getUserConsent))
+		await expectSaga(makeUploadBackupWorker(setLocalStorage, getUserConsent))
 			.dispatch({
-				type: ApplicationActionType.APPLICATION_BACKUP_LOAD,
+				type: ApplicationActionType.APPLICATION_BACKUP_UPLOAD,
 				file: file,
 			})
 			.run({ silenceTimeout: true });
@@ -47,14 +48,14 @@ describe(makeLoadBackupWorker.name, () => {
 		setLocalStorage.mockImplementation(() => {
 			throw Error('ANY');
 		});
-		await expectSaga(makeLoadBackupWorker(setLocalStorage, getUserConsent))
+		await expectSaga(makeUploadBackupWorker(setLocalStorage, getUserConsent))
 			.dispatch({
-				type: ApplicationActionType.APPLICATION_BACKUP_LOAD,
+				type: ApplicationActionType.APPLICATION_BACKUP_UPLOAD,
 				file: file,
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_UPLOAD_BACKUP, Error('ANY')),
 			})
 			.run({ silenceTimeout: true });
 	});

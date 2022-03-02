@@ -3,12 +3,13 @@ import { AccountType, Account } from '../features/accounts/state';
 import { TransactionType, TransactionsState } from '../features/transactions/state';
 import { Templates, CreateBookEntry } from '../features/bookEntries/state';
 import { SettingsState } from '../features/settings/state';
+import { CashBookError } from '../models/cashBookError';
 
 export enum ApplicationActionType {
 	APPLICATION_DEFAULT_SET = 'APPLICATION_ACTION_TYPE/DEFAULT/SET',
 	APPLICATION_LOADING_SET = 'APPLICATION_ACTION_TYPE/LOADING/SET',
 	APPLICATION_ERROR_SET = 'APPLICATION_ACTION_TYPE/ERROR/SET',
-	APPLICATION_BACKUP_LOAD = 'APPLICATION_ACTION_TYPE/BACKUP/LOAD',
+	APPLICATION_BACKUP_UPLOAD = 'APPLICATION_ACTION_TYPE/BACKUP/UPLOAD',
 	APPLICATION_LOAD = 'APPLICATION_ACTION_TYPE/LOAD',
 	APPLICATION_SET = 'APPLICATION_ACTION_TYPE/SET',
 	APPLICATION_SAVE = 'APPLICATION_ACTION_TYPE/SAVE',
@@ -83,8 +84,8 @@ export type ApplicationAction =
 export type Misc = LoadBackup | Load | Set | Save | Reset | DefaultSet | LoadingSet | ErrorSet | Export;
 export type DefaultSet = Action<ApplicationActionType.APPLICATION_DEFAULT_SET>;
 export type LoadingSet = Action<ApplicationActionType.APPLICATION_LOADING_SET>;
-export type ErrorSet = Action<ApplicationActionType.APPLICATION_ERROR_SET, { error: Error }>;
-export type LoadBackup = Action<ApplicationActionType.APPLICATION_BACKUP_LOAD, { file: File }>;
+export type ErrorSet = Action<ApplicationActionType.APPLICATION_ERROR_SET, { error: CashBookError }>;
+export type LoadBackup = Action<ApplicationActionType.APPLICATION_BACKUP_UPLOAD, { file: File }>;
 export type Load = Action<ApplicationActionType.APPLICATION_LOAD>;
 export type Set = Action<ApplicationActionType.APPLICATION_SET, { state: any }>;
 export type Save = Action<ApplicationActionType.APPLICATION_SAVE>;

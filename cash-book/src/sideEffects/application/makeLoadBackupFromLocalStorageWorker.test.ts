@@ -5,6 +5,7 @@ import { TransactionType } from '../../features/transactions/state';
 import { LatestVersion, latestVersion } from '../../backupMigrations';
 import { expectSaga } from 'redux-saga-test-plan';
 import { makeLoadBackupFromLocalStorageWorker, INVALID_BACKUP_ERROR } from './makeLoadBackupFromLocalStorageWorker';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 const getFromLocalStorage = jest.fn();
 const parseJSON = jest.fn();
@@ -55,7 +56,7 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_LOAD_BACKUP, Error('ANY')),
 			})
 			.run({ silenceTimeout: true });
 	});
@@ -75,7 +76,7 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_LOAD_BACKUP, Error('ANY')),
 			})
 			.run({ silenceTimeout: true });
 	});
@@ -96,7 +97,7 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error(INVALID_BACKUP_ERROR),
+				error: new CashBookError(CashBookErrorType.INVALID_BACKUP, Error(INVALID_BACKUP_ERROR)),
 			})
 			.run({ silenceTimeout: true });
 	});
@@ -115,7 +116,7 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error(INVALID_BACKUP_ERROR),
+				error: new CashBookError(CashBookErrorType.INVALID_BACKUP, Error(INVALID_BACKUP_ERROR)),
 			})
 			.run({ silenceTimeout: true });
 	});
@@ -312,7 +313,7 @@ describe(makeLoadBackupFromLocalStorageWorker.name, () => {
 			})
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_LOAD_BACKUP, Error('ANY')),
 			})
 			.run({ silenceTimeout: true });
 	});

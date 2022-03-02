@@ -5,6 +5,7 @@ import { makeSaveBackupToLocalStorage } from './makeSaveBackupToLocalStorage';
 import { expectSaga } from 'redux-saga-test-plan';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 import { selectAppState } from '../../applicationState';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 describe(makeSaveBackupToLocalStorage.name, () => {
 	const actions = [
@@ -100,7 +101,7 @@ describe(makeSaveBackupToLocalStorage.name, () => {
 			.provide([[SE.select(selectAppState), appState]])
 			.put({
 				type: ApplicationActionType.APPLICATION_ERROR_SET,
-				error: Error('ANY'),
+				error: new CashBookError(CashBookErrorType.FAILED_TO_SAVE_BACKUP_TO_LOCAL_STORAGE, Error('ANY')),
 			})
 			.run({ silenceTimeout: true, timeout: 250 });
 	});

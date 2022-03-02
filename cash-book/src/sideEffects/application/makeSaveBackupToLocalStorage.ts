@@ -3,6 +3,7 @@ import { ApplicationActionType } from '../../applicationState/actions';
 import { SettingsSaveType } from '../../features/settings/state';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 import { ApplicationState, selectAppState } from '../../applicationState';
+import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 export const makeSaveBackupToLocalStorage = (
 	setInLocalStorage: (key: string, value: string) => void,
@@ -51,10 +52,10 @@ export const makeSaveBackupToLocalStorage = (
 					const value = JSON.stringify(backup);
 					setInLocalStorage(LOCAL_STORAGE_KEY, value);
 				}
-			} catch (error) {
+			} catch (error: any) {
 				yield SE.put({
 					type: ApplicationActionType.APPLICATION_ERROR_SET,
-					error: error,
+					error: new CashBookError(CashBookErrorType.FAILED_TO_SAVE_BACKUP_TO_LOCAL_STORAGE, error),
 				});
 			}
 		}

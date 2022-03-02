@@ -1,5 +1,13 @@
 import { test, expect } from '@playwright/test';
-import {makeCreateBookEntry, uploadBackup, select, expectFilesToBeEqual, download, readFile, fillInput} from '../utils';
+import {
+	makeCreateBookEntry,
+	uploadBackup,
+	select,
+	expectFilesToBeEqual,
+	download,
+	readFile,
+	fillInput,
+} from '../utils';
 import { PAGE_URL } from '../environment';
 
 test.describe('BookEntries', () => {
@@ -51,7 +59,7 @@ test.describe('BookEntries', () => {
 		await page.goto(PAGE_URL + '/book-entries');
 		await select(page)('Set Template', 'Nikolassee');
 
-		await page.locator('button >> "Edit"').nth(0).click()
+		await page.locator('button >> "Edit"').nth(0).click();
 
 		await fillInput(page)('Privat', '50');
 		await page.locator('#difference-account-message-id >> input[type="checkbox"]').click();

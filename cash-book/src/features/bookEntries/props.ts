@@ -66,6 +66,7 @@ export interface BookEntryDayViewProps {
 		diff: string;
 	};
 	entries: Array<DataBookEntryViewProps | ErrorBookEnrtyViewProps>;
+	error?: string;
 }
 
 export interface DataBookEntryViewProps {

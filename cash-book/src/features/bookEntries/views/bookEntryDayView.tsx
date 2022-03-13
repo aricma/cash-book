@@ -21,9 +21,14 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 		<Disclosure>
 			{({ open }) => (
 				<>
-					<div className="w-full block button button-xs flex items-center space-x-2">
+					<div data-test-id="book-entry" className="w-full block button button-xs flex items-center space-x-2">
 						<Disclosure.Button className="flex-grow flex items-center justify-between space-x-2">
-							<p className="font-medium">{props.date}</p>
+							<p className="font-medium flex items-center space-x-2">
+								<span>{props.date}</span>
+								{props.error && (
+									<Icon type={IconType.EXCLAMATION_FILL} className="w-5 h-5 text-orange-500 dark:text-orange-200" />
+								)}
+							</p>
 							<Icon type={open ? IconType.CHEVRON_DOWN_FILL : IconType.CHEVRON_LEFT_FILL} className="w-5 h-5" />
 						</Disclosure.Button>
 						<button type="button" onClick={props.edit.onSelect} className="">
@@ -36,6 +41,7 @@ export const BookEntryDayView: React.FC<BookEntryDayViewProps> = (props) => {
 						</button>
 					</div>
 					<Disclosure.Panel className="space-y-4">
+						{props.error && <p className="ml-2 text-orange-500 dark:text-orange-200">{props.error}</p>}
 						<p className="ml-2 text-blue-900 dark:text-blue-300 font-medium">Cash Station information</p>
 						<div className="grid grid-cols-5 gap-2">
 							{cashInformation.map((props, index) => (

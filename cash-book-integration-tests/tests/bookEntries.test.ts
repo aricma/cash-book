@@ -71,6 +71,32 @@ test.describe('BookEntries', () => {
 		await expect(page.locator('#difference-account-aggregation >> "-80.73"')).toBeVisible();
 	});
 
+	test('invalid bookEntry', async ({ page }) => {
+		await uploadBackup(page)('./fixtures/backup-invalid-book-entry-v3_1.json');
+
+		await page.goto(PAGE_URL + '/book-entries');
+		await select(page)('Set Template', 'Mitte');
+
+		await expect(page.locator('#difference-account-aggregation >> "-8.48"')).toBeVisible();
+
+		await page
+			.locator(
+				'div[data-test-id="book-entry"]:has-text("Mittwoch, 2. Februar 2022") >> svg[type="ICON_TYPE/EXCLAMATION/FILL"]'
+			)
+			.isVisible();
+
+		await page.locator('div[data-test-id="book-entry"]:has-text("Mittwoch, 2. Februar 2022") >> "Edit"').click();
+
+		await page.locator('#difference-account-message-id >> input[type="checkbox"]').click();
+
+		await page.locator('button >> "Submit"').click();
+
+		await page.locator('button >> "Yes"').click();
+
+		const path = await download(page)(page.locator('button >> "Export"').nth(0));
+		expectFilesToBeEqual(path, './fixtures/export-datev-feb.csv');
+	});
+
 	test('export month', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-v3_1.json');
 

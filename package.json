@@ -3,6 +3,10 @@
 	"description": "the aricma mono repo for all the aricma projects",
 	"private": true,
 	"scripts": {
+		"ci:cash-book": "cd $PWD/cash-book && yarn ci",
+		"ci:cash-book-integration-tests": "cd $PWD/cash-book-integrattion-tests && yarn ci",
+		"preci": "yarn prettify",
+		"ci": "yarn ci:cash-book && yarn ci:cash-book-integration-tests",
 		"prettify": "prettier --write .",
 		"pretty": "prettier --check ."
 	},

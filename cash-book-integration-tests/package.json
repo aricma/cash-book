@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"ci": "export CI=true && yarn test",
 		"test": "npx playwright test",
 		"report": "npx playwright show-report"
 	},

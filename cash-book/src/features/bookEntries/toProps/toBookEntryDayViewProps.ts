@@ -60,8 +60,32 @@ export const toBookEntryDayViewProps = (appState: ApplicationState, bookEntry: B
 			diff: toDiffInfo(appState, bookEntry),
 		},
 		entries: toBookEntryViewProps(appState, bookEntry),
+		error: toErrorMessage(appState, bookEntry),
 	};
 };
+
+const toErrorMessage = (appState: ApplicationState, bookEntry: BookEntry): string | undefined => {
+	const result = Object.entries(bookEntry.transactions).reduce((sum: number, [transactionId, value]): number => {
+		switch (appState.transactions.transactions[transactionId].type) {
+			case TransactionType.SYS_IN:
+			case TransactionType.IN:
+				return sum + CurrencyInt.fromStringOr(value, 0);
+			case TransactionType.SYS_OUT:
+			case TransactionType.OUT:
+				return sum - CurrencyInt.fromStringOr(value, 0);
+			default:
+				return sum;
+		}
+	}, 0);
+	if (result === 0) {
+		return undefined;
+	} else {
+		return FALSE_RESULT_ERROR_MESSAGE(CurrencyInt.toString(result));
+	}
+};
+
+const FALSE_RESULT_ERROR_MESSAGE = (value: string) =>
+	`This day has an insufficient difference transaction. The day ends with a balance of ${value}. Please check the values for this day.`;
 
 const toBookEntryViewProps = (appState: ApplicationState, bookEntry: BookEntry) => {
 	const template = appState.transactions.templates[bookEntry.templateId];

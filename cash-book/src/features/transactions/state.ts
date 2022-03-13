@@ -10,10 +10,12 @@ export interface TransactionsState {
 	templates: {
 		[templateId: string]: Template;
 	};
-	transactions: {
-		[transactionId: string]: Transaction;
-	};
+	transactions: Transactions;
 }
+
+export type Transactions = {
+	[transactionId: string]: Transaction;
+};
 
 export interface CreateTemplate {
 	id?: string;

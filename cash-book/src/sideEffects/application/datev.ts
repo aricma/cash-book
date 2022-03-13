@@ -50,8 +50,6 @@ export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Ar
 								throw Error('Unknown TransactionType: ' + transaction.type);
 						}
 					}
-					case 2:
-						return transaction.name;
 					case 3: {
 						const date = DateWithoutTime.fromString(req.bookEntry.date);
 						const day = date.getDate();
@@ -62,6 +60,8 @@ export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Ar
 						return account.name;
 					case 7:
 						return account.number;
+					case 12:
+						return transaction.name;
 					default:
 						return placeholder;
 				}

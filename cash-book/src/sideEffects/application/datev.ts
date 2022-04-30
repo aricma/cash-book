@@ -57,11 +57,9 @@ export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Ar
 						return pad(day, 2) + pad(month, 2);
 					}
 					case 4:
-						return account.name;
+						return account.name + ', ' + transaction.name;
 					case 7:
 						return account.number;
-					case 12:
-						return transaction.name;
 					default:
 						return placeholder;
 				}

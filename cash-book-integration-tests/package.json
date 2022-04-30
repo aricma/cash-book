@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"postinstall": "npx playwright install",
 		"ci": "export CI=true && yarn test",
 		"test": "npx playwright test",
 		"report": "npx playwright show-report"
@@ -12,6 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@playwright/test": "^1.19.2"
+		"@playwright/test": "^1.21.1",
+		"postinstall": "^0.7.4"
 	}
 }

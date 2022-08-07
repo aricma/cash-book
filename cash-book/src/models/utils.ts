@@ -77,7 +77,7 @@ export const getLastDateOfTheWeek = (date: Date): Date => {
 	const currentWeekDay = date.getDay();
 	switch (currentWeekDay) {
 		case 0:
-			return date;
+			return addDays(date, 1);
 		case 1:
 			return addDays(date, 6);
 		default:

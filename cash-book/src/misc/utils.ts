@@ -56,3 +56,8 @@ export const bookEntriesForMonth = (date: Date, bookEntries: BookEntries): BookE
 export const toLowerCaseWithDashes = (value: string): string => {
 	return value.replace(/[\s_]+/, '-').toLowerCase();
 };
+
+export const scrollToTheTop = () => {
+	document.body.scrollTop = 0;
+	document.documentElement.scrollTop = 0;
+};

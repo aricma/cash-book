@@ -1,13 +1,5 @@
 import { test, expect } from '@playwright/test';
-import {
-	makeCreateBookEntry,
-	uploadBackup,
-	select,
-	expectFilesToBeEqual,
-	download,
-	readFile,
-	fillInput,
-} from '../utils';
+import { makeCreateBookEntry, uploadBackup, select, expectFilesToBeEqual, download, fillInput } from '../utils';
 import { PAGE_URL } from '../environment';
 
 test.describe('BookEntries', () => {

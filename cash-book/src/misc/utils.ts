@@ -48,7 +48,7 @@ export const bookEntriesForMonth = (date: Date, bookEntries: BookEntries): BookE
 	return Object.fromEntries(
 		Object.entries(bookEntries).filter(([date, _]) => {
 			const currentDate = DateWithoutTime.fromString(date).getTime();
-			return fromDate <= currentDate && currentDate < toDate;
+			return fromDate <= currentDate && currentDate <= toDate;
 		})
 	);
 };

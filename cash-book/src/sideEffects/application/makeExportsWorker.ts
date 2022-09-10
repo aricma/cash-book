@@ -3,13 +3,13 @@ import { ApplicationActionType, Export } from '../../applicationState/actions';
 import { ApplicationState, selectAppState } from '../../applicationState';
 import { Channel } from 'redux-saga';
 import { WriteToFileConfig } from './makeWriteToFile';
-import { ToExportFileConfig } from './toWriteToFileConfig';
+import { ToWriteToFileConfig } from './toWriteToFileConfig';
 import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 interface Request {
 	exportFilesQueue: Channel<WriteToFileConfig>;
 	makeUniqueID: () => string;
-	toExportFileConfig: ToExportFileConfig;
+	toExportFileConfig: ToWriteToFileConfig;
 }
 
 export const makeExportsWorker = (req: Request) => {

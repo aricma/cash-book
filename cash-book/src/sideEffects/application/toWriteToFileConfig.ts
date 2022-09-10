@@ -13,13 +13,13 @@ import { latestVersion } from '../../backupMigrations';
 import { headline, bookEntryToDatevRows, validateDatevRows } from './datev';
 import { DateWithoutTime } from '../../models/dateWithoutTime';
 
-interface Request {
+export interface ToWriteToFileConfigRequest {
 	appState: ApplicationState;
 	unique: string;
 	action: Export;
 }
-export type ToExportFileConfig = (req: Request) => WriteToFileConfig | null;
-export const toWriteToFileConfig: ToExportFileConfig = (req) => {
+export type ToWriteToFileConfig = (req: ToWriteToFileConfigRequest) => WriteToFileConfig | null;
+export const toWriteToFileConfig: ToWriteToFileConfig = (req) => {
 	switch (req.action.payload.type) {
 		case ExportPayloadType.ACCOUNTS:
 			switch (req.action.payload.fileType) {

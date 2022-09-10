@@ -14,12 +14,12 @@ export interface WriteToFileConfig {
 	content: string;
 }
 
-interface Request {
+export interface MakeWriteToFileRequest {
 	writeToFilesQueue: Channel<WriteToFileConfig>;
 	writeToFile: (content: string, name: string) => void;
 }
 
-export const makeWriteToFile = (req: Request) => {
+export const makeWriteToFile = (req: MakeWriteToFileRequest) => {
 	return function* worker() {
 		while (true) {
 			try {

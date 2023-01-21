@@ -1,6 +1,6 @@
 import { Account } from '../../features/accounts/state';
 import { BookEntry } from '../../features/bookEntries/state';
-import { TransactionType, Transaction } from '../../features/transactions/state';
+import { Transaction, TransactionType } from '../../features/transactions/state';
 import { DateWithoutTime } from '../../models/dateWithoutTime';
 import { CurrencyInt } from '../../models/currencyInt';
 import { pad } from '../../models/utils';
@@ -27,44 +27,66 @@ interface BookEntryToDatevRowsRequest {
 	accounts: { [key: string]: Account };
 }
 
+interface AccountTransactionValue {
+	transaction: Transaction;
+	account: Account;
+	value: string;
+}
+
 export const bookEntryToDatevRows = (req: BookEntryToDatevRowsRequest): Array<Array<string>> => {
-	return Object.entries(req.bookEntry.transactions).map(([transactionId, value]) => {
-		const transaction = req.transactions[transactionId];
-		const account = req.accounts[transaction.accountId];
-		return Array(headline.length)
-			.fill('')
-			.map((placeholder, index) => {
-				switch (index) {
-					case 0:
-						return 'EUR';
-					case 1: {
-						const parsedValue = value.replace('.', ',');
-						switch (transaction.type) {
-							case TransactionType.IN:
-							case TransactionType.SYS_IN:
-								return '+' + parsedValue;
-							case TransactionType.OUT:
-							case TransactionType.SYS_OUT:
-								return '-' + parsedValue;
-							default:
-								throw Error('Unknown TransactionType: ' + transaction.type);
+	return Object.entries(req.bookEntry.transactions)
+		.map(([transactionId, value]): AccountTransactionValue => {
+			const transaction = req.transactions[transactionId];
+			const account = req.accounts[transaction.accountId];
+			return { transaction, account, value };
+		})
+		.sort((a, b) => {
+			switch (true) {
+				case (a.transaction.type === TransactionType.IN || a.transaction.type === TransactionType.SYS_IN) &&
+					(b.transaction.type === TransactionType.OUT || b.transaction.type === TransactionType.SYS_OUT):
+					return -1;
+				case (a.transaction.type === TransactionType.OUT || a.transaction.type === TransactionType.SYS_OUT) &&
+					(b.transaction.type === TransactionType.IN || b.transaction.type === TransactionType.SYS_IN):
+					return 1;
+				default:
+					return 0;
+			}
+		})
+		.map(({ transaction, account, value }) => {
+			return Array(headline.length)
+				.fill('')
+				.map((placeholder, index) => {
+					switch (index) {
+						case 0:
+							return 'EUR';
+						case 1: {
+							const parsedValue = value.replace('.', ',');
+							switch (transaction.type) {
+								case TransactionType.IN:
+								case TransactionType.SYS_IN:
+									return '+' + parsedValue;
+								case TransactionType.OUT:
+								case TransactionType.SYS_OUT:
+									return '-' + parsedValue;
+								default:
+									throw Error('Unknown TransactionType: ' + transaction.type);
+							}
 						}
+						case 3: {
+							const date = DateWithoutTime.fromString(req.bookEntry.date);
+							const day = date.getDate();
+							const month = date.getMonth() + 1;
+							return pad(day, 2) + pad(month, 2);
+						}
+						case 4:
+							return account.name + ', ' + transaction.name;
+						case 7:
+							return account.number;
+						default:
+							return placeholder;
 					}
-					case 3: {
-						const date = DateWithoutTime.fromString(req.bookEntry.date);
-						const day = date.getDate();
-						const month = date.getMonth() + 1;
-						return pad(day, 2) + pad(month, 2);
-					}
-					case 4:
-						return account.name + ', ' + transaction.name;
-					case 7:
-						return account.number;
-					default:
-						return placeholder;
-				}
-			});
-	});
+				});
+		});
 };
 
 export const validateDatevRows = (rows: Array<Array<string>>): string | null => {

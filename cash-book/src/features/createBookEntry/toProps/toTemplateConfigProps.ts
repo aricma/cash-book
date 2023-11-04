@@ -154,6 +154,10 @@ export const toTemplateConfigProps = (req: ToTemplateConfigPropsRequest): Create
 						transactionId: transaction.id,
 						value: newValue,
 					});
+					req.dispatch({
+						type: ApplicationActionType.BOOK_ENTRIES_CREATE_REMOVE_DIFF_TRANSACTION,
+						templateId: template.id,
+					});
 				},
 			};
 		}),

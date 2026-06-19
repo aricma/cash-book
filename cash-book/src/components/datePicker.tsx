@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonProps, DisabledButtonProps, WithClasses } from '../models/props';
+import { ButtonProps, DisabledButtonProps, WithClasses, WithChildren } from '../models/props';
 import { Icon } from './icons';
 
 export interface DatePickerProps {
@@ -102,13 +102,15 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => {
 	);
 };
 
-const Button: React.FC<ButtonProps & WithClasses> = (props) => (
+
+
+const Button: React.FC<ButtonProps & WithClasses & WithChildren> = (props) => (
 	<button type="button" onClick={props.onSelect} className={props.className}>
 		{props.children}
 	</button>
 );
 
-const DisabledButton: React.FC<DisabledButtonProps & WithClasses> = (props) => (
+const DisabledButton: React.FC<DisabledButtonProps & WithClasses & WithChildren> = (props) => (
 	<button type="button" disabled className={props.className}>
 		{props.children}
 	</button>

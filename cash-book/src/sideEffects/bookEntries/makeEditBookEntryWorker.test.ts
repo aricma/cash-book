@@ -147,7 +147,7 @@ describe(makeEditBookEntryWorker.name, () => {
 	});
 
 	test('when called and fails, then sets error in state', async () => {
-		const fakeEditBookEntryReducer = jest.fn(() => {
+		const fakeEditBookEntryReducer = vi.fn(() => {
 			throw Error('ANY');
 		});
 		await expectSaga(makeEditBookEntryWorker(fakeEditBookEntryReducer))

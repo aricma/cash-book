@@ -9,8 +9,8 @@ import { DOCS_SUPPORT } from '../../variables/externalLinks';
 
 describe(makeGoToWorker.name, () => {
 	test('when called, then calls goTo and scrollToTheTop', async () => {
-		const goTo = jest.fn();
-		const scrollToTheTop = jest.fn();
+		const goTo = vi.fn();
+		const scrollToTheTop = vi.fn();
 		const action: RouterGoTo = {
 			type: ApplicationActionType.ROUTER_GO_TO,
 			path: 'ANY',
@@ -23,8 +23,8 @@ describe(makeGoToWorker.name, () => {
 	});
 
 	test('given ROUTES_SUPPORT, when called, then calls goToExternal with DOCS_SUPPORT', async () => {
-		const goToExternal = jest.fn();
-		const scrollToTheTop = jest.fn();
+		const goToExternal = vi.fn();
+		const scrollToTheTop = vi.fn();
 		const action: RouterGoTo = {
 			type: ApplicationActionType.ROUTER_GO_TO,
 			path: ROUTES_SUPPORT,

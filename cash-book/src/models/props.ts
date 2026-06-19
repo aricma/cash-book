@@ -40,6 +40,10 @@ export interface WithClasses {
 	className: string;
 }
 
+export interface WithChildren {
+  children?: React.ReactNode;
+};
+
 export interface TextInputProps {
 	type: 'TEXT_INPUT_PROPS_TYPE';
 	label?: string;

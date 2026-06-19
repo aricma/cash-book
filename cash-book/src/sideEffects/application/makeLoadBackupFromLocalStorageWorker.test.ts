@@ -7,10 +7,10 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { makeLoadBackupFromLocalStorageWorker, INVALID_BACKUP_ERROR } from './makeLoadBackupFromLocalStorageWorker';
 import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
-const getFromLocalStorage = jest.fn();
-const parseJSON = jest.fn();
-const migrateBackup = jest.fn();
-const backupValidation = jest.fn();
+const getFromLocalStorage = vi.fn();
+const parseJSON = vi.fn();
+const migrateBackup = vi.fn();
+const backupValidation = vi.fn();
 
 beforeEach(() => {
 	getFromLocalStorage.mockReset();

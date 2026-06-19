@@ -11,7 +11,7 @@ export const CreateTemplateView: React.FC<CreateTemplateViewProps> = (props) => 
 		<div className="flex-shrink-0 p-4">
 			<Header
 				title={props.title}
-				right={() => (
+				right={(
 					<div className="flex items-center justify-end">
 						<button type="button" onClick={props.close.onSelect} className="link link-sm">
 							{props.close.icon && <Icon type={props.close.icon} className="w-5 h-5" />}

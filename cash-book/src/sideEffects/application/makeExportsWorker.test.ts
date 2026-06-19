@@ -424,7 +424,7 @@ describe(makeExportsWorker.name, () => {
 
 	test('given exportFilesQueue returns not null, when called, then it puts the request in the queue', async () => {
 		// @ts-ignore
-		const queue = { put: jest.fn() } as Channel<any>;
+		const queue = { put: vi.fn() } as Channel<any>;
 		const worker = makeExportsWorker({
 			exportFilesQueue: queue,
 			makeUniqueID: () => unique,
@@ -465,7 +465,7 @@ describe(makeExportsWorker.name, () => {
 
 	test('given exportFilesQueue returns null, when called, then it continues', async () => {
 		// @ts-ignore
-		const queue = { put: jest.fn() } as Channel<any>;
+		const queue = { put: vi.fn() } as Channel<any>;
 		const worker = makeExportsWorker({
 			exportFilesQueue: queue,
 			makeUniqueID: () => unique,

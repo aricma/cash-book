@@ -5,7 +5,7 @@ import { ErrorSet, ApplicationActionType } from '../../applicationState/actions'
 import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
 describe(makeWriteToFile.name, () => {
-	const callback = jest.fn();
+	const callback = vi.fn();
 	const queue = channel<WriteToFileConfig>();
 	const itemInQueue1: WriteToFileConfig = {
 		name: 'some.txt',

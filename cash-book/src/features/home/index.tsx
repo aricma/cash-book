@@ -19,7 +19,6 @@ export const Home: React.FC = () => {
 			}
 		}, timeouts[loading]);
 		return () => clearTimeout(sleep);
-		// eslint-disable-next-line
 	}, [loading]);
 
 	return (

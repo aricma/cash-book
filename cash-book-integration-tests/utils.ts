@@ -4,6 +4,30 @@ import * as fs from 'fs';
 import * as Path from 'path';
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const visibleInputByPlaceholder = (page: Page, placeholder: string) =>
+	page.locator('#modals').locator(`input[placeholder="${placeholder}"]:visible`).last();
+
+const selectOption =
+	(page: Page) =>
+	async (selectLabel: string, option: string): Promise<void> => {
+		const button = page.getByRole('button', { name: selectLabel, exact: true }).last();
+		await button.click();
+
+		const options = page.getByRole('option');
+		await expect(options.first()).toBeVisible();
+		const optionTitles = (await options.allTextContents()).map((value) => value.trim());
+		const optionIndex = optionTitles.indexOf(option);
+		if (optionIndex < 0) throw Error(`Option not found: ${option}`);
+
+		await page.keyboard.press('Home');
+		for (let i = 0; i < optionIndex; i++) {
+			await page.keyboard.press('ArrowDown');
+		}
+		await page.keyboard.press('Enter');
+		await expect(page.getByRole('button', { name: option, exact: true }).last()).toBeVisible();
+	};
+
 export const makeCreateAccount = (page: Page) => async (type: string, name: string, number: string) => {
 	await page.waitForURL(PAGE_URL + '/accounts');
 
@@ -11,16 +35,14 @@ export const makeCreateAccount = (page: Page) => async (type: string, name: stri
 	await expect(page.getByRole('heading', { name: 'Create Account', exact: true })).toBeVisible();
 
 	if (type !== 'Default') {
-		await page.getByRole('button', { name: 'Default', exact: true }).click();
-		await page.getByRole('option', { name: type, exact: true }).click();
-		await expect(page.getByRole('button', { name: type, exact: true })).toBeVisible();
+		await selectOption(page)('Default', type);
 	}
 
-	const nameInput = page.getByPlaceholder('e.g. Bank').last();
+	const nameInput = visibleInputByPlaceholder(page, 'e.g. Bank');
 	await nameInput.fill(name);
 	await expect(nameInput).toHaveValue(name);
 
-	const numberInput = page.getByPlaceholder('e.g. 1500').last();
+	const numberInput = visibleInputByPlaceholder(page, 'e.g. 1500');
 	await numberInput.fill(number);
 	await expect(numberInput).toHaveValue(number);
 
@@ -138,9 +160,7 @@ export const expectJsonFilesToBeEqual = (pathToFile: string, pathToExpectedFile:
 };
 
 export const select = (page: Page) => async (select: string, option: string) => {
-	await page.getByRole('button', { name: select, exact: true }).click();
-	await page.getByRole('option', { name: option, exact: true }).click();
-	await expect(page.getByRole('button', { name: option, exact: true })).toBeVisible();
+	await selectOption(page)(select, option);
 };
 
 export const fillInput =

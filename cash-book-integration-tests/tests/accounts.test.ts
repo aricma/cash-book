@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { PAGE_URL } from '../environment';
-import { makeCreateAccount, uploadBackup } from '../utils';
+import { makeCreateAccount, uploadBackup, select } from '../utils';
 
 test.describe('Accounts', () => {
 	test('create account', async ({ page }) => {
@@ -18,14 +18,13 @@ test.describe('Accounts', () => {
 		await page.goto(PAGE_URL + '/accounts');
 		await page.locator('[data-test-id="account"]:has-text("Kassendifferenz")').getByRole('button', { name: 'Edit', exact: true }).click();
 
-		await page.getByRole('button', { name: 'Difference', exact: true }).click();
-		await page.getByRole('option', { name: 'Cashier', exact: true }).click();
+		await select(page)('Difference', 'Cashier');
 
-		const nameInput = page.getByPlaceholder('e.g. Bank');
+		const nameInput = page.locator('#modals').locator('input[placeholder="e.g. Bank"]:visible').last();
 		await nameInput.fill('Cash Station 001');
 		await expect(nameInput).toHaveValue('Cash Station 001');
 
-		const numberInput = page.getByPlaceholder('e.g. 1500');
+		const numberInput = page.locator('#modals').locator('input[placeholder="e.g. 1500"]:visible').last();
 		await numberInput.fill('7000');
 		await expect(numberInput).toHaveValue('7000');
 

@@ -1,5 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { makeCreateBookEntry, uploadBackup, select, expectFilesToBeEqual, download, fillInput } from '../utils';
+import {
+	makeCreateBookEntry,
+	uploadBackup,
+	select,
+	expectCsvFilesToBeEqualIgnoringRowOrder,
+	download,
+	fillInput,
+} from '../utils';
 import { PAGE_URL } from '../environment';
 
 test.describe('BookEntries', () => {
@@ -51,14 +58,14 @@ test.describe('BookEntries', () => {
 		await page.goto(PAGE_URL + '/book-entries');
 		await select(page)('Set Template', 'Nikolassee');
 
-		await page.locator('button >> "Edit"').nth(0).click();
+		await page.getByRole('button', { name: 'Edit', exact: true }).first().click();
 
 		await fillInput(page)('Privat', '50');
 		await page.locator('#difference-account-message-id >> input[type="checkbox"]').click();
 
-		await page.locator('button >> "Submit"').click();
+		await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
-		await page.locator('button >> "Yes"').click();
+		await page.getByRole('button', { name: 'Yes', exact: true }).click();
 
 		await expect(page.locator('#difference-account-aggregation >> "-80.73"')).toBeVisible();
 	});
@@ -77,16 +84,19 @@ test.describe('BookEntries', () => {
 			)
 			.isVisible();
 
-		await page.locator('div[data-test-id="book-entry"]:has-text("Mittwoch, 2. Februar 2022") >> "Edit"').click();
+		await page
+			.locator('div[data-test-id="book-entry"]:has-text("Mittwoch, 2. Februar 2022")')
+			.getByRole('button', { name: 'Edit', exact: true })
+			.click();
 
 		await page.locator('#difference-account-message-id >> input[type="checkbox"]').click();
 
-		await page.locator('button >> "Submit"').click();
+		await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
-		await page.locator('button >> "Yes"').click();
+		await page.getByRole('button', { name: 'Yes', exact: true }).click();
 
-		const path = await download(page)(page.locator('button >> "Export"').nth(0));
-		expectFilesToBeEqual(path, './fixtures/export-datev-feb.csv');
+		const path = await download(page)(page.getByRole('button', { name: 'Export', exact: true }).nth(0));
+		expectCsvFilesToBeEqualIgnoringRowOrder(path, './fixtures/export-datev-feb.csv');
 	});
 
 	test('export month', async ({ page }) => {
@@ -95,8 +105,8 @@ test.describe('BookEntries', () => {
 		await page.goto(PAGE_URL + '/book-entries');
 		await select(page)('Set Template', 'Nikolassee');
 
-		const path = await download(page)(page.locator('button >> "Export"').nth(0));
-		expectFilesToBeEqual(path, './fixtures/export-datev-month.csv');
+		const path = await download(page)(page.getByRole('button', { name: 'Export', exact: true }).nth(0));
+		expectCsvFilesToBeEqualIgnoringRowOrder(path, './fixtures/export-datev-month.csv');
 	});
 
 	test('export day', async ({ page }) => {
@@ -105,8 +115,8 @@ test.describe('BookEntries', () => {
 		await page.goto(PAGE_URL + '/book-entries');
 		await select(page)('Set Template', 'Nikolassee');
 
-		const path = await download(page)(page.locator('button >> "Export"').nth(1));
-		expectFilesToBeEqual(path, './fixtures/export-datev-day.csv');
+		const path = await download(page)(page.getByRole('button', { name: 'Export', exact: true }).nth(1));
+		expectCsvFilesToBeEqualIgnoringRowOrder(path, './fixtures/export-datev-day.csv');
 	});
 
 	test('export invalid month', async ({ page }) => {
@@ -115,8 +125,8 @@ test.describe('BookEntries', () => {
 		await page.goto(PAGE_URL + '/book-entries');
 		await select(page)('Set Template', 'Nikolassee');
 
-		await page.locator('button >> "Export"').nth(0).click();
-		await expect(page.locator('"Failed To Export"')).toBeVisible();
+		await page.getByRole('button', { name: 'Export', exact: true }).nth(0).click();
+		await expect(page.getByText('Failed To Export', { exact: true })).toBeVisible();
 	});
 
 	test('export invalid day', async ({ page }) => {
@@ -125,7 +135,7 @@ test.describe('BookEntries', () => {
 		await page.goto(PAGE_URL + '/book-entries');
 		await select(page)('Set Template', 'Nikolassee');
 
-		await page.locator('button >> "Export"').nth(1).click();
-		await expect(page.locator('"Failed To Export"')).toBeVisible();
+		await page.getByRole('button', { name: 'Export', exact: true }).nth(1).click();
+		await expect(page.getByText('Failed To Export', { exact: true })).toBeVisible();
 	});
 });

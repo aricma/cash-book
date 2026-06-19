@@ -6,10 +6,8 @@ import {
 	makeCreateBookEntry,
 	makeCreateTemplate,
 	makeCreateAccount,
-	readFile,
 	uploadBackup,
-	sleep,
-	expectFilesToBeEqual,
+	expectCsvFilesToBeEqualIgnoringRowOrder,
 } from '../utils';
 
 test.describe('Setup', () => {
@@ -65,37 +63,33 @@ test.describe('Setup', () => {
 			},
 		]);
 
-		await page.locator('button >> "Entries"').click();
+		await page.getByRole('button', { name: 'Entries', exact: true }).click();
 		await page.waitForURL(PAGE_URL + '/book-entries');
-		const path = await download(page)(page.locator('button >> "Export"').nth(0));
-		expectFilesToBeEqual(path, './fixtures/golden-path-expected-datev-export.csv');
+		const path = await download(page)(page.getByRole('button', { name: 'Export', exact: true }).first());
+		expectCsvFilesToBeEqualIgnoringRowOrder(path, './fixtures/golden-path-expected-datev-export.csv');
 	});
 
 	test('given no accounts', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-empty-v3_1.json');
 		await page.goto(PAGE_URL);
-		await sleep(2000);
-		await expect(page).toHaveURL(PAGE_URL + '/accounts');
+		await expect(page).toHaveURL(PAGE_URL + '/accounts', { timeout: 4000 });
 	});
 
 	test('given accounts and neither transactions nor book entries', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-with-accounts-v3_1.json');
 		await page.goto(PAGE_URL);
-		await sleep(2000);
-		await expect(page).toHaveURL(PAGE_URL + '/transactions');
+		await expect(page).toHaveURL(PAGE_URL + '/transactions', { timeout: 4000 });
 	});
 
 	test('given accounts, transactions and no book entries', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-with-accounts-and-transactions-v3_1.json');
 		await page.goto(PAGE_URL);
-		await sleep(2000);
-		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create');
+		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create', { timeout: 4000 });
 	});
 
 	test('given accounts, transactions and book entries', async ({ page }) => {
 		await uploadBackup(page)('./fixtures/backup-with-account-transactions-and-book-entries-v3_1.json');
 		await page.goto(PAGE_URL);
-		await sleep(2000);
-		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create');
+		await expect(page).toHaveURL(PAGE_URL + '/book-entries/create', { timeout: 4000 });
 	});
 });

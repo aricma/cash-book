@@ -178,5 +178,12 @@ export const toAbsoluteFilePath = (path: string): string => (Path.isAbsolute(pat
 export const uploadBackup = (page: Page) => async (path: string) => {
 	await page.goto(PAGE_URL + '/settings');
 	page.on('dialog', (dialog) => dialog.accept());
-	await upload(page)([path])(page.locator('button >> "Load Backup"'));
+	await upload(page)([path])(page.getByRole('button', { name: 'Load Backup', exact: true }));
+	await page.waitForFunction(
+		(key) => {
+			const value = window.localStorage.getItem(key);
+			return typeof value === 'string' && value.length > 0;
+		},
+		'ARICMA_CASHIER'
+	);
 };

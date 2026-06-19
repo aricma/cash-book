@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { sleep } from '../utils';
 import { PAGE_URL } from '../environment';
 
 test.describe('Home Page', () => {
@@ -9,8 +8,6 @@ test.describe('Home Page', () => {
 		await expect(page.locator('h1')).toContainText('cash');
 		await expect(page.locator('h1')).toContainText('Book');
 
-		await sleep(2000);
-
-		await expect(page).toHaveURL(PAGE_URL + '/accounts');
+		await expect(page).toHaveURL(PAGE_URL + '/accounts', { timeout: 4000 });
 	});
 });

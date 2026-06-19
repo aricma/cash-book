@@ -29,14 +29,16 @@ const config: PlaywrightTestConfig = {
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: 'html',
+	reporter: [
+		['line'],
+		['html', { open: 'never' }], // HTML report artifact
+	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
 		actionTimeout: 0,
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		// baseURL: 'http://localhost:3000',
-
+		baseURL: 'http://127.0.0.1:3000',
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
 	},
@@ -107,9 +109,9 @@ const config: PlaywrightTestConfig = {
 
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: 'cd ' + path.join(__dirname, '../cash-book') + ' && yarn start',
-		timeout: 120 * 1000,
-		port: 3000,
+		command: `npm --prefix ${path.join(__dirname, '../cash-book')} run start -- --host 127.0.0.1 --port 3000`,
+		url: 'http://127.0.0.1:3000',
+		timeout: 120_000,
 		reuseExistingServer: !process.env.CI,
 	},
 };

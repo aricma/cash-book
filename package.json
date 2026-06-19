@@ -3,10 +3,9 @@
 	"description": "the aricma mono repo for all the aricma projects",
 	"private": true,
 	"scripts": {
-		"ci:cash-book": "cd $PWD/cash-book && yarn ci",
-		"ci:cash-book-integration-tests": "cd $PWD/cash-book-integrattion-tests && yarn ci",
-		"preci": "yarn prettify",
-		"ci": "yarn ci:cash-book && yarn ci:cash-book-integration-tests",
+		"ci:cash-book": "export CI=true && npm --prefix cash-book run compile && npm --prefix cash-book run coverage && npm --prefix cash-book run build",
+		"ci:cash-book-integration-tests": "export CI=true && npm --prefix cash-book-integration-tests run test",
+		"ci": "npm run ci:cash-book && npm run ci:cash-book-integration-tests",
 		"prettify": "prettier --write .",
 		"pretty": "prettier --check ."
 	},

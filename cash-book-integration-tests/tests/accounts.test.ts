@@ -20,11 +20,11 @@ test.describe('Accounts', () => {
 
 		await select(page)('Difference', 'Cashier');
 
-		const nameInput = page.locator('#modals').locator('input[placeholder="e.g. Bank"]:visible').last();
+		const nameInput = page.locator('#modals').locator('.input-group', { hasText: 'Name' }).locator('input').first();
 		await nameInput.fill('Cash Station 001');
 		await expect(nameInput).toHaveValue('Cash Station 001');
 
-		const numberInput = page.locator('#modals').locator('input[placeholder="e.g. 1500"]:visible').last();
+		const numberInput = page.locator('#modals').locator('.input-group', { hasText: 'Number' }).locator('input').first();
 		await numberInput.fill('7000');
 		await expect(numberInput).toHaveValue('7000');
 

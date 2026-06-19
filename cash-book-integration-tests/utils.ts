@@ -5,8 +5,8 @@ import * as Path from 'path';
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const visibleInputByPlaceholder = (page: Page, placeholder: string) =>
-	page.locator('#modals').locator(`input[placeholder="${placeholder}"]:visible`).last();
+const modalInputByLabel = (page: Page, label: string) =>
+	page.locator('#modals').locator('.input-group', { hasText: label }).locator('input').first();
 
 const selectOption =
 	(page: Page) =>
@@ -38,11 +38,11 @@ export const makeCreateAccount = (page: Page) => async (type: string, name: stri
 		await selectOption(page)('Default', type);
 	}
 
-	const nameInput = visibleInputByPlaceholder(page, 'e.g. Bank');
+	const nameInput = modalInputByLabel(page, 'Name');
 	await nameInput.fill(name);
 	await expect(nameInput).toHaveValue(name);
 
-	const numberInput = visibleInputByPlaceholder(page, 'e.g. 1500');
+	const numberInput = modalInputByLabel(page, 'Number');
 	await numberInput.fill(number);
 	await expect(numberInput).toHaveValue(number);
 

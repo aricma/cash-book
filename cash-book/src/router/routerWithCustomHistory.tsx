@@ -1,12 +1,13 @@
 import * as ReactRouter from 'react-router-dom';
 import React from 'react';
 import { History, Action, Location } from 'history';
+import { WithChildren } from '../models/props';
 
 export interface CustomRouterProps {
 	basename?: string;
 }
 
-export const MakeRouterWithHistory = (history: History): React.FC<CustomRouterProps> => {
+export const MakeRouterWithHistory = (history: History): React.FC<CustomRouterProps & WithChildren> => {
 	return function Router(props) {
 		interface RouterState {
 			action: Action;
@@ -25,7 +26,7 @@ export const MakeRouterWithHistory = (history: History): React.FC<CustomRouterPr
 					location: historyObject.location,
 				})
 			);
-			// eslint-disable-next-line
+
 		}, []);
 
 		return (

@@ -6,7 +6,12 @@ import { ErrorViewProps } from './props';
 import { makeToErrorViewProps } from './toProps';
 import { ErrorView, LoadingView } from './views';
 
-export const GlobalStateWrapper: React.FC = (props) => {
+type CustomRouterProps = {
+  // existing props...
+  children?: React.ReactNode;
+};
+
+export const GlobalStateWrapper: React.FC<CustomRouterProps> = (props) => {
 	const appState = useAppState(selectAppState);
 
 	switch (appState.global.type) {

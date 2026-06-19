@@ -3,8 +3,8 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { ApplicationActionType } from '../../applicationState/actions';
 import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
-const clearLocalStorage = jest.fn();
-const getUserConsent = jest.fn();
+const clearLocalStorage = vi.fn();
+const getUserConsent = vi.fn();
 
 beforeEach(() => {
 	clearLocalStorage.mockReset();

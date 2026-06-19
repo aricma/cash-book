@@ -4,30 +4,50 @@ import * as fs from 'fs';
 import * as Path from 'path';
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const modalInputByLabel = (page: Page, label: string) =>
+	page.locator('#modals').locator('.input-group', { hasText: label }).locator('input').first();
+
+const selectOption =
+	(page: Page) =>
+	async (selectLabel: string, option: string): Promise<void> => {
+		const button = page.getByRole('button', { name: selectLabel, exact: true }).last();
+		await button.click();
+
+		const options = page.getByRole('option');
+		await expect(options.first()).toBeVisible();
+		const optionTitles = (await options.allTextContents()).map((value) => value.trim());
+		const optionIndex = optionTitles.indexOf(option);
+		if (optionIndex < 0) throw Error(`Option not found: ${option}`);
+
+		await page.keyboard.press('Home');
+		for (let i = 0; i < optionIndex; i++) {
+			await page.keyboard.press('ArrowDown');
+		}
+		await page.keyboard.press('Enter');
+		await expect(page.getByRole('button', { name: option, exact: true }).last()).toBeVisible();
+	};
+
 export const makeCreateAccount = (page: Page) => async (type: string, name: string, number: string) => {
 	await page.waitForURL(PAGE_URL + '/accounts');
 
-	await page.locator('button >> "Create Account"').nth(0).click();
-
-	await page.locator('h2 >> "Create Account"').isVisible();
+	await page.getByRole('button', { name: 'Create Account', exact: true }).first().click();
+	await expect(page.getByRole('heading', { name: 'Create Account', exact: true })).toBeVisible();
 
 	if (type !== 'Default') {
-		await page.locator('button >> "Default"').click();
-		await page.locator(`"${type}"`).click();
-		await page.locator(`button >> "${type}"`).isVisible();
+		await selectOption(page)('Default', type);
 	}
 
-	const nameInput = await page.locator('input:near(label:text("Name"), 5)');
+	const nameInput = modalInputByLabel(page, 'Name');
 	await nameInput.fill(name);
 	await expect(nameInput).toHaveValue(name);
 
-	const numberInput = await page.locator('input:near(label:text("Number"), 5)');
+	const numberInput = modalInputByLabel(page, 'Number');
 	await numberInput.fill(number);
 	await expect(numberInput).toHaveValue(number);
 
-	await page.locator('button >> "Submit"').click();
-
-	await page.locator('h2 >> "Create Account"').isHidden();
+	await page.getByRole('button', { name: 'Submit', exact: true }).click();
+	await expect(page.getByRole('heading', { name: 'Create Account', exact: true })).toBeHidden();
 };
 
 interface CreateTemplateRequest {
@@ -38,38 +58,34 @@ interface CreateTemplateRequest {
 }
 
 export const makeCreateTemplate = (page: Page) => async (request: CreateTemplateRequest) => {
-	await page.locator('button >> "Transactions"').click();
+	await page.getByRole('button', { name: 'Transactions', exact: true }).click();
 	await page.waitForURL(PAGE_URL + '/transactions');
 
-	await page.locator('button >> "Create"').nth(0).click();
-	await page.locator('h2 >> "Create Transaction Template"').isVisible();
+	await page.getByRole('button', { name: 'Create', exact: true }).first().click();
+	await expect(page.getByRole('heading', { name: 'Create Transaction Template', exact: true })).toBeVisible();
 
 	await fillInput(page)('Name', request.name);
 
 	request.cashierAccount && (await select(page)('set cashier account', request.cashierAccount));
-	// (request.differenceAccount) && await select(page)("???", request.differenceAccount);
+	request.differenceAccount && (await select(page)('set difference account', request.differenceAccount));
 
 	await asyncForEach(async ([name, type, account], i) => {
 		await page.locator('#create-template-modal-content').evaluate((node) => node.scroll(0, 0));
-		const addTransactionButton = await page.locator('#modals >> button >> "Add Transaction"').nth(0);
-		await addTransactionButton.click();
+		await page.getByRole('button', { name: 'Add Transaction', exact: true }).first().click();
 
-		const nameInput = await page.locator('input:near(label:text("Name"), 5)').nth(i + 1);
+		const nameInput = await makeFindInput(page)('Name', i + 1);
 		await nameInput.fill(name);
 
 		if (type) {
-			await page.locator('button >> "Set transaction type"').nth(i).click();
+			await page.getByRole('button', { name: 'Set transaction type', exact: true }).nth(i).click();
 		}
 
-		await page
-			.locator('[data-test-id="create-transaction-select-other-account"] >> button >> "set other account"')
-			.click();
-		await page.locator(`"${account}"`).click();
+		await page.getByRole('button', { name: 'set other account', exact: true }).click();
+		await page.getByRole('option', { name: account, exact: true }).click();
 	})(request.transactions);
 
-	await page.locator('button >> "Submit"').click();
-
-	await page.locator('h2 >> "Create Transaction Template"').isHidden();
+	await page.getByRole('button', { name: 'Submit', exact: true }).click();
+	await expect(page.getByRole('heading', { name: 'Create Transaction Template', exact: true })).toBeHidden();
 };
 
 interface CreateBookEntryRequest {
@@ -80,7 +96,7 @@ interface CreateBookEntryRequest {
 }
 
 export const makeCreateBookEntry = (page: Page) => async (request: CreateBookEntryRequest) => {
-	await page.locator('button >> "Create Book Entry"').click();
+	await page.getByRole('button', { name: 'Create Book Entry', exact: true }).click();
 	await page.waitForURL(PAGE_URL + '/book-entries/create');
 
 	await makeSetDatePicker(page)(...request.date);
@@ -98,7 +114,7 @@ export const makeCreateBookEntry = (page: Page) => async (request: CreateBookEnt
 		await diffTransactionDiv.locator('input[type="checkbox"]').click();
 	}
 
-	await page.locator('button >> "Submit"').click();
+	await page.getByRole('button', { name: 'Submit', exact: true }).click();
 };
 
 export const makeSetDatePicker = (page: Page) => async (year: string, month: string, day: string) => {
@@ -126,10 +142,25 @@ export const expectFilesToBeEqual = (pathToFile: string, pathToExpectedFile: str
 	expect(fileContent).toEqual(expectedFileContent);
 };
 
+export const expectCsvFilesToBeEqualIgnoringRowOrder = (pathToFile: string, pathToExpectedFile: string) => {
+	const normalize = (content: string) => {
+		const [header, ...rows] = content.trim().split('\n');
+		return [header, ...rows.sort()].join('\n');
+	};
+
+	const fileContent = normalize(readFile(pathToFile));
+	const expectedFileContent = normalize(readFile(pathToExpectedFile));
+	expect(fileContent).toEqual(expectedFileContent);
+};
+
+export const expectJsonFilesToBeEqual = (pathToFile: string, pathToExpectedFile: string) => {
+	const actual = JSON.parse(readFile(pathToFile));
+	const expected = JSON.parse(readFile(pathToExpectedFile));
+	expect(actual).toEqual(expected);
+};
+
 export const select = (page: Page) => async (select: string, option: string) => {
-	await page.locator(`button >> "${select}"`).click();
-	await page.locator(`"${option}"`).click();
-	await page.locator(`button >> "${option}"`).isVisible();
+	await selectOption(page)(select, option);
 };
 
 export const fillInput =
@@ -143,8 +174,9 @@ export const fillInput =
 
 export const makeFindInput =
 	(page: Page) =>
-	async (label: string, nth?: number): Promise<Locator> => {
-		return page.locator(`input:near(label:text("${label}"), 5)`).nth(nth || 0);
+	async (label: string, nth = 0): Promise<Locator> => {
+		const locator = page.locator('.input-group', { hasText: label }).locator('input');
+		return nth < 0 ? locator.last() : locator.nth(nth);
 	};
 
 export const download =
@@ -178,5 +210,12 @@ export const toAbsoluteFilePath = (path: string): string => (Path.isAbsolute(pat
 export const uploadBackup = (page: Page) => async (path: string) => {
 	await page.goto(PAGE_URL + '/settings');
 	page.on('dialog', (dialog) => dialog.accept());
-	await upload(page)([path])(page.locator('button >> "Load Backup"'));
+	await upload(page)([path])(page.getByRole('button', { name: 'Load Backup', exact: true }));
+	await page.waitForFunction(
+		(key) => {
+			const value = window.localStorage.getItem(key);
+			return typeof value === 'string' && value.length > 0;
+		},
+		'ARICMA_CASHIER'
+	);
 };

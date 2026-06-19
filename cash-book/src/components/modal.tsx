@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Transition } from '@headlessui/react';
+import { WithChildren } from '../models/props';
 
-export const AppearModal: React.FC<{ isVisible: boolean }> = (props) => {
+export const AppearModal: React.FC<{ isVisible: boolean } & WithChildren> = (props) => {
 	const container = document.getElementById('modals') || undefined;
 	if (container === undefined) return null;
 	return ReactDOM.createPortal(
@@ -13,13 +14,13 @@ export const AppearModal: React.FC<{ isVisible: boolean }> = (props) => {
 	);
 };
 
-export const DialogContainer: React.FC = (props) => (
+export const DialogContainer: React.FC<WithChildren> = (props) => (
 	<div className="w-full h-full px-2 flex items-center justify-center bg-gray-900/80">
 		<div className="bg-canvas rounded-2xl border border-gray-700">{props.children}</div>
 	</div>
 );
 
-export const SlideInModal: React.FC<{ isVisible: boolean }> = (props) => {
+export const SlideInModal: React.FC<{ isVisible: boolean } & WithChildren> = (props) => {
 	const container = document.getElementById('modals') || undefined;
 	if (container === undefined) return null;
 	return ReactDOM.createPortal(
@@ -40,7 +41,7 @@ export const SlideInModal: React.FC<{ isVisible: boolean }> = (props) => {
 	);
 };
 
-export const OverlayContainer: React.FC = (props) => (
+export const OverlayContainer: React.FC<WithChildren> = (props) => (
 	<div className="w-screen h-screen px-1 pt-8">
 		<div className="w-full h-full bg-canvas shadow-md rounded-t-2xl border border-gray-200 dark:border-gray-700">
 			{props.children}

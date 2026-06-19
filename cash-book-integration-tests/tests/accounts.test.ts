@@ -1,38 +1,38 @@
 import { test, expect } from '@playwright/test';
 import { PAGE_URL } from '../environment';
-import { makeCreateAccount } from '../utils';
-
-test.beforeEach(async ({ page }) => {
-	await page.goto(PAGE_URL + '/accounts');
-	await makeCreateAccount(page)('Difference', 'Difference Account', '3400');
-});
+import { makeCreateAccount, uploadBackup, select } from '../utils';
 
 test.describe('Accounts', () => {
 	test('create account', async ({ page }) => {
-		await expect(page.locator('[data-test-id="account"] >> "Difference"')).toBeVisible();
-		await expect(page.locator('[data-test-id="account"] >> "Difference Account"')).toBeVisible();
-		await expect(page.locator('[data-test-id="account"] >> "3400"')).toBeVisible();
-		await expect(page.locator('[data-test-id="account"] >> button >> "Edit"')).toBeVisible();
+		await page.goto(PAGE_URL + '/accounts');
+		await makeCreateAccount(page)('Difference', 'Difference Account', '3400');
+
+		await expect(page.getByText('Difference', { exact: true })).toBeVisible();
+		await expect(page.locator('[data-test-id="account"] >> text="Difference Account"')).toBeVisible();
+		await expect(page.getByText('3400', { exact: true })).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Edit', exact: true })).toBeVisible();
 	});
 
 	test('edit account', async ({ page }) => {
-		await page.locator('[data-test-id="account"] >> button >> "Edit"').click();
+		await uploadBackup(page)('./fixtures/backup-with-accounts-v3_1.json');
+		await page.goto(PAGE_URL + '/accounts');
+		await page.locator('[data-test-id="account"]:has-text("Kassendifferenz")').getByRole('button', { name: 'Edit', exact: true }).click();
 
-		await page.locator('button >> "Difference"').click();
-		await page.locator(`"Cashier"`).click();
+		await select(page)('Difference', 'Cashier');
 
-		const nameInput = await page.locator('input:near(label:text("Name"), 5)');
+		const nameInput = page.locator('#modals').locator('.input-group', { hasText: 'Name' }).locator('input').first();
 		await nameInput.fill('Cash Station 001');
 		await expect(nameInput).toHaveValue('Cash Station 001');
 
-		const numberInput = await page.locator('input:near(label:text("Number"), 5)');
-		await numberInput.fill('1000');
-		await expect(numberInput).toHaveValue('1000');
+		const numberInput = page.locator('#modals').locator('.input-group', { hasText: 'Number' }).locator('input').first();
+		await numberInput.fill('7000');
+		await expect(numberInput).toHaveValue('7000');
 
-		await page.locator('button >> "Submit"').click();
+		await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
-		await expect(page.locator('[data-test-id="account"] >> "Cashier"')).toBeVisible();
-		await expect(page.locator('[data-test-id="account"] >> "Cash Station 001"')).toBeVisible();
-		await expect(page.locator('[data-test-id="account"] >> "1000"')).toBeVisible();
+		const editedAccount = page.locator('[data-test-id="account"]:has-text("Cash Station 001")');
+		await expect(editedAccount.getByText('Cashier', { exact: true })).toBeVisible();
+		await expect(editedAccount.getByText('Cash Station 001', { exact: true })).toBeVisible();
+		await expect(editedAccount.getByText('7000', { exact: true })).toBeVisible();
 	});
 });

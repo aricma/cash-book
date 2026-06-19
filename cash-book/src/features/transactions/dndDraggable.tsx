@@ -11,6 +11,7 @@ import {
 } from 'react-dnd';
 import React from 'react';
 import { TransactionViewProps } from './props/transactionsViewProps';
+import { WithChildren } from '../../models/props';
 
 interface TargetProps {
 	index: number;
@@ -21,7 +22,7 @@ interface TargetInstance {
 	getNode(): HTMLDivElement | null;
 }
 
-export type RefTargetProps = TargetProps & {
+export type RefTargetProps = TargetProps & WithChildren & {
 	isDragging: boolean;
 	connectDragSource: ConnectDragSource;
 	connectDropTarget: ConnectDropTarget;

@@ -16,7 +16,7 @@ import { makeReducerExpectation, makeDefaultReducerTest } from '../../../misc/te
 import { makeReducer } from './reducer';
 import { initialState, TransactionsState, TransactionType } from '../state';
 
-const makeFakeId = jest.fn(() => 'X');
+const makeFakeId = vi.fn(() => 'X');
 const expectation = makeReducerExpectation(makeReducer(makeFakeId));
 
 makeDefaultReducerTest(makeReducer(makeFakeId), initialState);

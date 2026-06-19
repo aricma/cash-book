@@ -3,6 +3,7 @@ import { SkeletonTransactionsViewProps } from '../props/transactionsViewProps';
 import { Header } from '../../../components/header';
 import { Icon } from '../../../components/icons';
 import { ExternalLink } from '../../../components/externalLink';
+import { WithChildren } from '../../../models/props';
 
 export const SkeletonTransactionsView: React.FC<SkeletonTransactionsViewProps> = (props) => {
 	return (
@@ -67,7 +68,7 @@ export const SkeletonTransactionsView: React.FC<SkeletonTransactionsViewProps> =
 	);
 };
 
-export const TemplatesSkeleton: React.FC = () => (
+export const TemplatesSkeleton: React.FC<WithChildren> = () => (
 	<>
 		{Array(3)
 			.fill(null)

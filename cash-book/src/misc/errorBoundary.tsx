@@ -3,13 +3,15 @@ import { ApplicationActionType } from '../applicationState/actions';
 import { dispatch } from '../applicationState/store';
 import { IS_DEVELOPMENT_ENVIRONMENT } from '../variables/environments';
 import { CashBookError, CashBookErrorType } from '../models/cashBookError';
+import { WithChildren } from '../models/props';
 
-export class ErrorBoundary extends React.Component {
-	state: {
-		hasError: boolean;
-	};
+type Props = React.PropsWithChildren<{}>;
+type State = { hasError: boolean };
 
-	constructor(props: any) {
+export class ErrorBoundary extends React.Component<Props, State> {
+  state: State;
+
+	constructor(props: WithChildren) {
 		super(props);
 		this.state = { hasError: false };
 	}
@@ -33,6 +35,6 @@ export class ErrorBoundary extends React.Component {
 		if (IS_DEVELOPMENT_ENVIRONMENT && this.state.hasError) {
 			return <h1>Something went wrong.</h1>;
 		}
-		return this.props.children;
+		return this.props.children!;
 	}
 }

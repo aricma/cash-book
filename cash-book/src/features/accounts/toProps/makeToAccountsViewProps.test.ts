@@ -3,8 +3,8 @@ import { makeToPropsExpectation, expectButtonProps, expectString } from '../../.
 import { AccountsState, initialState, AccountType } from '../state';
 import { AccountsViewType } from '../props/accountsViewProps';
 
-const dispatch = jest.fn();
-const showCreateModel = jest.fn();
+const dispatch = vi.fn();
+const showCreateModel = vi.fn();
 const expectation = makeToPropsExpectation(makeToAccountsViewProps({ dispatch, showCreateModel }));
 
 const baseState: AccountsState = {

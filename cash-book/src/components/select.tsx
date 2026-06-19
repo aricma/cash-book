@@ -2,6 +2,7 @@ import React from 'react';
 import { OptionsInputProps, IconType } from '../models/props';
 import { Listbox } from '@headlessui/react';
 import { Icon } from './icons';
+import { WithChildren } from '../models/props';
 
 export enum OptionsType {
 	BL = 'SELECT_TYPE/BL',
@@ -60,7 +61,7 @@ export const Select: React.FC<Props> = (props) => {
 	);
 };
 
-const Options: React.FC<{ type: OptionsType }> = (props) => {
+const Options: React.FC<{ type: OptionsType } & WithChildren> = (props) => {
 	switch (props.type) {
 		case OptionsType.BL:
 			return (

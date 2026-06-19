@@ -51,8 +51,8 @@ describe(makeSaveBackupToLocalStorage.name, () => {
 						save: SettingsSaveType.AUTO,
 					},
 				};
-				const setInLocalStorage = jest.fn();
-				const toBackup = jest.fn(() => ({
+				const setInLocalStorage = vi.fn();
+				const toBackup = vi.fn(() => ({
 					__version__: 'v0.0.0',
 				}));
 				const worker = makeSaveBackupToLocalStorage(setInLocalStorage, toBackup);
@@ -74,8 +74,8 @@ describe(makeSaveBackupToLocalStorage.name, () => {
 						save: SettingsSaveType.MANUAL,
 					},
 				};
-				const setInLocalStorage = jest.fn();
-				const toBackup = jest.fn();
+				const setInLocalStorage = vi.fn();
+				const toBackup = vi.fn();
 				const worker = makeSaveBackupToLocalStorage(setInLocalStorage, toBackup);
 				await expectSaga(worker)
 					.provide([[SE.select(selectAppState), appState]])

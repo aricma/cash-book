@@ -4,8 +4,8 @@ import { makeUploadBackupWorker } from './makeUploadBackupWorker';
 import { LOCAL_STORAGE_KEY } from '../../variables/environments';
 import { CashBookError, CashBookErrorType } from '../../models/cashBookError';
 
-const setLocalStorage = jest.fn();
-const getUserConsent = jest.fn();
+const setLocalStorage = vi.fn();
+const getUserConsent = vi.fn();
 
 beforeEach(() => {
 	setLocalStorage.mockReset();

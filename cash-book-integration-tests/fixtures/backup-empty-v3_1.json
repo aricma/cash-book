@@ -1,11 +1,7 @@
 {
     "__version__": "v3.1",
-    "accounts": {
-    },
-    "templates": {
-    },
-    "transactions": {
-    },
-    "bookEntries": {
-    }
+    "accounts": {},
+    "templates": {},
+    "transactions": {},
+    "bookEntries": {}
 }
